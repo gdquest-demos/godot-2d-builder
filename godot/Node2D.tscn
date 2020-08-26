@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://pawn.png" type="Texture" id=2]
+[ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
+[ext_resource path="res://StirlingEngine.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+
+export var movement_speed := 135.0
+
+
+func _physics_process(delta: float) -> void:
+	var direction := _get_direction()
+	
+	move_and_slide(direction * movement_speed)
+
+
+func _get_direction() -> Vector2:
+	return Vector2(
+		(Input.get_action_strength(\"right\") - Input.get_action_strength(\"left\")) * 2.0,
+		Input.get_action_strength(\"down\") - Input.get_action_strength(\"up\")
+	).normalized()
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 12.0
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0.418182, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 0 ), 0.0, -0.0362146, 0, 0, Vector2( 0.1893, 0.430682 ), 2.45455, 2.62987, 0, 0, Vector2( 1, 1 ), 0.179116, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 20.0
+gravity = Vector3( 0, -12, 0 )
+initial_velocity = 20.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.25
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Ground" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 100, 50 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 65553, 0, 0, 65554, 0, 0, 65555, 0, 0, 65556, 0, 0, 65557, 0, 0, 65558, 0, 0, 65559, 0, 0, 65560, 0, 0, 65561, 0, 0, 65562, 0, 0, 65563, 0, 0, 65564, 0, 0, 131089, 0, 0, 131090, 0, 0, 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 131095, 0, 0, 131096, 0, 0, 131097, 0, 0, 131098, 0, 0, 131099, 0, 0, 131100, 0, 0, 196625, 0, 0, 196626, 0, 0, 196627, 0, 0, 196628, 0, 0, 196629, 0, 0, 196630, 0, 0, 196631, 0, 0, 196632, 0, 0, 196633, 0, 0, 196634, 0, 0, 196635, 0, 0, 196636, 0, 0, 262161, 0, 0, 262162, 0, 0, 262163, 0, 0, 262164, 0, 0, 262165, 0, 0, 262166, 0, 0, 262167, 0, 0, 262168, 0, 0, 262169, 0, 0, 262170, 0, 0, 262171, 0, 0, 262172, 0, 0, 327697, 0, 0, 327698, 0, 0, 327699, 0, 0, 327700, 0, 0, 327701, 0, 0, 327702, 0, 0, 327703, 0, 0, 327704, 0, 0, 327705, 0, 0, 327706, 0, 0, 327707, 0, 0, 327708, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 393237, 0, 0, 393238, 0, 0, 393239, 0, 0, 393240, 0, 0, 393241, 0, 0, 393242, 0, 0, 393243, 0, 0, 393244, 0, 0, 458769, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 458774, 0, 0, 458775, 0, 0, 458776, 0, 0, 458777, 0, 0, 458778, 0, 0, 458779, 0, 0, 458780, 0, 0 )
+
+[node name="PropsMap" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 100, 50 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 65556, 11, 0, 65557, 3, 0, 65558, 3, 0, 65559, 3, 0, 65560, 3, 0, 65561, 8, 0, 131090, 1, 0, 131091, 3, 0, 131092, 1, 0, 131097, 4, 0, 196628, 6, 0, 196629, 3, 0, 196630, 3, 0, 196632, 3, 0, 196633, 1, 0 )
+
+[node name="StirlingEngine" parent="PropsMap" instance=ExtResource( 4 )]
+position = Vector2( 1000, 649.136 )
+
+[node name="Player" type="KinematicBody2D" parent="PropsMap"]
+position = Vector2( 910.121, 683.234 )
+script = SubResource( 1 )
+
+[node name="Pawn" type="Sprite" parent="PropsMap/Player"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PropsMap/Player"]
+position = Vector2( 0, 17.1061 )
+shape = SubResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 1001.24, 649.906 )
+amount = 2
+lifetime = 2.0
+visibility_rect = Rect2( -5.05289, -44.2723, 16.9529, 44.2634 )
+process_material = SubResource( 7 )
+texture = ExtResource( 3 )

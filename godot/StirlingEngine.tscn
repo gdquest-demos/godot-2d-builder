@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://tileset.png" type="Texture" id=1]
+[ext_resource path="res://piston.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+
+onready var animation_player := $AnimationPlayer
+onready var tween := $Tween
+
+
+func _ready() -> void:
+	animation_player.play(\"Work\")
+	tween.interpolate_property(animation_player, \"playback_speed\", 0, 1, 12.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+"
+
+[sub_resource type="Animation" id=2]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pistons/PistonLeft:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -25, 16 ), Vector2( -25, -8 ), Vector2( -25, 16 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pistons/PistonRight:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 24.5, -8 ), Vector2( 24.5, 16 ), Vector2( 24.5, -8 ) ]
+}
+
+[node name="StirlingEngine" type="KinematicBody2D"]
+script = SubResource( 1 )
+
+[node name="EngineBack" type="Sprite" parent="."]
+position = Vector2( 0, -7.35245 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 449, 119, 101, 35 )
+
+[node name="Pistons" type="Node2D" parent="."]
+
+[node name="PistonLeft" type="Sprite" parent="Pistons"]
+position = Vector2( -25, 16 )
+texture = ExtResource( 2 )
+
+[node name="PistonRight" type="Sprite" parent="Pistons"]
+position = Vector2( 24.5, -8 )
+texture = ExtResource( 2 )
+
+[node name="EngineFront" type="Sprite" parent="."]
+position = Vector2( 0, 24.6476 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 559, 144, 102, 52 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -7.38865 )
+polygon = PoolVector2Array( -49.8228, 32.0964, -0.100166, 8.31966, 49.8727, 32.013, -0.0167389, 56.8743 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Work = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
