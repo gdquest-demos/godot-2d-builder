@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "PowerComponent",
 "language": "GDScript",
 "path": "res://Systems/Power/PowerComponent.gd"
+}, {
+"base": "Node2D",
+"class": "WireBlueprint",
+"language": "GDScript",
+"path": "res://Entities/WireBlueprint.gd"
 } ]
 _global_script_class_icons={
 "BlueprintEntity": "",
 "ElectricSystem": "",
-"PowerComponent": ""
+"PowerComponent": "",
+"WireBlueprint": ""
 }
 
 [application]
@@ -69,4 +75,5 @@ down={
 [rendering]
 
 quality/2d/use_pixel_snap=true
+environment/default_clear_color=Color( 0.2, 0.290196, 0.592157, 1 )
 environment/default_environment="res://default_env.tres"

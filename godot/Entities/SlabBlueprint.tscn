@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
+[ext_resource path="res://Entities/SlabEntity.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+Entity = ExtResource( 3 )
+
+[node name="Slab" type="Sprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( 0, 13.1889 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 229, 9, 102, 77 )

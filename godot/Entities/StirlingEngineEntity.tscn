@@ -3,7 +3,17 @@
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
 [ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=2]
 [ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
-[ext_resource path="res://Systems/Power/PowerComponent.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends StaticBody2D
+
+
+func _ready() -> void:
+	$AnimationPlayer.play(\"Work\")
+	$Tween.interpolate_property($AnimationPlayer, \"playback_speed\", 0, 1, 6)
+	$Tween.interpolate_callback($Particles2D, 6, \"set_emitting\", true)
+	$Tween.start()
+"
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.418182, 1 )
@@ -43,7 +53,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -25, 16 ), Vector2( -25, -8 ), Vector2( -25, 16 ) ]
+"values": [ Vector2( -25, 16 ), Vector2( -25, -7 ), Vector2( -25, 16 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Pistons/PistonRight:position")
@@ -58,12 +68,8 @@ tracks/1/keys = {
 "values": [ Vector2( 25, -7 ), Vector2( 25, 16 ), Vector2( 25, -7 ) ]
 }
 
-[node name="StirlingEngine" type="KinematicBody2D"]
-
-[node name="PowerComponent" type="Node" parent="."]
-script = ExtResource( 4 )
-power_role = 1
-power_amount = 10
+[node name="StirlingEngine" type="StaticBody2D"]
+script = SubResource( 7 )
 
 [node name="EngineBack" type="Sprite" parent="."]
 position = Vector2( 0, -8 )

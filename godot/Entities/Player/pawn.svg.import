@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/test.svg-b20427b9eaaf7e1ae1dfaf68285a0fbb.stex"
+path="res://.import/pawn.svg-4014748a2e9b1fd8fb641689abdc7ebd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shared/test.svg"
-dest_files=[ "res://.import/test.svg-b20427b9eaaf7e1ae1dfaf68285a0fbb.stex" ]
+source_file="res://Entities/Player/pawn.svg"
+dest_files=[ "res://.import/pawn.svg-4014748a2e9b1fd8fb641689abdc7ebd.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
