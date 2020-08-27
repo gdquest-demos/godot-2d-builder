@@ -54,6 +54,16 @@ func place_entity(cellv: Vector2, entity: PackedScene) -> void:
 	
 	new_entity.global_position = map_to_world(cellv)
 	
+	#----- TEMP
+	var animation_player: AnimationPlayer = new_entity.get_node(\"AnimationPlayer\")
+	animation_player.play(\"Work\")
+	var tween: Tween = new_entity.get_node(\"Tween\")
+	new_entity.get_node(\"Particles2D\").emitting = true
+	
+	tween.interpolate_property(animation_player, \"playback_speed\", 0, 1.0, 6.0)
+	tween.start()
+	# -----
+	
 	blueprint.queue_free()
 
 	owner.electric_system.add_new_cell(cellv, new_entity.get_node(\"PowerComponent\"))
