@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/StirlingEngineBlueprint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Systems/Power/ElectricSystem.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+
+onready var electric_system := $ElectricSystem
+
+
+func _ready() -> void:
+	pass
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends TileMap
+
+
+export(PackedScene) var StirlingEngine: PackedScene
+
+var blueprint: Node2D
+
+
+func _ready() -> void:
+	blueprint = StirlingEngine.instance()
+	add_child(blueprint)
+	blueprint.global_position = map_to_world(world_to_map(get_global_mouse_position()))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if blueprint:
+		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+			var cellv := world_to_map(event.global_position)
+			if get_cellv(cellv) == -1:
+				var new_position: Vector2 = event.global_position
+				place_entity(cellv, StirlingEngine)
+
+		if event is InputEventMouseMotion:
+			var cellv := world_to_map(event.global_position)
+			if get_cellv(cellv) == -1:
+				blueprint.modulate = Color.white
+			else:
+				blueprint.modulate = Color.red
+			blueprint.global_position = map_to_world(cellv)
+
+
+func place_entity(cellv: Vector2, entity: PackedScene) -> void:
+	var new_entity: Node2D = blueprint.Entity.instance()
+	add_child(new_entity)
+	
+	new_entity.global_position = map_to_world(cellv)
+	
+	blueprint.queue_free()
+
+	owner.electric_system.add_new_cell(cellv, new_entity.get_node(\"PowerComponent\"))
+"
+
+[node name="Simulation" type="Node"]
+script = SubResource( 1 )
+
+[node name="GameWorld" type="Node2D" parent="."]
+
+[node name="Ground" type="TileMap" parent="GameWorld"]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 100, 50 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 65550, 0, 0, 65551, 0, 0, 65552, 0, 0, 65553, 0, 0, 65554, 0, 0, 65555, 0, 0, 65556, 0, 0, 65557, 0, 0, 65558, 0, 0, 65559, 0, 0, 65560, 0, 0, 65561, 0, 0, 65562, 0, 0, 65563, 0, 0, 65564, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 131090, 0, 0, 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 131095, 0, 0, 131096, 0, 0, 131097, 0, 0, 131098, 0, 0, 131099, 0, 0, 131100, 0, 0, 196622, 0, 0, 196623, 0, 0, 196624, 0, 0, 196625, 0, 0, 196626, 0, 0, 196627, 0, 0, 196628, 0, 0, 196629, 0, 0, 196630, 0, 0, 196631, 0, 0, 196632, 0, 0, 196633, 0, 0, 196634, 0, 0, 196635, 0, 0, 196636, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 262162, 0, 0, 262163, 0, 0, 262164, 0, 0, 262165, 0, 0, 262166, 0, 0, 262167, 0, 0, 262168, 0, 0, 262169, 0, 0, 262170, 0, 0, 262171, 0, 0, 262172, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 0, 0, 327699, 0, 0, 327700, 0, 0, 327701, 0, 0, 327702, 0, 0, 327703, 0, 0, 327704, 0, 0, 327705, 0, 0, 327706, 0, 0, 327707, 0, 0, 327708, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 393237, 0, 0, 393238, 0, 0, 393239, 0, 0, 393240, 0, 0, 393241, 0, 0, 393242, 0, 0, 393243, 0, 0, 393244, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 458774, 0, 0, 458775, 0, 0, 458776, 0, 0, 458777, 0, 0, 458778, 0, 0, 458779, 0, 0, 458780, 0, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 524305, 0, 0, 524306, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 524310, 0, 0, 524311, 0, 0, 524312, 0, 0, 524313, 0, 0, 524314, 0, 0, 524315, 0, 0, 524316, 0, 0 )
+
+[node name="PropsMap" type="TileMap" parent="GameWorld"]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 100, 50 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 131089, 2, 0, 131090, 4, 0, 131091, 4, 0, 131092, 4, 0, 131093, 13, 0, 131094, 4, 0, 131095, 4, 0, 131096, 7, 0, 196632, 5, 0, 262168, 5, 0, 327704, 2, 0 )
+script = SubResource( 2 )
+StirlingEngine = ExtResource( 3 )
+
+[node name="Player" parent="GameWorld/PropsMap" instance=ExtResource( 2 )]
+position = Vector2( 882.503, 674.238 )
+
+[node name="ElectricSystem" type="Node" parent="."]
+script = ExtResource( 4 )

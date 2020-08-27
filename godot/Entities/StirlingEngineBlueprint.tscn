@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=1]
+[ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=2]
+[ext_resource path="res://Entities/StirlingEngineEntity.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[node name="StirlingEngine" type="Node2D"]
+script = ExtResource( 2 )
+Entity = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( 0, 13.0815 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 4, 49, 102, 77 )

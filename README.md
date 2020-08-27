@@ -1,1 +1,3 @@
-# godot-2d-simulation-survival
+# Builder game in Godot
+
+Simulated entities and systems in isometric

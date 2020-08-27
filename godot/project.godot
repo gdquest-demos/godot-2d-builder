@@ -8,14 +8,32 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BlueprintEntity",
+"language": "GDScript",
+"path": "res://Entities/BlueprintEntity.gd"
+}, {
+"base": "Node",
+"class": "ElectricSystem",
+"language": "GDScript",
+"path": "res://Systems/Power/ElectricSystem.gd"
+}, {
+"base": "Node",
+"class": "PowerComponent",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerComponent.gd"
+} ]
 _global_script_class_icons={
-
+"BlueprintEntity": "",
+"ElectricSystem": "",
+"PowerComponent": ""
 }
 
 [application]
 
-config/name="Godot 2D Survival"
+config/name="Godot 2D Builder"
+run/main_scene="res://SimulationDemo.tscn"
 config/icon="res://icon.png"
 
 [display]

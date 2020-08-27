@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
+[ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=2]
+[ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
+[ext_resource path="res://Systems/Power/PowerComponent.gd" type="Script" id=4]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.418182, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0 ), 0.0, -0.0362146, 0, 0, Vector2( 0.1893, 0.430682 ), 2.45455, 2.62987, 0, 0, Vector2( 1, 1 ), 0.179116, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 20.0
+gravity = Vector3( 0, -12, 0 )
+initial_velocity = 20.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.25
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="Animation" id=6]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pistons/PistonLeft:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -25, 16 ), Vector2( -25, -8 ), Vector2( -25, 16 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pistons/PistonRight:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 25, -7 ), Vector2( 25, 16 ), Vector2( 25, -7 ) ]
+}
+
+[node name="StirlingEngine" type="KinematicBody2D"]
+
+[node name="PowerComponent" type="Node" parent="."]
+script = ExtResource( 4 )
+power_role = 1
+power_amount = 10
+
+[node name="EngineBack" type="Sprite" parent="."]
+position = Vector2( 0, -8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 780, 119, 100, 34 )
+
+[node name="Pistons" type="Node2D" parent="."]
+
+[node name="PistonLeft" type="Sprite" parent="Pistons"]
+position = Vector2( -25, 16 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 4, 7, 32, 33 )
+
+[node name="PistonRight" type="Sprite" parent="Pistons"]
+position = Vector2( 25, -7 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 4, 7, 32, 33 )
+
+[node name="EngineFront" type="Sprite" parent="."]
+position = Vector2( 0, 25.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 669, 144, 102, 52 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -7.38865 )
+polygon = PoolVector2Array( -49.8228, 32.0964, -0.100166, 8.31966, 49.8727, 32.013, -0.0167389, 56.8743 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+amount = 2
+lifetime = 2.0
+visibility_rect = Rect2( -5.05289, -44.2723, 16.9529, 44.2634 )
+process_material = SubResource( 5 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Work = SubResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]

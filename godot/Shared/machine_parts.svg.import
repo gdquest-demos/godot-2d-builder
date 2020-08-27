@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/piston.png-4633382a909e07351a3c9388ec018cf3.stex"
+path="res://.import/machine_parts.svg-6f3546c499f4fc51cfa588e73ee9b9bc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://piston.png"
-dest_files=[ "res://.import/piston.png-4633382a909e07351a3c9388ec018cf3.stex" ]
+source_file="res://Shared/machine_parts.svg"
+dest_files=[ "res://.import/machine_parts.svg-6f3546c499f4fc51cfa588e73ee9b9bc.stex" ]
 
 [params]
 
