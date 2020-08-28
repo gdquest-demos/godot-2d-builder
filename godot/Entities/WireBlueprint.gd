@@ -6,17 +6,17 @@ enum Directions { N = 1, E = 2, S = 4, W = 8 }
 
 
 const _directions_data := {
-	10: {"tile": 4, "region": Rect2(474, 9, 57, 40)},
-	5: {"tile": 5, "region": Rect2(579, 9, 57, 40)},
-	15: {"tile": 6, "region": Rect2(691, 9, 58, 40)},
-	12: {"tile": 7, "region": Rect2(804, 9, 35, 40)},
-	9: {"tile": 8, "region": Rect2(914, 9, 57, 29)},
-	6: {"tile": 9, "region": Rect2(34, 129, 57, 29)},
-	3: {"tile": 10, "region": Rect2(164, 119, 35, 40)},
-	14: {"tile": 11, "region": Rect2(251, 119, 57, 40)},
-	13: {"tile": 12, "region": Rect2(361, 119, 58, 40)},
-	11: {"tile": 13, "region": Rect2(471, 119, 58, 40)},
-	7: {"tile": 14, "region": Rect2(582, 119, 57, 40)}
+	10: {"tile": 4, "region": Rect2(450, 10, 100, 100)},
+	5: {"tile": 5, "region": Rect2(560, 10, 100, 100)},
+	15: {"tile": 6, "region": Rect2(670, 10, 100, 100)},
+	12: {"tile": 7, "region": Rect2(780, 10, 100, 100)},
+	9: {"tile": 8, "region": Rect2(890, 10, 100, 100)},
+	6: {"tile": 9, "region": Rect2(10, 120, 100, 100)},
+	3: {"tile": 10, "region": Rect2(120, 120, 100, 100)},
+	14: {"tile": 11, "region": Rect2(230, 120, 100, 100)},
+	13: {"tile": 12, "region": Rect2(340, 120, 100, 100)},
+	11: {"tile": 13, "region": Rect2(450, 120, 100, 100)},
+	7: {"tile": 14, "region": Rect2(560, 120, 100, 100)}
 }
 
 onready var sprite := $Sprite

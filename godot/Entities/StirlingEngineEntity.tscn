@@ -4,7 +4,7 @@
 [ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=2]
 [ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=1]
 script/source = "extends StaticBody2D
 
 
@@ -15,20 +15,20 @@ func _ready() -> void:
 	$Tween.start()
 "
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.418182, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 0 ), 0.0, -0.0362146, 0, 0, Vector2( 0.1893, 0.430682 ), 2.45455, 2.62987, 0, 0, Vector2( 1, 1 ), 0.179116, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=4]
-curve = SubResource( 3 )
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 direction = Vector3( 0, -1, 0 )
 spread = 20.0
@@ -37,10 +37,10 @@ initial_velocity = 20.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 0.25
-scale_curve = SubResource( 4 )
-color_ramp = SubResource( 2 )
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -69,7 +69,7 @@ tracks/1/keys = {
 }
 
 [node name="StirlingEngine" type="StaticBody2D"]
-script = SubResource( 7 )
+script = SubResource( 1 )
 
 [node name="EngineBack" type="Sprite" parent="."]
 position = Vector2( 0, -8 )
@@ -99,17 +99,17 @@ region_rect = Rect2( 669, 144, 102, 52 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, -7.38865 )
-polygon = PoolVector2Array( -49.8228, 32.0964, -0.100166, 8.31966, 49.8727, 32.013, -0.0167389, 56.8743 )
+polygon = PoolVector2Array( -49.9145, 32.1499, -49.9145, 23.8461, -0.196518, -0.0143766, 50.4675, 23.7409, 50.2573, 32.255, 0.0137024, 57.4819 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
 amount = 2
 lifetime = 2.0
 visibility_rect = Rect2( -5.05289, -44.2723, 16.9529, 44.2634 )
-process_material = SubResource( 5 )
+process_material = SubResource( 6 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Work = SubResource( 6 )
+anims/Work = SubResource( 7 )
 
 [node name="Tween" type="Tween" parent="."]

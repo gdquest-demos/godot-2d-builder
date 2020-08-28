@@ -14,15 +14,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entities/BlueprintEntity.gd"
 }, {
-"base": "Node",
-"class": "ElectricSystem",
+"base": "Reference",
+"class": "EntityTracker",
 "language": "GDScript",
-"path": "res://Systems/Power/ElectricSystem.gd"
+"path": "res://Systems/EntityTracker.gd"
 }, {
 "base": "Node",
-"class": "PowerComponent",
+"class": "Simulation",
 "language": "GDScript",
-"path": "res://Systems/Power/PowerComponent.gd"
+"path": "res://Systems/Simulation.gd"
 }, {
 "base": "Node2D",
 "class": "WireBlueprint",
@@ -31,8 +31,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BlueprintEntity": "",
-"ElectricSystem": "",
-"PowerComponent": "",
+"EntityTracker": "",
+"Simulation": "",
 "WireBlueprint": ""
 }
 
@@ -41,6 +41,10 @@ _global_script_class_icons={
 config/name="Godot 2D Builder"
 run/main_scene="res://SimulationDemo.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Events="*res://Global/Events.gd"
 
 [display]
 

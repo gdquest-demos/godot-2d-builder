@@ -10,11 +10,9 @@ export var Wire: PackedScene
 
 var held_blueprint: Node2D
 
-var placed_entities := {}
-
 var wiring := false
 
-onready var wires: TileMap = $WireBlueprints
+onready var wires: TileMap = get_node("../../WireBlueprints")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,7 +30,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if held_blueprint:
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 			var cellv := world_to_map(event.global_position)
-			if get_cellv(cellv) == -1 and not placed_entities.has(cellv):
+			if not owner.is_cell_occupied(cellv):
 				var new_position: Vector2 = event.global_position
 				if wiring:
 					place_wire(cellv, held_blueprint.get_direction_tile_id(get_powered_neighbors(cellv)))
@@ -42,7 +40,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if event is InputEventMouseMotion:
 			var cellv := world_to_map(event.global_position)
-			if get_cellv(cellv) == -1 and not placed_entities.has(cellv):
+			if not owner.is_cell_occupied(cellv):
 				held_blueprint.modulate = Color.white
 			else:
 				held_blueprint.modulate = Color.red
@@ -62,7 +60,7 @@ func get_powered_neighbors(cellv: Vector2) -> int:
 	var direction := 0
 	
 	for neighbor in neighbors:
-		if wires.get_cellv(neighbor.cellv) != -1 or placed_entities.has(neighbor.cellv):
+		if wires.get_cellv(neighbor.cellv) != -1 or owner.is_cell_occupied(neighbor.cellv):
 			direction |= neighbor.direction
 	
 	return direction
@@ -84,6 +82,7 @@ func replace_neighbor_wires(cellv: Vector2) -> void:
 
 func place_wire(cellv: Vector2, wire_tile: int) -> void:
 	wires.set_cellv(cellv, wire_tile)
+	owner.place_entity(wire_tile, cellv)
 	_clear_blueprint()
 
 
@@ -93,7 +92,7 @@ func place_entity(cellv: Vector2, entity: PackedScene) -> void:
 	
 	new_entity.global_position = map_to_world(cellv)
 	
-	placed_entities[cellv] = new_entity
+	owner.place_entity(new_entity, cellv)
 	
 	_clear_blueprint()
 
@@ -113,6 +112,10 @@ func _set_blueprint(entity: PackedScene) -> void:
 	wiring = entity == Wire
 	if wiring:
 		held_blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
+	if not owner.is_cell_occupied(cellv):
+		held_blueprint.modulate = Color.white
+	else:
+		held_blueprint.modulate = Color.red
 
 
 func _replace_blueprint(entity: PackedScene) -> void:
