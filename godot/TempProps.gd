@@ -29,9 +29,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 	if held_blueprint:
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			var cellv := world_to_map(event.global_position)
+			var cellv := world_to_map(event.position)
 			if not owner.is_cell_occupied(cellv):
-				var new_position: Vector2 = event.global_position
+				var new_position: Vector2 = event.position
 				if wiring:
 					place_wire(cellv, held_blueprint.get_direction_tile_id(get_powered_neighbors(cellv)))
 				else:
@@ -39,7 +39,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				replace_neighbor_wires(cellv)
 
 		if event is InputEventMouseMotion:
-			var cellv := world_to_map(event.global_position)
+			var cellv := world_to_map(event.position)
 			if not owner.is_cell_occupied(cellv):
 				held_blueprint.modulate = Color.white
 			else:
