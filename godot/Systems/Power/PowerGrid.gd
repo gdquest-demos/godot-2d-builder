@@ -10,6 +10,9 @@ var available_power := 0
 func update_grid() -> void:
 	available_power = 0
 	for entity in entities.values():
+		if not entity is Node:
+			continue
+		
 		var components := _find_power_component_nodes(entity)
 		
 		for component in components:
@@ -17,7 +20,6 @@ func update_grid() -> void:
 				available_power += component.power_per_tick
 			if component is PowerConsumer:
 				available_power -= component.power_per_tick
-	print(available_power)
 
 
 func act(delta: float) -> void:
@@ -29,6 +31,9 @@ func act(delta: float) -> void:
 
 
 func _find_power_component_nodes(parent: Node) -> Array:
+	if not parent:
+		return []
+	
 	var power_components := []
 	
 	var parent_stack := [parent]

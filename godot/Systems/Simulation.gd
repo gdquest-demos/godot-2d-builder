@@ -13,7 +13,7 @@ onready var props_map := $GameWorld/YSort/PropsMap
 
 
 func _ready() -> void:
-	$Timer.wait_time = simulation_speed
+	$Timer.start(simulation_speed)
 
 
 func place_entity(entity, cellv: Vector2, role: int) -> void:

@@ -11,7 +11,8 @@ func place_entity(entity, cellv: Vector2, role: int) -> void:
 	if entities.has(cellv):
 		return
 	
-	entities[cellv] = {"entity": entity, "type": role}
+	if role == Types.ACTOR:
+		entities[cellv] = {"entity": entity, "type": role}
 	
 	Events.emit_signal("entity_placed", entity, cellv)
 
