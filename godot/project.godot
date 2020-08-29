@@ -20,6 +20,31 @@ _global_script_classes=[ {
 "path": "res://Systems/EntityTracker.gd"
 }, {
 "base": "Node",
+"class": "PowerComponent",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerComponent.gd"
+}, {
+"base": "PowerComponent",
+"class": "PowerConsumer",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerConsumer.gd"
+}, {
+"base": "Reference",
+"class": "PowerGrid",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerGrid.gd"
+}, {
+"base": "PowerComponent",
+"class": "PowerProducer",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerProducer.gd"
+}, {
+"base": "Reference",
+"class": "PowerSystem",
+"language": "GDScript",
+"path": "res://Systems/Power/PowerSystem.gd"
+}, {
+"base": "Node",
 "class": "Simulation",
 "language": "GDScript",
 "path": "res://Systems/Simulation.gd"
@@ -32,6 +57,11 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BlueprintEntity": "",
 "EntityTracker": "",
+"PowerComponent": "",
+"PowerConsumer": "",
+"PowerGrid": "",
+"PowerProducer": "",
+"PowerSystem": "",
 "Simulation": "",
 "WireBlueprint": ""
 }

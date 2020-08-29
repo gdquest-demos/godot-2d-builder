@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/machine_parts.svg-6f3546c499f4fc51cfa588e73ee9b9bc.stex"
+path="res://.import/indicator.png-d48beea899a4647dc3b615daaddc30c1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shared/machine_parts.svg"
-dest_files=[ "res://.import/machine_parts.svg-6f3546c499f4fc51cfa588e73ee9b9bc.stex" ]
+source_file="res://Shared/indicator.png"
+dest_files=[ "res://.import/indicator.png-d48beea899a4647dc3b615daaddc30c1.stex" ]
 
 [params]
 

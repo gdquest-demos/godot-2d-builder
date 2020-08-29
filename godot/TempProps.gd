@@ -7,6 +7,7 @@ enum Directions { N = 1, E = 2, S = 4, W = 8 }
 export var StirlingEngine: PackedScene
 export var Slab: PackedScene
 export var Wire: PackedScene
+export var Battery: PackedScene
 
 var held_blueprint: Node2D
 
@@ -24,6 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_replace_blueprint(Slab)
 			KEY_3:
 				_replace_blueprint(Wire)
+			KEY_4:
+				_replace_blueprint(Battery)
 			KEY_Q:
 				_clear_blueprint()
 			
@@ -82,7 +85,7 @@ func replace_neighbor_wires(cellv: Vector2) -> void:
 
 func place_wire(cellv: Vector2, wire_tile: int) -> void:
 	wires.set_cellv(cellv, wire_tile)
-	owner.place_entity(wire_tile, cellv)
+	owner.place_entity(wire_tile, cellv, Simulation.TYPE_WIRE)
 	_clear_blueprint()
 
 
@@ -92,7 +95,7 @@ func place_entity(cellv: Vector2, entity: PackedScene) -> void:
 	
 	new_entity.global_position = map_to_world(cellv)
 	
-	owner.place_entity(new_entity, cellv)
+	owner.place_entity(new_entity, cellv, Simulation.TYPE_ACTOR)
 	
 	_clear_blueprint()
 

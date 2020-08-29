@@ -1,34 +1,25 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
 [ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=2]
 [ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
+[ext_resource path="res://Entities/StirlingEngineEntity.gd" type="Script" id=4]
+[ext_resource path="res://Systems/Power/PowerProducer.gd" type="Script" id=5]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends StaticBody2D
-
-
-func _ready() -> void:
-	$AnimationPlayer.play(\"Work\")
-	$Tween.interpolate_property($AnimationPlayer, \"playback_speed\", 0, 1, 6)
-	$Tween.interpolate_callback($Particles2D, 6, \"set_emitting\", true)
-	$Tween.start()
-"
-
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.418182, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 0 ), 0.0, -0.0362146, 0, 0, Vector2( 0.1893, 0.430682 ), 2.45455, 2.62987, 0, 0, Vector2( 1, 1 ), 0.179116, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=5]
 flag_disable_z = true
 direction = Vector3( 0, -1, 0 )
 spread = 20.0
@@ -37,10 +28,10 @@ initial_velocity = 20.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 0.25
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -69,7 +60,11 @@ tracks/1/keys = {
 }
 
 [node name="StirlingEngine" type="StaticBody2D"]
-script = SubResource( 1 )
+script = ExtResource( 4 )
+
+[node name="PowerProducer" type="Node" parent="."]
+script = ExtResource( 5 )
+power_per_tick = 10
 
 [node name="EngineBack" type="Sprite" parent="."]
 position = Vector2( 0, -8 )
@@ -106,10 +101,10 @@ emitting = false
 amount = 2
 lifetime = 2.0
 visibility_rect = Rect2( -5.05289, -44.2723, 16.9529, 44.2634 )
-process_material = SubResource( 6 )
+process_material = SubResource( 5 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Work = SubResource( 7 )
+anims/Work = SubResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]

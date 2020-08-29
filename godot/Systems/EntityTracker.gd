@@ -4,15 +4,14 @@ extends Reference
 
 enum Types { ACTOR, WIRE }
 
-
 var entities := {}
 
 
-func place_entity(entity, cellv: Vector2) -> void:
+func place_entity(entity, cellv: Vector2, role: int) -> void:
 	if entities.has(cellv):
 		return
 	
-	entities[cellv] = entity
+	entities[cellv] = {"entity": entity, "type": role}
 	
 	Events.emit_signal("entity_placed", entity, cellv)
 
@@ -26,5 +25,3 @@ func remove_entity(cellv: Vector2) -> void:
 
 func is_cell_occupied(cellv: Vector2) -> bool:
 	return entities.has(cellv)
-
-

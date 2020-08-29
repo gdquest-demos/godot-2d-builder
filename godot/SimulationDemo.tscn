@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Entities/SlabBlueprint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/WireBlueprint.tscn" type="PackedScene" id=6]
 [ext_resource path="res://TempProps.gd" type="Script" id=7]
+[ext_resource path="res://Entities/BatteryBlueprint.tscn" type="PackedScene" id=8]
 
 [node name="Simulation" type="Node"]
 script = ExtResource( 4 )
@@ -44,6 +45,12 @@ script = ExtResource( 7 )
 StirlingEngine = ExtResource( 3 )
 Slab = ExtResource( 5 )
 Wire = ExtResource( 6 )
+Battery = ExtResource( 8 )
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.033
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
