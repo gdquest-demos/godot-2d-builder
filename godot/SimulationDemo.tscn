@@ -2,12 +2,12 @@
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Entities/StirlingEngineBlueprint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Blueprints/StirlingEngineBlueprint.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
-[ext_resource path="res://Entities/SlabBlueprint.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Entities/WireBlueprint.tscn" type="PackedScene" id=6]
-[ext_resource path="res://TempProps.gd" type="Script" id=7]
-[ext_resource path="res://Entities/BatteryBlueprint.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Entities/Blueprints/SlabBlueprint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/Blueprints/WireBlueprint.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
+[ext_resource path="res://Entities/Blueprints/BatteryBlueprint.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 
 [node name="Simulation" type="Node"]
@@ -29,7 +29,7 @@ tile_data = PoolIntArray( 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 
 
 [node name="YSort" type="YSort" parent="GameWorld"]
 
-[node name="PropsMap" type="TileMap" parent="GameWorld/YSort"]
+[node name="EntityPlacer" type="TileMap" parent="GameWorld/YSort"]
 mode = 1
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 100, 50 )
@@ -42,10 +42,10 @@ Slab = ExtResource( 5 )
 Wire = ExtResource( 6 )
 Battery = ExtResource( 8 )
 
-[node name="Timer" type="Timer" parent="GameWorld/YSort/PropsMap"]
+[node name="Timer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
 wait_time = 0.2
 
-[node name="TextureProgress" type="TextureProgress" parent="GameWorld/YSort/PropsMap"]
+[node name="TextureProgress" type="TextureProgress" parent="GameWorld/YSort/EntityPlacer"]
 visible = false
 margin_right = 56.0
 margin_bottom = 56.0
@@ -59,7 +59,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="GameWorld/YSort/PropsMap"]
+[node name="Tween" type="Tween" parent="GameWorld/YSort/EntityPlacer"]
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )

@@ -1,3 +1,4 @@
+# TODO: Give inventory, require fuel
 extends StaticBody2D
 
 

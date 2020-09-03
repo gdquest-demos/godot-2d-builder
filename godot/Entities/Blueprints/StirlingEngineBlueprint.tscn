@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=1]
 [ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=2]
-[ext_resource path="res://Entities/StirlingEngineEntity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Entities/Power/StirlingEngineEntity.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1

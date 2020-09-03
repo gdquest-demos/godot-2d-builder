@@ -47,12 +47,12 @@ _global_script_classes=[ {
 "base": "BlueprintEntity",
 "class": "WireBlueprint",
 "language": "GDScript",
-"path": "res://Entities/WireBlueprint.gd"
+"path": "res://Entities/Blueprints/WireBlueprint.gd"
 }, {
 "base": "Node2D",
 "class": "WireEntity",
 "language": "GDScript",
-"path": "res://Entities/WireEntity.gd"
+"path": "res://Entities/Entities/Power/WireEntity.gd"
 } ]
 _global_script_class_icons={
 "BlueprintEntity": "",

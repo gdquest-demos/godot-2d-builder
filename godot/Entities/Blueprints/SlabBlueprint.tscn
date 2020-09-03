@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
-[ext_resource path="res://Entities/SlabEntity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Entities/SlabEntity.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1

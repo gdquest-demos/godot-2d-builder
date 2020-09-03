@@ -1,12 +1,17 @@
+# Central simulation owner. Delegates tasks and triggers system updates.
 class_name Simulation
 extends Node
 
 
+# Time for systems to update at.
 export var simulation_speed := 1.0 / 30
 
+# Repository of all placed entities
 var tracker := EntityTracker.new()
 
-onready var props_map := $GameWorld/YSort/PropsMap
+# The tilemap used to convert positions into indexible vectors
+onready var props_map := $GameWorld/YSort/EntityPlacer
+# System to update power and keep track of power-related entities
 onready var power_system := PowerSystem.new()
 
 
