@@ -12,11 +12,19 @@ export var Battery: PackedScene
 var held_blueprint: Node2D
 
 var wiring := false
+var last_hovered: Node2D = null
 
 onready var wires := get_node("../../Wires")
+onready var timer := $Timer
+onready var indicator := $TextureProgress
+onready var tween := $Tween
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		timer.stop()
+		indicator.hide()
+	
 	if event is InputEventKey:
 		match event.scancode:
 			KEY_1:
@@ -29,20 +37,35 @@ func _unhandled_input(event: InputEvent) -> void:
 				_replace_blueprint(Battery)
 			KEY_Q:
 				_clear_blueprint()
-			
-	if held_blueprint:
-		if event is InputEventMouseButton and event.pressed and  event.button_index == BUTTON_LEFT:
-			var cellv := world_to_map(event.position)
+	
+	if event is InputEventMouseButton and event.pressed:
+		var cellv := world_to_map(event.position)
+		
+		if held_blueprint and event.button_index == BUTTON_LEFT:
 			if not owner.is_cell_occupied(cellv):
 				var new_position: Vector2 = event.position
 				if wiring:
 					place_wire(cellv, get_powered_neighbors(cellv))
 				else:
-					place_entity(cellv, StirlingEngine)
+					place_entity(cellv)
 				replace_neighbor_wires(cellv)
 
-		if event is InputEventMouseMotion:
-			var cellv := world_to_map(event.position)
+		elif not held_blueprint and event.button_index == BUTTON_RIGHT:
+			if owner.is_cell_occupied(cellv):
+				indicator.show()
+				indicator.rect_position = event.position
+				tween.interpolate_property(indicator, "value", 0, 100, 0.2)
+				tween.start()
+				timer.start()
+				yield(timer, "timeout")
+				owner.remove_entity(cellv)
+				replace_neighbor_wires(cellv)
+				indicator.hide()
+
+	elif event is InputEventMouseMotion:
+		var cellv := world_to_map(event.position)
+		
+		if held_blueprint:
 			if not owner.is_cell_occupied(cellv):
 				held_blueprint.modulate = Color.white
 			else:
@@ -50,11 +73,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			held_blueprint.global_position = map_to_world(cellv)
 			if wiring:
 				held_blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
-	else:
-		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_RIGHT:
-			var cellv := world_to_map(event.position)
+		else:
 			if owner.is_cell_occupied(cellv):
-				owner.remove_entity(cellv)
+				if last_hovered:
+					last_hovered.modulate = Color.white
+				
+				var entity: Node2D = owner.get_entity_at(cellv)
+				entity.modulate = Color.green
+				
+				last_hovered = entity
+			else:
+				if last_hovered:
+					last_hovered.modulate = Color.white
 
 
 func get_powered_neighbors(cellv: Vector2) -> int:
@@ -84,9 +114,9 @@ func replace_neighbor_wires(cellv: Vector2) -> void:
 	
 	for neighbor in neighbors:
 		var object = owner.get_entity_at(neighbor)
-		if object and object.entity is WireEntity:
+		if object and object is WireEntity:
 			var tile_directions := get_powered_neighbors(neighbor)
-			replace_wire(object.entity, tile_directions)
+			replace_wire(object, tile_directions)
 
 
 func replace_wire(wire: Node2D, directions: int) -> void:
@@ -104,7 +134,7 @@ func place_wire(cellv: Vector2, directions: int) -> void:
 	_clear_blueprint()
 
 
-func place_entity(cellv: Vector2, entity: PackedScene) -> void:
+func place_entity(cellv: Vector2) -> void:
 	var new_entity: Node2D = held_blueprint.Entity.instance()
 	add_child(new_entity)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Entities/WireBlueprint.tscn" type="PackedScene" id=6]
 [ext_resource path="res://TempProps.gd" type="Script" id=7]
 [ext_resource path="res://Entities/BatteryBlueprint.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 
 [node name="Simulation" type="Node"]
 script = ExtResource( 4 )
@@ -40,6 +41,25 @@ StirlingEngine = ExtResource( 3 )
 Slab = ExtResource( 5 )
 Wire = ExtResource( 6 )
 Battery = ExtResource( 8 )
+
+[node name="Timer" type="Timer" parent="GameWorld/YSort/PropsMap"]
+wait_time = 0.2
+
+[node name="TextureProgress" type="TextureProgress" parent="GameWorld/YSort/PropsMap"]
+visible = false
+margin_right = 56.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 56, 56 )
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
+value = 100.0
+texture_progress = ExtResource( 9 )
+fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="GameWorld/YSort/PropsMap"]
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )

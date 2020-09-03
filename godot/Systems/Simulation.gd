@@ -36,6 +36,6 @@ func _on_Timer_timeout() -> void:
 
 func get_entity_at(cellv: Vector2) -> Node2D:
 	if tracker.is_cell_occupied(cellv):
-		return tracker.entities[cellv]
+		return tracker.entities[cellv].entity
 	else:
 		return null
