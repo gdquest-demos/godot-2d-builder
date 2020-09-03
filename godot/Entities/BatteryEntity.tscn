@@ -2,32 +2,37 @@
 
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
 [ext_resource path="res://Shared/indicator.png" type="Texture" id=2]
-[ext_resource path="res://Systems/Power/PowerConsumer.gd" type="Script" id=3]
-[ext_resource path="res://Systems/Power/PowerProducer.gd" type="Script" id=4]
+[ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=3]
+[ext_resource path="res://Systems/Power/PowerSource.gd" type="Script" id=4]
 [ext_resource path="res://Entities/battery_indicator.shader" type="Shader" id=5]
 [ext_resource path="res://Entities/BatteryEntity.gd" type="Script" id=6]
 
 [sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
 shader = ExtResource( 5 )
 shader_param/amount = 0.0
 
-[node name="BatteryEntity" type="StaticBody2D"]
+[node name="BatteryEntity" type="StaticBody2D" groups=[
+"power_receivers",
+"power_sources",
+]]
 script = ExtResource( 6 )
+
+[node name="PowerReceiver" type="Node" parent="."]
+script = ExtResource( 3 )
+power_required = 50.0
+
+[node name="PowerSource" type="Node" parent="."]
+script = ExtResource( 4 )
+power_amount = 50.0
+output_direction = 4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -0.25, 38 )
-polygon = PoolVector2Array( -50.112, -12.3131, -50.112, -22.57, -0.0166473, -46.8001, 50.0787, -21.6781, 50.1852, -12.0562, -0.00808716, 12.8532 )
-
-[node name="PowerProducer" type="Node" parent="."]
-script = ExtResource( 4 )
-power_per_tick = 10
-
-[node name="PowerConsumer" type="Node" parent="."]
-script = ExtResource( 3 )
-power_per_tick = 10
+polygon = PoolVector2Array( -50.2676, -14.8475, -49.8217, -24.8071, 0.422333, -47.848, 50.369, -24.2125, 50.5177, -15.2934, 0.125031, 10.5718 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 11 )
+position = Vector2( 0, 8 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 889, 119, 102, 82 )
@@ -35,9 +40,9 @@ region_rect = Rect2( 889, 119, 102, 82 )
 [node name="Indicator" type="Sprite" parent="."]
 modulate = Color( 1, 0, 0, 1 )
 material = SubResource( 1 )
-position = Vector2( -23.385, 8.5 )
+position = Vector2( -23.385, 5.5 )
 scale = Vector2( 0.65, 0.65 )
 texture = ExtResource( 2 )
 region_rect = Rect2( 131, 77, 11, 12 )
-[connection signal="acted" from="PowerProducer" to="." method="_on_PowerProducer_acted"]
-[connection signal="acted" from="PowerConsumer" to="." method="_on_PowerConsumer_acted"]
+[connection signal="received_power" from="PowerReceiver" to="." method="_on_PowerReceiver_received_power"]
+[connection signal="power_updated" from="PowerSource" to="." method="_on_PowerSource_power_updated"]

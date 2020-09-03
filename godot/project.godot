@@ -20,24 +20,14 @@ _global_script_classes=[ {
 "path": "res://Systems/EntityTracker.gd"
 }, {
 "base": "Node",
-"class": "PowerComponent",
+"class": "PowerReceiver",
 "language": "GDScript",
-"path": "res://Systems/Power/PowerComponent.gd"
+"path": "res://Systems/Power/PowerReceiver.gd"
 }, {
-"base": "PowerComponent",
-"class": "PowerConsumer",
+"base": "Node",
+"class": "PowerSource",
 "language": "GDScript",
-"path": "res://Systems/Power/PowerConsumer.gd"
-}, {
-"base": "Reference",
-"class": "PowerGrid",
-"language": "GDScript",
-"path": "res://Systems/Power/PowerGrid.gd"
-}, {
-"base": "PowerComponent",
-"class": "PowerProducer",
-"language": "GDScript",
-"path": "res://Systems/Power/PowerProducer.gd"
+"path": "res://Systems/Power/PowerSource.gd"
 }, {
 "base": "Reference",
 "class": "PowerSystem",
@@ -49,21 +39,31 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Systems/Simulation.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
+"class": "Types",
+"language": "GDScript",
+"path": "res://Shared/Types.gd"
+}, {
+"base": "BlueprintEntity",
 "class": "WireBlueprint",
 "language": "GDScript",
 "path": "res://Entities/WireBlueprint.gd"
+}, {
+"base": "Node2D",
+"class": "WireEntity",
+"language": "GDScript",
+"path": "res://Entities/WireEntity.gd"
 } ]
 _global_script_class_icons={
 "BlueprintEntity": "",
 "EntityTracker": "",
-"PowerComponent": "",
-"PowerConsumer": "",
-"PowerGrid": "",
-"PowerProducer": "",
+"PowerReceiver": "",
+"PowerSource": "",
 "PowerSystem": "",
 "Simulation": "",
-"WireBlueprint": ""
+"Types": "",
+"WireBlueprint": "",
+"WireEntity": ""
 }
 
 [application]
@@ -74,13 +74,13 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://Global/Events.gd"
+Events="*res://Autoload/Events.gd"
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
 [input]

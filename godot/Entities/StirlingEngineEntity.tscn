@@ -4,7 +4,7 @@
 [ext_resource path="res://Shared/machine_parts.svg" type="Texture" id=2]
 [ext_resource path="res://lightning_symbol.png" type="Texture" id=3]
 [ext_resource path="res://Entities/StirlingEngineEntity.gd" type="Script" id=4]
-[ext_resource path="res://Systems/Power/PowerProducer.gd" type="Script" id=5]
+[ext_resource path="res://Systems/Power/PowerSource.gd" type="Script" id=5]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.418182, 1 )
@@ -59,12 +59,14 @@ tracks/1/keys = {
 "values": [ Vector2( 25, -7 ), Vector2( 25, 16 ), Vector2( 25, -7 ) ]
 }
 
-[node name="StirlingEngine" type="StaticBody2D"]
+[node name="StirlingEngine" type="StaticBody2D" groups=[
+"power_sources",
+]]
 script = ExtResource( 4 )
 
-[node name="PowerProducer" type="Node" parent="."]
+[node name="PowerSource" type="Node" parent="."]
 script = ExtResource( 5 )
-power_per_tick = 10
+power_amount = 50.0
 
 [node name="EngineBack" type="Sprite" parent="."]
 position = Vector2( 0, -8 )

@@ -1,5 +1,5 @@
 class_name WireBlueprint
-extends Node2D
+extends BlueprintEntity
 
 
 enum Directions { N = 1, E = 2, S = 4, W = 8 }
@@ -23,6 +23,10 @@ onready var sprite := $Sprite
 
 
 func set_sprite_for_direction(directions: int) -> void:
+	sprite.region_rect = get_region_for_direction(directions)
+
+
+static func get_region_for_direction(directions: int) -> Rect2:
 	if not _directions_data.has(directions):
 		if directions == 1 or directions == 4:
 			directions = 5
@@ -31,7 +35,7 @@ func set_sprite_for_direction(directions: int) -> void:
 		else:
 			directions = 10
 	var direction: Dictionary = _directions_data[directions]
-	sprite.region_rect = direction.region
+	return direction.region
 
 
 static func get_direction_tile_id(directions: int) -> int:

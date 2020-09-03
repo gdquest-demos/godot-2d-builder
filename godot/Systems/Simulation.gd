@@ -2,14 +2,12 @@ class_name Simulation
 extends Node
 
 
-enum { TYPE_ACTOR, TYPE_WIRE }
-
 export var simulation_speed := 1.0 / 30
 
 var tracker := EntityTracker.new()
-onready var power_system := PowerSystem.new(self)
 
 onready var props_map := $GameWorld/YSort/PropsMap
+onready var power_system := PowerSystem.new()
 
 
 func _ready() -> void:
@@ -34,3 +32,10 @@ func convert_to_cell(world_position: Vector2) -> Vector2:
 
 func _on_Timer_timeout() -> void:
 	Events.emit_signal("systems_ticked", simulation_speed)
+
+
+func get_entity_at(cellv: Vector2) -> Node2D:
+	if tracker.is_cell_occupied(cellv):
+		return tracker.entities[cellv]
+	else:
+		return null

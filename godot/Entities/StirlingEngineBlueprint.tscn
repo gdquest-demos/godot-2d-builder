@@ -7,11 +7,11 @@
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[node name="Node2D" type="Node2D"]
+[node name="StirlingEngineBlueprint" type="Node2D"]
 script = ExtResource( 2 )
 Entity = ExtResource( 3 )
 
-[node name="StirlingEngine" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
 position = Vector2( 0, 13.0815 )
 texture = ExtResource( 1 )

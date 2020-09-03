@@ -13,7 +13,7 @@ var held_blueprint: Node2D
 
 var wiring := false
 
-onready var wires: TileMap = get_node("../../WireBlueprints")
+onready var wires := get_node("../../Wires")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -31,12 +31,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				_clear_blueprint()
 			
 	if held_blueprint:
-		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+		if event is InputEventMouseButton and event.pressed and  event.button_index == BUTTON_LEFT:
 			var cellv := world_to_map(event.position)
 			if not owner.is_cell_occupied(cellv):
 				var new_position: Vector2 = event.position
 				if wiring:
-					place_wire(cellv, held_blueprint.get_direction_tile_id(get_powered_neighbors(cellv)))
+					place_wire(cellv, get_powered_neighbors(cellv))
 				else:
 					place_entity(cellv, StirlingEngine)
 				replace_neighbor_wires(cellv)
@@ -50,6 +50,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			held_blueprint.global_position = map_to_world(cellv)
 			if wiring:
 				held_blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
+	else:
+		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_RIGHT:
+			var cellv := world_to_map(event.position)
+			if owner.is_cell_occupied(cellv):
+				owner.remove_entity(cellv)
 
 
 func get_powered_neighbors(cellv: Vector2) -> int:
@@ -63,7 +68,7 @@ func get_powered_neighbors(cellv: Vector2) -> int:
 	var direction := 0
 	
 	for neighbor in neighbors:
-		if wires.get_cellv(neighbor.cellv) != -1 or owner.is_cell_occupied(neighbor.cellv):
+		if owner.is_cell_occupied(neighbor.cellv):
 			direction |= neighbor.direction
 	
 	return direction
@@ -78,14 +83,24 @@ func replace_neighbor_wires(cellv: Vector2) -> void:
 	]
 	
 	for neighbor in neighbors:
-		if wires.get_cellv(neighbor) > -1:
+		var object = owner.get_entity_at(neighbor)
+		if object and object.entity is WireEntity:
 			var tile_directions := get_powered_neighbors(neighbor)
-			place_wire(neighbor, WireBlueprint.get_direction_tile_id(tile_directions))
+			replace_wire(object.entity, tile_directions)
 
 
-func place_wire(cellv: Vector2, wire_tile: int) -> void:
-	wires.set_cellv(cellv, wire_tile)
-	owner.place_entity(wire_tile, cellv, Simulation.TYPE_WIRE)
+func replace_wire(wire: Node2D, directions: int) -> void:
+	wire.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
+
+
+func place_wire(cellv: Vector2, directions: int) -> void:
+	var new_wire: Node2D = held_blueprint.Entity.instance()
+	wires.add_child(new_wire)
+	new_wire.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
+	
+	new_wire.global_position = map_to_world(cellv)
+	
+	owner.place_entity(new_wire, cellv, Types.TYPE_ACTOR)
 	_clear_blueprint()
 
 
@@ -95,7 +110,7 @@ func place_entity(cellv: Vector2, entity: PackedScene) -> void:
 	
 	new_entity.global_position = map_to_world(cellv)
 	
-	owner.place_entity(new_entity, cellv, Simulation.TYPE_ACTOR)
+	owner.place_entity(new_entity, cellv, Types.TYPE_ACTOR)
 	
 	_clear_blueprint()
 

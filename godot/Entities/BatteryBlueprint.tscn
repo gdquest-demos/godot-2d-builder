@@ -13,7 +13,7 @@ Entity = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
-position = Vector2( 0, 11 )
+position = Vector2( 0, 8 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 889, 119, 102, 82 )
