@@ -75,6 +75,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Events="*res://Autoload/Events.gd"
+Log="*res://Autoload/Log.gd"
 
 [display]
 

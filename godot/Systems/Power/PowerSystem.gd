@@ -163,7 +163,7 @@ func _on_entity_placed(entity, cellv: Vector2) -> void:
 
 
 func _on_entity_removed(entity, cellv: Vector2) -> void:
-	power_sources.erase(cellv)
-	power_receivers.erase(cellv)
-	power_movers.erase(cellv)
+	var _result := power_sources.erase(cellv)
+	_result = power_receivers.erase(cellv)
+	_result = power_movers.erase(cellv)
 	_retrace_paths()

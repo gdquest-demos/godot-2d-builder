@@ -20,11 +20,11 @@ script = ExtResource( 3 )
 
 [node name="PowerReceiver" type="Node" parent="."]
 script = ExtResource( 4 )
-power_required = 50.0
+power_required = 200.0
 
 [node name="PowerSource" type="Node" parent="."]
 script = ExtResource( 6 )
-power_amount = 50.0
+power_amount = 200.0
 output_direction = 4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

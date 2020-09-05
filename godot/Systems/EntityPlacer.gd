@@ -16,22 +16,21 @@ export var Slab: PackedScene
 export var Wire: PackedScene
 export var Battery: PackedScene
 
-
 var held_blueprint: Node2D
 
 var wiring := false
 var last_hovered: Node2D = null
 
 onready var wires := get_node("../../Wires")
-onready var timer := $Timer
-onready var indicator := $TextureProgress
-onready var tween := $Tween
+onready var deconstruct_timer := $Timer
+onready var deconstruct_indicator := $TextureProgress
+onready var deconstruct_tween := $Tween
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouse:
-		timer.stop()
-		indicator.hide()
+		deconstruct_timer.stop()
+		deconstruct_indicator.hide()
 	
 	# TODO: Replace with inventory/quickbar setup
 	if event is InputEventKey:
@@ -53,7 +52,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Place blueprinted entities
 		if held_blueprint and event.button_index == BUTTON_LEFT:
 			if not owner.is_cell_occupied(cellv):
-				var new_position: Vector2 = event.position
 				if wiring:
 					place_entity(cellv, get_powered_neighbors(cellv))
 				else:
@@ -63,17 +61,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Do hold-and-release entity removal
 		elif not held_blueprint and event.button_index == BUTTON_RIGHT:
 			if owner.is_cell_occupied(cellv):
-				indicator.show()
-				indicator.rect_position = event.position
+				deconstruct_indicator.show()
+				deconstruct_indicator.rect_position = event.position
 				
-				tween.interpolate_property(indicator, "value", 0, 100, 0.2)
-				tween.start()
-				timer.start()
-				yield(timer, "timeout")
+				deconstruct_tween.interpolate_property(deconstruct_indicator, "value", 0, 100, 0.2)
+				deconstruct_tween.start()
+				deconstruct_timer.start()
+				yield(deconstruct_timer, "timeout")
 				
 				owner.remove_entity(cellv)
 				replace_neighbor_wires(cellv)
-				indicator.hide()
+				deconstruct_indicator.hide()
 
 	elif event is InputEventMouseMotion:
 		var cellv := world_to_map(event.position)
