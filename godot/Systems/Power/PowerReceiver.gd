@@ -1,6 +1,7 @@
 class_name PowerReceiver
 extends Node
 
+#warning-ignore: unused_signal
 signal received_power(amount, delta)
 
 

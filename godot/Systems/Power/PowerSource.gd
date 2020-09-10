@@ -1,7 +1,7 @@
 class_name PowerSource
 extends Node
 
-
+#warning-ignore: unused_signal
 signal power_updated(power_draw, delta)
 
 

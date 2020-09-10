@@ -10,13 +10,16 @@ export var simulation_speed := 1.0 / 30
 var tracker := EntityTracker.new()
 
 # The tilemap used to convert positions into indexible vectors
-onready var props_map := $GameWorld/YSort/EntityPlacer
+onready var entity_placer := $GameWorld/YSort/EntityPlacer
 # System to update power and keep track of power-related entities
 onready var power_system := PowerSystem.new()
+
+onready var gui := $GUI
 
 
 func _ready() -> void:
 	$Timer.start(simulation_speed)
+	entity_placer.setup(gui.drag_preview)
 
 
 func place_entity(entity, cellv: Vector2, role: int) -> void:
@@ -32,7 +35,7 @@ func is_cell_occupied(cellv: Vector2) -> bool:
 
 
 func convert_to_cell(world_position: Vector2) -> Vector2:
-	return props_map.world_to_map(world_position)
+	return entity_placer.world_to_map(world_position)
 
 
 func _on_Timer_timeout() -> void:

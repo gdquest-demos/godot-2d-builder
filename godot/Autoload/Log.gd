@@ -10,7 +10,7 @@ var file: File
 func _ready() -> void:
 	if ENABLED:
 		file = File.new()
-		file.open("res://log.txt", File.WRITE)
+		var _result := file.open("res://log.txt", File.WRITE)
 
 
 func _exit_tree() -> void:

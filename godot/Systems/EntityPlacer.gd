@@ -16,7 +16,7 @@ export var Slab: PackedScene
 export var Wire: PackedScene
 export var Battery: PackedScene
 
-var held_blueprint: Node2D
+var drag_preview: Control
 
 var wiring := false
 var last_hovered: Node2D = null
@@ -32,25 +32,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		deconstruct_timer.stop()
 		deconstruct_indicator.hide()
 	
-	# TODO: Replace with inventory/quickbar setup
-	if event is InputEventKey:
-		match event.scancode:
-			KEY_1:
-				_replace_blueprint(StirlingEngine)
-			KEY_2:
-				_replace_blueprint(Slab)
-			KEY_3:
-				_replace_blueprint(Wire)
-			KEY_4:
-				_replace_blueprint(Battery)
-			KEY_Q:
-				_clear_blueprint()
-	
 	if event is InputEventMouseButton and event.pressed:
 		var cellv := world_to_map(event.position)
 		
 		# Place blueprinted entities
-		if held_blueprint and event.button_index == BUTTON_LEFT:
+		if drag_preview.blueprint and event.button_index == BUTTON_LEFT:
 			if not owner.is_cell_occupied(cellv):
 				if wiring:
 					place_entity(cellv, get_powered_neighbors(cellv))
@@ -59,7 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				replace_neighbor_wires(cellv)
 
 		# Do hold-and-release entity removal
-		elif not held_blueprint and event.button_index == BUTTON_RIGHT:
+		elif not drag_preview.blueprint and event.button_index == BUTTON_RIGHT:
 			if owner.is_cell_occupied(cellv):
 				deconstruct_indicator.show()
 				deconstruct_indicator.rect_position = event.position
@@ -77,14 +63,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		var cellv := world_to_map(event.position)
 		
 		# Move blueprint
-		if held_blueprint:
+		if drag_preview.blueprint:
+			drag_preview.blueprint.scale = Vector2.ONE
+
 			if not owner.is_cell_occupied(cellv):
-				held_blueprint.modulate = Color.white
+				drag_preview.blueprint.modulate = Color.white
 			else:
-				held_blueprint.modulate = Color.red
-			held_blueprint.global_position = map_to_world(cellv)
+				drag_preview.blueprint.modulate = Color.red
+			drag_preview.blueprint.global_position = map_to_world(cellv)
 			if wiring:
-				held_blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
+				drag_preview.blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
 		# Hover entities
 		else:
 			if owner.is_cell_occupied(cellv):
@@ -98,6 +86,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				if last_hovered:
 					last_hovered.modulate = Color.white
+
+
+func setup(blueprint_preview: Control) -> void:
+	drag_preview = blueprint_preview
 
 
 # Gets neighbors that are in the power groups around the given cell
@@ -135,7 +127,7 @@ func replace_wire(wire: Node2D, directions: int) -> void:
 
 # Places an entity or wire and informs the simulation
 func place_entity(cellv: Vector2, directions := 0) -> void:
-	var new_entity: Node2D = held_blueprint.Entity.instance()
+	var new_entity: Node2D = drag_preview.blueprint.Entity.instance()
 	if wiring:
 		wires.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
@@ -145,33 +137,12 @@ func place_entity(cellv: Vector2, directions := 0) -> void:
 	new_entity.global_position = map_to_world(cellv)
 	
 	owner.place_entity(new_entity, cellv, Types.TYPE_ACTOR)
-	_clear_blueprint()
-
-
-func _clear_blueprint() -> void:
-	if held_blueprint:
-		held_blueprint.queue_free()
-
-
-func _set_blueprint(entity: PackedScene) -> void:
-	held_blueprint = entity.instance()
-	add_child(held_blueprint)
-	
-	var cellv := world_to_map(get_global_mouse_position())
-	held_blueprint.global_position = map_to_world(cellv)
-	
-	wiring = entity == Wire
-	if wiring:
-		held_blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
-	if not owner.is_cell_occupied(cellv):
-		held_blueprint.modulate = Color.white
+	if drag_preview.blueprint.stack_count == 1:
+		drag_preview.destroy_blueprint()
 	else:
-		held_blueprint.modulate = Color.red
+		drag_preview.blueprint.stack_count -= 1
+		drag_preview.update_label()
 
-
-func _replace_blueprint(entity: PackedScene) -> void:
-	_clear_blueprint()
-	_set_blueprint(entity)
 
 
 func _snap_to_map(world_position: Vector2) -> Vector2:

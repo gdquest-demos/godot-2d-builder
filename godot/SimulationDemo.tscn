@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
 [ext_resource path="res://Entities/Blueprints/BatteryBlueprint.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
+[ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
 
 [node name="Simulation" type="Node"]
 script = ExtResource( 4 )
@@ -66,4 +67,6 @@ position = Vector2( 722.614, 595.161 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.033
+
+[node name="GUI" parent="." instance=ExtResource( 10 )]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
