@@ -18,7 +18,6 @@ export var Battery: PackedScene
 
 var drag_preview: Control
 
-var wiring := false
 var last_hovered: Node2D = null
 
 onready var wires := get_node("../../Wires")
@@ -38,7 +37,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Place blueprinted entities
 		if drag_preview.blueprint and event.button_index == BUTTON_LEFT:
 			if not owner.is_cell_occupied(cellv):
-				if wiring:
+				if drag_preview.blueprint.id == "wire":
 					place_entity(cellv, get_powered_neighbors(cellv))
 				else:
 					place_entity(cellv)
@@ -71,7 +70,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				drag_preview.blueprint.modulate = Color.red
 			drag_preview.blueprint.global_position = map_to_world(cellv)
-			if wiring:
+			if drag_preview.blueprint.id == "wire":
 				drag_preview.blueprint.set_sprite_for_direction(get_powered_neighbors(cellv))
 		# Hover entities
 		else:
@@ -128,7 +127,7 @@ func replace_wire(wire: Node2D, directions: int) -> void:
 # Places an entity or wire and informs the simulation
 func place_entity(cellv: Vector2, directions := 0) -> void:
 	var new_entity: Node2D = drag_preview.blueprint.Entity.instance()
-	if wiring:
+	if drag_preview.blueprint.id == "wire":
 		wires.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 	else:

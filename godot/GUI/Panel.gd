@@ -64,6 +64,7 @@ func _set_held_item(value: BlueprintEntity) -> void:
 		add_child(held_item)
 		move_child(held_item, 0)
 		held_item.position = rect_size / 2
+		held_item.scale = Vector2.ONE * 0.5
 	_update_label()
 	if not silent:
 		emit_signal("held_item_changed")

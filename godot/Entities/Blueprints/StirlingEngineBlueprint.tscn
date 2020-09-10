@@ -10,6 +10,7 @@ blend_mode = 1
 [node name="StirlingEngineBlueprint" type="Node2D"]
 script = ExtResource( 2 )
 Entity = ExtResource( 3 )
+id = "stirling_engine"
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
