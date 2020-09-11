@@ -10,14 +10,6 @@ var silent := false
 onready var count_label := $Label
 
 
-func _ready() -> void:
-	if get_child_count() > 1:
-		held_item = get_child(0)
-		if held_item.name == "WireBlueprint":
-			held_item.stack_count = 64
-		_update_label()
-
-
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		if owner.held_item:

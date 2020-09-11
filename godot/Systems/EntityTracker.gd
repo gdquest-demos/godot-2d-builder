@@ -17,7 +17,7 @@ func place_entity(entity, cellv: Vector2, role: int) -> void:
 func remove_entity(cellv: Vector2) -> void:
 	if entities.has(cellv):
 		var entity = entities[cellv]
-		entities.erase(cellv)
+		var _result := entities.erase(cellv)
 		Events.emit_signal("entity_removed", entity, cellv)
 		entity.entity.queue_free()
 

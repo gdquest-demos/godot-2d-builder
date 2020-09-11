@@ -23,9 +23,9 @@ var receivers_provided := {}
 
 
 func _init() -> void:
-	Events.connect("entity_placed", self, "_on_entity_placed")
-	Events.connect("entity_removed", self, "_on_entity_removed")
-	Events.connect("systems_ticked", self, "_on_systems_ticked")
+	var _result := Events.connect("entity_placed", self, "_on_entity_placed")
+	_result = Events.connect("entity_removed", self, "_on_entity_removed")
+	_result = Events.connect("systems_ticked", self, "_on_systems_ticked")
 
 
 func _retrace_paths() -> void:
@@ -162,7 +162,7 @@ func _on_entity_placed(entity, cellv: Vector2) -> void:
 	_retrace_paths()
 
 
-func _on_entity_removed(entity, cellv: Vector2) -> void:
+func _on_entity_removed(_entity, cellv: Vector2) -> void:
 	var _result := power_sources.erase(cellv)
 	_result = power_receivers.erase(cellv)
 	_result = power_movers.erase(cellv)
