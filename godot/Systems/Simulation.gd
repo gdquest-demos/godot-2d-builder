@@ -20,7 +20,7 @@ onready var _gui := $GUI
 
 func _ready() -> void:
 	$Timer.start(simulation_speed)
-	_entity_placer.setup(_gui.drag_preview)
+	_entity_placer.setup(self, $GameWorld/Wires, $GUI/DragPreview)
 
 
 func place_entity(entity, cellv: Vector2) -> void:
