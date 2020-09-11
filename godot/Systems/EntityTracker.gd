@@ -1,5 +1,5 @@
-# Sub class of the simulation that keeps track of all entities and where they are
-# using dictionary keys, and raises notifications when this changes.
+# Sub class of the simulation that keeps track of all entities and their location
+# using dictionary keys. Emits signals when entities are placed or removed.
 class_name EntityTracker
 extends Reference
 
