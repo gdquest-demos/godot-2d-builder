@@ -5,13 +5,15 @@ extends HBoxContainer
 
 var held_item: BlueprintEntity setget _set_held_item, _get_held_item
 var drag_preview: Control
-
 var panels := []
 
 
 func _ready() -> void:
 	for container in get_children():
-		panels.push_back(container)
+		if container is InventoryPanel:
+			panels.push_back(container)
+		else:
+			panels.push_back(container.get_child(1))
 
 
 func setup(_drag_preview: Control) -> void:

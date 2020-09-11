@@ -5,14 +5,6 @@ class_name PowerSystem
 extends Reference
 
 
-const NEIGHBORS := {
-	Types.Direction.RIGHT: Vector2.RIGHT,
-	Types.Direction.DOWN: Vector2.DOWN,
-	Types.Direction.LEFT: Vector2.LEFT,
-	Types.Direction.UP: Vector2.UP
-}
-
-
 var power_sources := {}
 var power_receivers := {}
 var power_movers := {}
@@ -22,13 +14,14 @@ var paths := []
 var power_left := 0.0
 var cells_travelled := []
 
-var receivers_provided := {}
+var receivers_already_provided := {}
 
 
 func _init() -> void:
-	var _result := Events.connect("entity_placed", self, "_on_entity_placed")
-	_result = Events.connect("entity_removed", self, "_on_entity_removed")
-	_result = Events.connect("systems_ticked", self, "_on_systems_ticked")
+	Log.log_message("Power system init")
+	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"))
+	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"))
+	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"))
 
 
 func _retrace_paths() -> void:
@@ -56,30 +49,16 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 	var receivers := _find_neighbors_in(cellv, power_receivers, direction)
 	for receiver in receivers:
 		if not receiver in cells_travelled:
-			direction = 0
-			if receiver.x < cellv.x:
-				direction |= Types.Direction.LEFT
-			elif receiver.x > cellv.x:
-				direction |= Types.Direction.RIGHT
-			elif receiver.y < cellv.y:
-				direction |= Types.Direction.UP
-			elif receiver.y > cellv.y:
-				direction |= Types.Direction.DOWN
+			direction = _combine_directions(receiver, cellv)
 			
 			var power_receiver: PowerReceiver = power_receivers[receiver]
-			if direction & Types.Direction.RIGHT != 0:
-				if power_receiver.input_direction & Types.Direction.LEFT == 0:
-					print(power_receiver.input_direction)
-					continue
-			elif direction & Types.Direction.DOWN != 0:
-				if power_receiver.input_direction & Types.Direction.UP == 0:
-					continue
-			elif direction & Types.Direction.LEFT != 0:
-				if power_receiver.input_direction & Types.Direction.RIGHT == 0:
-					continue
-			elif direction & Types.Direction.UP != 0:
-				if power_receiver.input_direction & Types.Direction.DOWN == 0:
-					continue
+			if (
+				(direction & Types.Direction.RIGHT != 0 and power_receiver.input_direction & Types.Direction.LEFT == 0) or
+				(direction & Types.Direction.DOWN != 0 and power_receiver.input_direction & Types.Direction.UP == 0) or
+				(direction & Types.Direction.LEFT != 0 and power_receiver.input_direction & Types.Direction.RIGHT == 0) or
+				(direction & Types.Direction.UP != 0 and power_receiver.input_direction & Types.Direction.DOWN == 0)
+			):
+				continue
 			new_path.push_back(receiver)
 	
 	var movers := _find_neighbors_in(cellv, power_movers)
@@ -90,11 +69,26 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 	return new_path
 
 
+func _combine_directions(receiver: Vector2, cellv: Vector2) -> int:
+	var direction := 0
+
+	if receiver.x < cellv.x:
+		direction |= Types.Direction.LEFT
+	elif receiver.x > cellv.x:
+		direction |= Types.Direction.RIGHT
+	elif receiver.y < cellv.y:
+		direction |= Types.Direction.UP
+	elif receiver.y > cellv.y:
+		direction |= Types.Direction.DOWN
+	
+	return direction
+
+
 func _find_neighbors_in(cellv: Vector2, collection: Dictionary, output_directions: int = 15) -> Array:
 	var neighbors := []
-	for neighbor in NEIGHBORS:
+	for neighbor in Types.NEIGHBORS.keys():
 		if neighbor & output_directions != 0:
-			var key: Vector2 = cellv + NEIGHBORS[neighbor]
+			var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
 			if collection.has(key):
 				neighbors.push_back(key)
 	
@@ -102,7 +96,7 @@ func _find_neighbors_in(cellv: Vector2, collection: Dictionary, output_direction
 
 
 func _on_systems_ticked(delta: float) -> void:
-	receivers_provided.clear()
+	receivers_already_provided.clear()
 	
 	for path in paths:
 		var power_source: PowerSource = power_sources[path[0]]
@@ -118,26 +112,28 @@ func _on_systems_ticked(delta: float) -> void:
 				continue
 			
 			var power_receiver: PowerReceiver = power_receivers[cell]
-			var required := power_receiver.get_effective_power()
+			var power_required := power_receiver.get_effective_power()
 			
-			if receivers_provided.has(cell):
-				var receiver_amount: float = receivers_provided[cell]
-				if receiver_amount >= required:
+			# Keep track of the total amount of power each receiver has already
+			# received, in case of multiple power sources. Subtract the power
+			# the receiver still needs so we don't draw more than necessary.
+			if receivers_already_provided.has(cell):
+				var receiver_total: float = receivers_already_provided[cell]
+				if receiver_total >= power_required:
 					continue
 				else:
-					required -= receiver_amount
+					power_required -= receiver_total
 			
-			power_draw += required
-			
-			power_receiver.emit_signal("received_power", min(available_power, required), delta)
+			power_draw += power_required
+			power_receiver.emit_signal("received_power", min(available_power, power_required), delta)
 
-			if not receivers_provided.has(cell):
-				receivers_provided[cell] = min(available_power, required)
+			if not receivers_already_provided.has(cell):
+				receivers_already_provided[cell] = min(available_power, power_required)
 			else:
-				receivers_provided[cell] += min(available_power, required)
+				receivers_already_provided[cell] += min(available_power, power_required)
 			
-			available_power -= required
-		
+			available_power -= power_required
+
 		if power_draw > 0:
 			power_source.emit_signal("power_updated", power_draw, delta)
 
@@ -159,17 +155,28 @@ func _get_power_receiver_from(entity: Node) -> PowerReceiver:
 
 
 func _on_entity_placed(entity, cellv: Vector2) -> void:
+	var retrace := false
+
 	if entity.is_in_group("power_sources"):
 		power_sources[cellv] = _get_power_source_from(entity)
+		retrace = true
+
 	if entity.is_in_group("power_receivers"):
 		power_receivers[cellv] = _get_power_receiver_from(entity)
+		retrace = true
+
 	if entity.is_in_group("power_movers"):
 		power_movers[cellv] = entity
-	_retrace_paths()
+		retrace = true
+
+	if retrace:
+		_retrace_paths()
 
 
 func _on_entity_removed(_entity, cellv: Vector2) -> void:
-	var _result := power_sources.erase(cellv)
-	_result = power_receivers.erase(cellv)
-	_result = power_movers.erase(cellv)
-	_retrace_paths()
+	var retrace := power_sources.erase(cellv)
+	retrace = retrace or power_receivers.erase(cellv)
+	retrace = retrace or power_movers.erase(cellv)
+
+	if retrace:
+		_retrace_paths()

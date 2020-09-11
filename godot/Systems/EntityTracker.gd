@@ -1,5 +1,5 @@
-# Sub class of the simulation that keeps track of all entities and where they are, 
-# and raises notifications when they change.
+# Sub class of the simulation that keeps track of all entities and where they are
+# using dictionary keys, and raises notifications when this changes.
 class_name EntityTracker
 extends Reference
 
@@ -7,12 +7,11 @@ extends Reference
 var entities := {}
 
 
-func place_entity(entity, cellv: Vector2, role: int) -> void:
+func place_entity(entity, cellv: Vector2) -> void:
 	if entities.has(cellv):
 		return
 	
-	if role == Types.TYPE_ACTOR:
-		entities[cellv] = {"entity": entity, "type": role}
+	entities[cellv] = {"entity": entity}
 	
 	Events.emit_signal("entity_placed", entity, cellv)
 

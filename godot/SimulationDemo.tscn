@@ -69,4 +69,5 @@ position = Vector2( 722.614, 595.161 )
 wait_time = 0.033
 
 [node name="GUI" parent="." instance=ExtResource( 10 )]
+debug_items = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 6 ) ]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

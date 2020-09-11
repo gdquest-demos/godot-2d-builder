@@ -352,13 +352,3 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="held_item_changed" from="VBoxContainer/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer2/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer3/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer4/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer5/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer6/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer7/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer8/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer9/Panel" to="." method="_on_Panel_held_item_changed"]
-[connection signal="held_item_changed" from="VBoxContainer10/Panel" to="." method="_on_Panel_held_item_changed"]

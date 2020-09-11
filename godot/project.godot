@@ -14,10 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entities/BlueprintEntity.gd"
 }, {
+"base": "StaticBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Entities/Entities/Entity.gd"
+}, {
 "base": "Reference",
 "class": "EntityTracker",
 "language": "GDScript",
 "path": "res://Systems/EntityTracker.gd"
+}, {
+"base": "Panel",
+"class": "InventoryPanel",
+"language": "GDScript",
+"path": "res://GUI/Inventory/Panel.gd"
 }, {
 "base": "Node",
 "class": "PowerReceiver",
@@ -56,7 +66,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BlueprintEntity": "",
+"Entity": "",
 "EntityTracker": "",
+"InventoryPanel": "",
 "PowerReceiver": "",
 "PowerSource": "",
 "PowerSystem": "",
@@ -169,6 +181,11 @@ quickbar_0={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":48,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777350,"unicode":0,"echo":false,"script":null)
+ ]
+}
+rotate_blueprint={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
 

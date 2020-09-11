@@ -1,3 +1,5 @@
+# Specialized blueprint. Holds and set tile/region information, as wires must
+# connect to neighbors.
 class_name WireBlueprint
 extends BlueprintEntity
 

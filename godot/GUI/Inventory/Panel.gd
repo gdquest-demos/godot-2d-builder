@@ -1,9 +1,7 @@
 # Represents a slot in which an item can be held. Inventory is kept track of 
 # through being a child of the panel.
+class_name InventoryPanel
 extends Panel
-
-
-signal held_item_changed
 
 
 var held_item: BlueprintEntity setget _set_held_item
@@ -30,37 +28,28 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items()
 					elif event.button_index == BUTTON_RIGHT:
 						_stack_items(true)
+
 				else:
 					if event.button_index == BUTTON_LEFT:
 						_swap_items()
 			else:
 				if event.button_index == BUTTON_LEFT:
 					_grab_item()
+
 				elif event.button_index == BUTTON_RIGHT:
 					if owner.held_item.stack_count > 1:
 						_grab_split_items()
 					else:
 						_grab_item()
+
 		elif held_item:
 			if event.button_index == BUTTON_LEFT:
 				_release_item()
 			elif event.button_index == BUTTON_RIGHT:
-				var stack_is_one := held_item.stack_count == 1
-				
-				if stack_is_one:
+				if held_item.stack_count == 1:
 					_release_item()
 				else:
 					_split_items()
-
-
-# Muffles signal emission
-func begin_silence() -> void:
-	silent = true
-
-
-# Enables signal emission
-func end_silence() -> void:
-	silent = false
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
@@ -73,9 +62,6 @@ func _set_held_item(value: BlueprintEntity) -> void:
 		move_child(held_item, 0)
 		held_item.make_inventory()
 	_update_label()
-
-	if not silent:
-		emit_signal("held_item_changed")
 
 
 func _update_label() -> void:
@@ -100,9 +86,6 @@ func _stack_items(split := false) -> void:
 
 	held_item.stack_count += count
 	_update_label()
-
-	if not silent:
-		emit_signal("held_item_changed")
 
 
 func _swap_items() -> void:
@@ -135,9 +118,6 @@ func _split_items() -> void:
 
 	owner.held_item = new_stack
 	_update_label()
-
-	if not silent:
-		emit_signal("held_item_changed")
 
 
 func _grab_split_items() -> void:

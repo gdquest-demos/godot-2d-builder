@@ -1,5 +1,5 @@
 # Central simulation owner. Delegates tasks and triggers system updates.
-# Its main purpose is as a central gateway for all world entities, mirroring
+# Its main purpose is as a central gateway for all world entities, routing
 # calls to sub classes and holding settings and config.
 class_name Simulation
 extends Node
@@ -24,8 +24,8 @@ func _ready() -> void:
 	entity_placer.setup(gui.drag_preview)
 
 
-func place_entity(entity, cellv: Vector2, role: int) -> void:
-	tracker.place_entity(entity, cellv, role)
+func place_entity(entity, cellv: Vector2) -> void:
+	tracker.place_entity(entity, cellv)
 
 
 func remove_entity(cellv: Vector2) -> void:
