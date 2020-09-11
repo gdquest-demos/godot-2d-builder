@@ -1,5 +1,8 @@
+# Sub class of the simulation that keeps track of all entities and where they are, 
+# and raises notifications when they change.
 class_name EntityTracker
 extends Reference
+
 
 var entities := {}
 

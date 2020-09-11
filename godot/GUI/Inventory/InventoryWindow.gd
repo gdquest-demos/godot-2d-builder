@@ -1,21 +1,21 @@
+# Class to hold and setup bars that are part of the inventory window.
 extends Control
 
 
-signal quickbar_changed
-
-
+onready var inventories := $MarginContainer/WindowBack/Window/Inventories
 var held_item: BlueprintEntity setget _set_held_item, _get_held_item
 var drag_preview: Control
-
-onready var quickbar := $MarginContainer/WindowBack/Window/Inventories/Quickbar
 
 
 func setup(_drag_preview: Control) -> void:
 	drag_preview = _drag_preview
-	quickbar.setup(drag_preview)
-	$MarginContainer/WindowBack/Window/Inventories/Inventory1.setup(drag_preview)
-	$MarginContainer/WindowBack/Window/Inventories/Inventory2.setup(drag_preview)
-	$MarginContainer/WindowBack/Window/Inventories/Inventory3.setup(drag_preview)
+	for bar in inventories.get_children():
+		bar.setup(drag_preview)
+
+
+func claim_quickbar(quickbar: Control) -> void:
+	quickbar.get_parent().remove_child(quickbar)
+	inventories.add_child(quickbar)
 
 
 func destroy_held_item() -> void:
@@ -41,7 +41,3 @@ func _get_held_item() -> BlueprintEntity:
 		return drag_preview.blueprint
 	else:
 		return null
-
-
-func _on_Quickbar_quickbar_changed() -> void:
-	emit_signal("quickbar_changed")

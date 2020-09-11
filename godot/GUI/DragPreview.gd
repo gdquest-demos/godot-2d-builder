@@ -1,9 +1,9 @@
+# A control that follows the mouse at all times to control the position of the
+# blueprint sprite.
 extends Control
 
 
 var blueprint: BlueprintEntity setget _set_blueprint
-
-var disable_follow := false
 
 onready var count_label := $Label
 
@@ -13,10 +13,9 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not disable_follow and event is InputEventMouseMotion:
+	if event is InputEventMouseMotion:
 		if blueprint:
-			blueprint.scale = Vector2.ONE * 0.5
-			blueprint.position = Vector2(25, 25)
+			blueprint.make_inventory()
 		rect_global_position = event.global_position
 
 

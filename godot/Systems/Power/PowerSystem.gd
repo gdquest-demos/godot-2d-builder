@@ -1,3 +1,6 @@
+# Holds references to entities in the world, and a series of paths that go from power sources
+# to power receivers. Every system tick, it sends power from the sources to the
+# receivers in order.
 class_name PowerSystem
 extends Reference
 
@@ -38,6 +41,9 @@ func _retrace_paths() -> void:
 		paths.push_back(path)
 
 
+# Recursively trace a path from the source cell outwards, skipping already
+# visited cells, only going through cells that has been recognized by the
+# power system.
 func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 	var new_path := path
 	cells_travelled.push_back(cellv)

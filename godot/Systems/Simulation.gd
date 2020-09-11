@@ -1,4 +1,6 @@
 # Central simulation owner. Delegates tasks and triggers system updates.
+# Its main purpose is as a central gateway for all world entities, mirroring
+# calls to sub classes and holding settings and config.
 class_name Simulation
 extends Node
 

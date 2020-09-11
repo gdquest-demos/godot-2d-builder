@@ -1,8 +1,6 @@
+# Class that represents a bar of inventory slots. Transmits blueprint events up
+# to the preview controller.
 extends HBoxContainer
-
-
-#warning-ignore: unused_signal
-signal quickbar_changed
 
 
 var held_item: BlueprintEntity setget _set_held_item, _get_held_item

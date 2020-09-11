@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://GUI/Panel.gd" type="Script" id=1]
+[ext_resource path="res://GUI/Inventory/Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/BagnardSans.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://GUI/Quickbar.gd" type="Script" id=3]
+[ext_resource path="res://GUI/Inventory/InventoryBar.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18

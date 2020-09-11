@@ -1,4 +1,4 @@
-# Handles user input and places entities, controls blueprints, and controls how they react.
+# Handles user input and places entities in the world.
 extends TileMap
 
 
@@ -17,7 +17,6 @@ export var Wire: PackedScene
 export var Battery: PackedScene
 
 var drag_preview: Control
-
 var last_hovered: Node2D = null
 
 onready var wires := get_node("../../Wires")
@@ -63,7 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		# Move blueprint
 		if drag_preview.blueprint:
-			drag_preview.blueprint.scale = Vector2.ONE
+			drag_preview.blueprint.make_world()
 
 			if not owner.is_cell_occupied(cellv):
 				drag_preview.blueprint.modulate = Color.white
