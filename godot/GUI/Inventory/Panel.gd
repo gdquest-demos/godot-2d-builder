@@ -6,21 +6,16 @@ extends Panel
 
 var held_item: BlueprintEntity setget _set_held_item
 var silent := false
+var gui: Control
 
 onready var count_label := $Label
 
 
-# -- TODO: DEBUG CODE --
-func _ready() -> void:
-	if get_child_count() > 1:
-		held_item = get_child(0)
-
-
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		if owner.held_item:
+		if gui.blueprint:
 			if held_item:
-				var item_is_same_type: bool = held_item.id == owner.held_item.id
+				var item_is_same_type: bool = held_item.id == gui.blueprint.id
 				var stack_has_space: bool = held_item.stack_count < held_item.stack_size
 				
 				if item_is_same_type and stack_has_space:
@@ -37,7 +32,7 @@ func _gui_input(event: InputEvent) -> void:
 					_grab_item()
 
 				elif event.button_index == BUTTON_RIGHT:
-					if owner.held_item.stack_count > 1:
+					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
 						_grab_item()
@@ -50,6 +45,10 @@ func _gui_input(event: InputEvent) -> void:
 					_release_item()
 				else:
 					_split_items()
+
+
+func setup(_gui: Control) -> void:
+	gui = _gui
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
@@ -76,10 +75,10 @@ func _update_label() -> void:
 
 
 func _stack_items(split := false) -> void:
-	var count: int = owner.held_item.stack_count / (2 if split else 1)
+	var count: int = gui.blueprint.stack_count / (2 if split else 1)
 
 	if split:
-		owner.held_item.stack_count -= count
+		gui.blueprint.stack_count -= count
 		owner._update_label()
 	else:
 		owner.destroy_held_item()
@@ -89,24 +88,24 @@ func _stack_items(split := false) -> void:
 
 
 func _swap_items() -> void:
-	var item: BlueprintEntity = owner.held_item
-	owner.held_item = null
+	var item: BlueprintEntity = gui.blueprint
+	gui.blueprint = null
 
 	var current_item := held_item
 	self.held_item = item
-	owner.held_item = current_item
+	gui.blueprint = current_item
 
 
 func _grab_item() -> void:
-	var item: BlueprintEntity = owner.held_item
-	owner.held_item = null
+	var item: BlueprintEntity = gui.blueprint
+	gui.blueprint = null
 	self.held_item = item
 
 
 func _release_item() -> void:
 	var item := held_item
 	self.held_item = null
-	owner.held_item = item
+	gui.blueprint = item
 
 
 func _split_items() -> void:
@@ -116,16 +115,16 @@ func _split_items() -> void:
 	new_stack.stack_count = count
 	held_item.stack_count -= count
 
-	owner.held_item = new_stack
+	gui.blueprint = new_stack
 	_update_label()
 
 
 func _grab_split_items() -> void:
-	var count: int = owner.held_item.stack_count/2
+	var count: int = gui.blueprint.stack_count/2
 
-	var new_stack: BlueprintEntity = owner.held_item.duplicate()
+	var new_stack: BlueprintEntity = gui.blueprint.duplicate()
 	new_stack.stack_count = count
-	owner.held_item.stack_count -= count
+	gui.blueprint.stack_count -= count
 	self.held_item = new_stack
 
 	_update_label()

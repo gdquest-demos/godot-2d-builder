@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
+[ext_resource path="res://Entities/Blueprints/blueprint_material.tres" type="Material" id=2]
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=3]
+
+[node name="StoneBlueprint" type="Node2D"]
+script = ExtResource( 1 )
+stack_size = 100
+placeable = false
+id = "stone"
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 2 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 232, 449, 96, 70 )

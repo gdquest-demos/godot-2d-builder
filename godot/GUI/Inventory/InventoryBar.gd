@@ -3,9 +3,11 @@
 extends HBoxContainer
 
 
-var held_item: BlueprintEntity setget _set_held_item, _get_held_item
-var drag_preview: Control
+export var quickbar := false
+
+
 var panels := []
+var gui: Control
 
 
 func _ready() -> void:
@@ -16,20 +18,10 @@ func _ready() -> void:
 			panels.push_back(container.get_child(1))
 
 
-func setup(_drag_preview: Control) -> void:
-	drag_preview = _drag_preview
-
-
-func destroy_held_item() -> void:
-	drag_preview.destroy_blueprint()
-
-
-func _set_held_item(value: BlueprintEntity) -> void:
-	drag_preview.blueprint = value
-
-
-func _get_held_item() -> BlueprintEntity:
-	if drag_preview:
-		return drag_preview.blueprint
-	else:
-		return null
+func setup(_gui: Control) -> void:
+	gui = _gui
+	for child in get_children():
+		if quickbar:
+			child.get_child(1).setup(gui)
+		else:
+			child.setup(gui)

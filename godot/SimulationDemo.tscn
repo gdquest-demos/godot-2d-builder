@@ -69,5 +69,11 @@ position = Vector2( 722.614, 595.161 )
 wait_time = 0.033
 
 [node name="GUI" parent="." instance=ExtResource( 10 )]
-debug_items = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 6 ) ]
+debug_items = {
+ExtResource( 3 ): 1,
+Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
+ExtResource( 6 ): 100,
+ExtResource( 8 ): 2,
+Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50
+}
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -8,7 +8,7 @@ export var Slab: PackedScene
 export var Wire: PackedScene
 export var Battery: PackedScene
 
-var drag_preview: Control
+var gui: Control
 var last_hovered: Node2D = null
 
 var _simulation: Simulation
@@ -25,13 +25,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouse:
 		_abort_deconstruct()
 
-	var has_placeable_blueprint: bool = drag_preview.blueprint and drag_preview.blueprint.placeable
+	var has_placeable_blueprint: bool = gui.blueprint and gui.blueprint.placeable
 
 	# Place entities that have a placeable blue print on left button, if there is space.
 	if event.is_action_pressed("left_click") and has_placeable_blueprint:
 		var cellv := world_to_map(event.position)
 		if not _simulation.is_cell_occupied(cellv):
-			if drag_preview.blueprint.id == "wire":
+			if gui.blueprint.id == "wire":
 				_place_entity(cellv, _get_powered_neighbors(cellv))
 			else:
 				_place_entity(cellv)
@@ -51,11 +51,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			_update_hover(cellv)
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
-		drag_preview.blueprint.rotate_blueprint()
+		gui.blueprint.rotate_blueprint()
 
 
-func setup(simulation: Simulation, wires: Node2D, blueprint_preview: Control) -> void:
-	drag_preview = blueprint_preview
+func setup(simulation: Simulation, wires: Node2D, _gui: Control) -> void:
+	gui = _gui
 	_simulation = simulation
 	_wires = wires
 
@@ -66,16 +66,16 @@ func replace_wire(wire: Node2D, directions: int) -> void:
 
 
 func move_blueprint_in_world(cellv: Vector2) -> void:
-	drag_preview.blueprint.make_world()
-	drag_preview.blueprint.global_position = map_to_world(cellv)
+	gui.blueprint.make_world()
+	gui.blueprint.global_position = map_to_world(cellv)
 
 	if not _simulation.is_cell_occupied(cellv):
-		drag_preview.blueprint.modulate = Color.white
+		gui.blueprint.modulate = Color.white
 	else:
-		drag_preview.blueprint.modulate = Color.red
+		gui.blueprint.modulate = Color.red
 
-	if drag_preview.blueprint.id == "wire":
-		drag_preview.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
+	if gui.blueprint.id == "wire":
+		gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
 # Gets neighbors that are in the power groups around the given cell
@@ -111,9 +111,9 @@ func _update_neighboring_wires(cellv: Vector2) -> void:
 
 # Places an entity or wire and informs the simulation
 func _place_entity(cellv: Vector2, directions := 0) -> void:
-	var new_entity: Node2D = drag_preview.blueprint.Entity.instance()
+	var new_entity: Node2D = gui.blueprint.Entity.instance()
 
-	if drag_preview.blueprint.id == "wire":
+	if gui.blueprint.id == "wire":
 		_wires.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 	else:
@@ -122,13 +122,13 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 	new_entity.global_position = map_to_world(cellv)
 
 	_simulation.place_entity(new_entity, cellv)
-	new_entity._setup(drag_preview.blueprint)
+	new_entity._setup(gui.blueprint)
 
-	if drag_preview.blueprint.stack_count == 1:
-		drag_preview.destroy_blueprint()
+	if gui.blueprint.stack_count == 1:
+		gui.destroy_blueprint()
 	else:
-		drag_preview.blueprint.stack_count -= 1
-		drag_preview.update_label()
+		gui.blueprint.stack_count -= 1
+		gui.update_label()
 
 
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:

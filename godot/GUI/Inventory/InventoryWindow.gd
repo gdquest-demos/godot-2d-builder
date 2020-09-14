@@ -2,16 +2,15 @@
 extends Control
 
 
-var held_item: BlueprintEntity setget _set_held_item, _get_held_item
-var drag_preview: Control
+var gui: Control
 
 onready var inventories := $MarginContainer/WindowBack/Window/Inventories
 
 
-func setup(_drag_preview: Control) -> void:
-	drag_preview = _drag_preview
+func setup(_gui: Control) -> void:
+	gui = _gui
 	for bar in inventories.get_children():
-		bar.setup(drag_preview)
+		bar.setup(gui)
 
 
 func claim_quickbar(quickbar: Control) -> void:
@@ -19,26 +18,22 @@ func claim_quickbar(quickbar: Control) -> void:
 	inventories.add_child(quickbar)
 
 
-func destroy_held_item() -> void:
-	drag_preview.destroy_blueprint()
-
-
 func update_label() -> void:
-	if drag_preview:
-		drag_preview.update_label()
+	if gui:
+		gui.update_label()
 
 
 func clear_held_item() -> void:
-	if drag_preview:
-		drag_preview.clear_blueprint()
+	if gui:
+		gui.clear_blueprint()
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
-	drag_preview.blueprint = value
+	gui.blueprint = value
 
 
 func _get_held_item() -> BlueprintEntity:
-	if drag_preview:
-		return drag_preview.blueprint
+	if gui:
+		return gui.blueprint
 	else:
 		return null

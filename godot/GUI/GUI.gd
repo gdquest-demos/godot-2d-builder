@@ -14,31 +14,29 @@ const QUICKBAR_ACTIONS := [
 	"quickbar_0"
 ]
 
-export(Array, PackedScene) var debug_items := []
+export var debug_items := {}
+
+var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
 
 onready var player_inventory := $InventoryWindow
-onready var drag_preview := $DragPreview
 onready var quickbar_container := $MarginContainer/MarginContainer
 onready var quickbar := $MarginContainer/MarginContainer/Quickbar
+onready var _drag_preview := $DragPreview
 
 
 func _ready() -> void:
-	player_inventory.setup(drag_preview)
-	quickbar.setup(drag_preview)
+	player_inventory.setup(self)
+	quickbar.setup(self)
 	
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
 	var index := 0
-	for item in debug_items:
+	for item in debug_items.keys():
 		var item_instance: Node = item.instance()
 		var panel: Panel = player_inventory.inventories.get_child(0).panels[index]
 		panel.held_item = item_instance
-		if item_instance.id == "wire":
-			item_instance.stack_count = 64
-			panel._update_label()
-		if item_instance.id == "battery":
-			item_instance.stack_count = 2
-			panel._update_label()
+		item_instance.stack_count = min(item_instance.stack_size, debug_items[item])
+		panel._update_label()
 		index += 1
 
 
@@ -68,3 +66,21 @@ func _simulate_input(panel: InventoryPanel) -> void:
 func _claim_quickbar() -> void:
 	quickbar.get_parent().remove_child(quickbar)
 	quickbar_container.add_child(quickbar)
+
+
+func _set_blueprint(value: BlueprintEntity) -> void:
+	if not is_inside_tree():
+		yield(self, "ready")
+	_drag_preview.blueprint = value
+
+
+func _get_blueprint() -> BlueprintEntity:
+	return _drag_preview.blueprint
+
+
+func destroy_blueprint() -> void:
+	_drag_preview.destroy_blueprint()
+
+
+func update_label() -> void:
+	_drag_preview.update_label()
