@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GUI/Inventory/InventoryWindow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/GUI.gd" type="Script" id=2]
 [ext_resource path="res://GUI/DragPreview.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/Inventory/Quickbar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/Inventory/Quickbar.gd" type="Script" id=5]
 
 [node name="GUI" type="CenterContainer"]
 anchor_right = 1.0
@@ -50,3 +51,4 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 600.0
 margin_bottom = 87.0
+script = ExtResource( 5 )

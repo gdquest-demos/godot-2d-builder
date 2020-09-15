@@ -12,35 +12,38 @@ onready var count_label := $Label
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
+	var left_click := event.is_action_pressed("left_click")
+	var right_click := event.is_action_pressed("right_click")
+	
+	if left_click or right_click:
 		if gui.blueprint:
 			if held_item:
 				var item_is_same_type: bool = held_item.id == gui.blueprint.id
 				var stack_has_space: bool = held_item.stack_count < held_item.stack_size
 				
 				if item_is_same_type and stack_has_space:
-					if event.button_index == BUTTON_LEFT:
+					if left_click:
 						_stack_items()
-					elif event.button_index == BUTTON_RIGHT:
+					elif right_click:
 						_stack_items(true)
 
 				else:
-					if event.button_index == BUTTON_LEFT:
+					if left_click:
 						_swap_items()
 			else:
-				if event.button_index == BUTTON_LEFT:
+				if left_click:
 					_grab_item()
 
-				elif event.button_index == BUTTON_RIGHT:
+				elif right_click:
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
 						_grab_item()
 
 		elif held_item:
-			if event.button_index == BUTTON_LEFT:
+			if left_click:
 				_release_item()
-			elif event.button_index == BUTTON_RIGHT:
+			elif right_click:
 				if held_item.stack_count == 1:
 					_release_item()
 				else:
