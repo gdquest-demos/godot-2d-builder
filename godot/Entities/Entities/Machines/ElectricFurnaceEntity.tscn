@@ -3,8 +3,8 @@
 [ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=1]
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
 
-[sub_resource type="GDScript" id=8]
-script/source = "extends StaticBody2D
+[sub_resource type="GDScript" id=1]
+script/source = "extends Entity
 
 
 func _ready() -> void:
@@ -14,14 +14,14 @@ func _ready() -> void:
 	$AnimationPlayer.play(\"Shutdown\")
 "
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.788945, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=4]
 emission_shape = 2
 emission_box_extents = Vector3( 12, 2.5, 1 )
 flag_disable_z = true
@@ -32,9 +32,9 @@ initial_velocity_random = 0.5
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 2.0
-color_ramp = SubResource( 10 )
+color_ramp = SubResource( 3 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=5]
 resource_name = "Powered"
 length = 0.001
 tracks/0/type = "value"
@@ -47,11 +47,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 0.572549, 2.47059, 0.701961, 1 ) ]
+"values": [ Color( 0.572549, 1.4, 0.701961, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "SETUP"
+[sub_resource type="Animation" id=6]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Particles2D:emitting")
@@ -75,7 +74,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1.58431, 0.784314, 0.270588, 0 ) ]
+"values": [ Color( 1.35294, 0.682353, 0.235294, 0 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("WorkIndicator:modulate")
@@ -87,7 +86,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 2, 0.121569, 0.121569, 0 ) ]
+"values": [ Color( 1.70196, 0.564706, 0.627451, 0 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("IdleIndicator:modulate")
@@ -99,7 +98,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 0.572549, 2.47059, 0.701961, 1 ) ]
+"values": [ Color( 0.572549, 1.4, 0.701961, 1 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Dial:rotation_degrees")
@@ -114,7 +113,7 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=7]
 resource_name = "Shutdown"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Particles2D:emitting")
@@ -138,7 +137,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 3.15294, 1.18431, 0.235294, 1 ), Color( 3.15294, 1.18431, 0.235294, 0 ) ]
+"values": [ Color( 1.35294, 0.682353, 0.235294, 1 ), Color( 1.35294, 0.682353, 0.235294, 0 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("WorkIndicator:modulate")
@@ -150,7 +149,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Color( 2, 0.121569, 0.121569, 0 ) ]
+"values": [ Color( 1.70196, 0.564706, 0.627451, 0 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("IdleIndicator:modulate")
@@ -162,7 +161,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.572549, 2.47059, 0.701961, 0 ), Color( 0.572549, 2.47059, 0.701961, 1 ) ]
+"values": [ Color( 0.572549, 1.4, 0.701961, 0 ), Color( 0.572549, 1.4, 0.701961, 1 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Dial:rotation_degrees")
@@ -177,7 +176,7 @@ tracks/4/keys = {
 "values": [ 225.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=8]
 resource_name = "Work"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Particles2D:emitting")
@@ -201,7 +200,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1.58431, 0.784314, 0.270588, 0 ), Color( 3.15294, 1.18431, 0.235294, 1 ) ]
+"values": [ Color( 1.35294, 0.682353, 0.235294, 0 ), Color( 1.35294, 0.682353, 0.235294, 1 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("WorkIndicator:modulate")
@@ -213,7 +212,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 2.52941, 0.6, 0.596078, 0 ), Color( 2.52941, 0.6, 0.596078, 1 ) ]
+"values": [ Color( 1.70196, 0.564706, 0.627451, 0 ), Color( 1.70196, 0.564706, 0.627451, 1 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("IdleIndicator:modulate")
@@ -225,7 +224,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Color( 0.14902, 1.25098, 0.0784314, 0 ) ]
+"values": [ Color( 0.572549, 1.4, 0.701961, 0 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Dial:rotation_degrees")
@@ -241,7 +240,7 @@ tracks/4/keys = {
 }
 
 [node name="ElectricFurnaceEntity" type="StaticBody2D"]
-script = SubResource( 8 )
+script = SubResource( 1 )
 
 [node name="PowerReceiver" type="Node" parent="."]
 script = ExtResource( 1 )
@@ -255,21 +254,21 @@ region_rect = Rect2( 339, 229, 102, 102 )
 polygon = PoolVector2Array( 0.048645, 49.7698, -50.5407, 24.3427, -50.435, 6.49844, -0.0381775, -21.5348, 50.3731, 6.3318, 49.8434, 25.667 )
 
 [node name="Vents" type="Sprite" parent="."]
-modulate = Color( 1.58431, 0.784314, 0.270588, 0 )
+modulate = Color( 1.35294, 0.682353, 0.235294, 0 )
 position = Vector2( -28, 13.25 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 242, 282, 20, 22 )
 
 [node name="IdleIndicator" type="Sprite" parent="."]
-modulate = Color( 0.572549, 2.47059, 0.701961, 1 )
+modulate = Color( 0.572549, 1.4, 0.701961, 1 )
 position = Vector2( -32.6917, -16.8369 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 252, 263, 12, 12 )
 
 [node name="WorkIndicator" type="Sprite" parent="."]
-modulate = Color( 2, 0.121569, 0.121569, 0 )
+modulate = Color( 1.70196, 0.564706, 0.627451, 0 )
 position = Vector2( -21.888, -11.3649 )
 texture = ExtResource( 2 )
 region_enabled = true
@@ -290,10 +289,10 @@ position = Vector2( -28.8214, 12.8615 )
 emitting = false
 lifetime = 0.5
 visibility_rect = Rect2( -36.2296, -9.99514, 45.9992, 40.6713 )
-process_material = SubResource( 11 )
+process_material = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Powered = SubResource( 12 )
-anims/SETUP = SubResource( 5 )
-anims/Shutdown = SubResource( 14 )
-anims/Work = SubResource( 13 )
+anims/Powered = SubResource( 5 )
+anims/SETUP = SubResource( 6 )
+anims/Shutdown = SubResource( 7 )
+anims/Work = SubResource( 8 )
