@@ -24,10 +24,10 @@ script = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 13.1102 )
+position = Vector2( 0, 17.2724 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 229, 9, 102, 77 )
+region_rect = Rect2( 669, 449, 102, 67 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -2.4817, -1.91985 )

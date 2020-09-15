@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
-[ext_resource path="res://Entities/Blueprints/blueprint_material.tres" type="Material" id=2]
-[ext_resource path="res://Shared/tileset.svg" type="Texture" id=3]
+[ext_resource path="res://Shared/blueprints.svg" type="Texture" id=2]
 
 [node name="BranchesBlueprint" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,7 +10,7 @@ placeable = false
 id = "branches"
 
 [node name="Sprite" type="Sprite" parent="."]
-material = ExtResource( 2 )
-texture = ExtResource( 3 )
+modulate = Color( 1, 1, 1, 0.882353 )
+texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 363, 450, 51, 88 )
+region_rect = Rect2( 803, 120, 58, 99 )

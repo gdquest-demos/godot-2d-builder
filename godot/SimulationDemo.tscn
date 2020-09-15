@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Entities/Blueprints/BatteryBlueprint.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Entities/Entities/Natural/RockEntity.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Entities/Entities/Natural/StickEntity.tscn" type="PackedScene" id=12]
+[ext_resource path="res://default_env.tres" type="Environment" id=14]
 
 [node name="Simulation" type="Node"]
 script = ExtResource( 4 )
@@ -26,7 +29,28 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, 0, 0, 65552, 0, 0, 65553, 0, 0, 65554, 0, 0, 65555, 0, 0, 65556, 0, 0, 65557, 0, 0, 65558, 0, 0, 65559, 0, 0, 65560, 0, 0, 65561, 0, 0, 65562, 0, 0, 65563, 0, 0, 131084, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 131090, 0, 0, 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 131095, 0, 0, 131096, 0, 0, 131097, 0, 0, 131098, 0, 0, 131099, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196623, 0, 0, 196624, 0, 0, 196625, 0, 0, 196626, 0, 0, 196627, 0, 0, 196628, 0, 0, 196629, 0, 0, 196630, 0, 0, 196631, 0, 0, 196632, 0, 0, 196633, 0, 0, 196634, 0, 0, 196635, 0, 0, 262156, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 262162, 0, 0, 262163, 0, 0, 262164, 0, 0, 262165, 0, 0, 262166, 0, 0, 262167, 0, 0, 262168, 0, 0, 262169, 0, 0, 262170, 0, 0, 262171, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 0, 0, 327699, 0, 0, 327700, 0, 0, 327701, 0, 0, 327702, 0, 0, 327703, 0, 0, 327704, 0, 0, 327705, 0, 0, 327706, 0, 0, 327707, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 393237, 0, 0, 393238, 0, 0, 393239, 0, 0, 393240, 0, 0, 393241, 0, 0, 393242, 0, 0, 393243, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 458774, 0, 0, 458775, 0, 0, 458776, 0, 0, 458777, 0, 0, 458778, 0, 0, 458779, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 524305, 0, 0, 524306, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 524310, 0, 0, 524311, 0, 0, 524312, 0, 0, 524313, 0, 0, 524314, 0, 0, 524315, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589847, 0, 0, 589848, 0, 0, 589849, 0, 0, 589850, 0, 0, 589851, 0, 0 )
 
-[node name="Wires" type="YSort" parent="GameWorld"]
+[node name="FlatEntities" type="YSort" parent="GameWorld"]
+
+[node name="RockEntity" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 502, 474 )
+
+[node name="RockEntity2" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 602, 375 )
+
+[node name="RockEntity3" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 403, 426 )
+
+[node name="RockEntity4" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 248, 498 )
+
+[node name="RockEntity5" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 847, 801 )
+
+[node name="RockEntity6" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 1100, 670 )
+
+[node name="RockEntity7" parent="GameWorld/FlatEntities" instance=ExtResource( 11 )]
+position = Vector2( 550, 648 )
 
 [node name="YSort" type="YSort" parent="GameWorld"]
 
@@ -62,6 +86,21 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="GameWorld/YSort/EntityPlacer"]
 
+[node name="StickEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 607, 460 )
+
+[node name="StickEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 507, 358 )
+
+[node name="StickEntity3" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 409, 508 )
+
+[node name="StickEntity4" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 905, 460 )
+
+[node name="StickEntity5" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 1054, 732 )
+
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )
 
@@ -70,10 +109,13 @@ wait_time = 0.033
 
 [node name="GUI" parent="." instance=ExtResource( 10 )]
 debug_items = {
+ExtResource( 6 ): 100,
+Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
 Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50,
 ExtResource( 8 ): 2,
-ExtResource( 6 ): 100,
-ExtResource( 3 ): 1,
-Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50
+ExtResource( 3 ): 1
 }
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 14 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

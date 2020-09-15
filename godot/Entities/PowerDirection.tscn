@@ -10,22 +10,22 @@ script = ExtResource( 2 )
 position = Vector2( -55, -5 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 789, 244, 31, 17 )
+region_rect = Rect2( 899, 134, 31, 17 )
 
 [node name="N" type="Sprite" parent="."]
 position = Vector2( 55, -5 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 840, 244, 31, 17 )
+region_rect = Rect2( 950, 134, 31, 17 )
 
 [node name="E" type="Sprite" parent="."]
 position = Vector2( 45, 45 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 840, 289, 31, 17 )
+region_rect = Rect2( 950, 179, 31, 17 )
 
 [node name="S" type="Sprite" parent="."]
 position = Vector2( -45, 45 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 789, 289, 31, 17 )
+region_rect = Rect2( 899, 179, 31, 17 )

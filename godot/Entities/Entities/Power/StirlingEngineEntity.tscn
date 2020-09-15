@@ -72,26 +72,26 @@ power_amount = 25.0
 position = Vector2( 0, 18.2497 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 9, 259, 102, 62 )
+region_rect = Rect2( 449, 149, 102, 62 )
 
 [node name="PistonBack" type="Sprite" parent="."]
 position = Vector2( 0, -8 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 340, 249, 100, 27 )
+region_rect = Rect2( 780, 139, 100, 27 )
 
 [node name="PistonShaft" type="Sprite" parent="."]
 modulate = Color( 0.501961, 0.662745, 1, 1 )
 position = Vector2( 0, -7.88049 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 144, 229, 52, 70 )
+region_rect = Rect2( 584, 119, 52, 70 )
 
 [node name="PistonFront" type="Sprite" parent="."]
 position = Vector2( 0, 21 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 229, 274, 102, 37 )
+region_rect = Rect2( 669, 164, 102, 37 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, 4.185 )

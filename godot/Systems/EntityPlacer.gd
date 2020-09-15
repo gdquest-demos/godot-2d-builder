@@ -12,7 +12,7 @@ var gui: Control
 var last_hovered: Node2D = null
 
 var _simulation: Simulation
-var _wires: Node2D
+var _flat_entities: Node2D
 
 onready var _deconstruct_timer := $Timer
 onready var _deconstruct_indicator := $TextureProgress
@@ -35,7 +35,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_place_entity(cellv, _get_powered_neighbors(cellv))
 			else:
 				_place_entity(cellv)
-			_update_neighboring_wires(cellv)
+			_update_neighboring_flat_entities(cellv)
 	# Do hold-and-release entity removal using a yielded timer. If interrupted by
 	# another event, stop the timer.
 	# TODO: Put removed items in inventory instead of just erasing it from existence
@@ -54,10 +54,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		gui.blueprint.rotate_blueprint()
 
 
-func setup(simulation: Simulation, wires: Node2D, _gui: Control) -> void:
+func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control) -> void:
 	gui = _gui
 	_simulation = simulation
-	_wires = wires
+	_flat_entities = flat_entities
+	
+	var existing_entities := flat_entities.get_children() + get_children().slice(3, get_child_count())
+	
+	for entity in existing_entities:
+		_simulation.place_entity(entity, world_to_map(entity.global_position))
 
 
 # Sets the sprite for a given wire
@@ -99,7 +104,7 @@ func _get_powered_neighbors(cellv: Vector2) -> int:
 
 
 # Finds all wires and replaces them so they point towards powered entities
-func _update_neighboring_wires(cellv: Vector2) -> void:
+func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 	for neighbor in Types.NEIGHBORS.keys():
 		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
 		var object = _simulation.get_entity_at(key)
@@ -114,7 +119,7 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 	var new_entity: Node2D = gui.blueprint.Entity.instance()
 
 	if gui.blueprint.id == "wire":
-		_wires.add_child(new_entity)
+		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 	else:
 		add_child(new_entity)
@@ -144,7 +149,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 
 func _finish_deconstruct(cellv: Vector2) -> void:
 	_simulation.remove_entity(cellv)
-	_update_neighboring_wires(cellv)
+	_update_neighboring_flat_entities(cellv)
 	_deconstruct_indicator.hide()
 
 

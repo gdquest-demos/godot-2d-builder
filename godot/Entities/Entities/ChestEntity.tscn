@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Close"
 length = 0.7
 tracks/0/type = "value"
@@ -30,8 +30,7 @@ tracks/1/keys = {
 "values": [ Vector2( -15.9347, -16.5908 ), Vector2( -12.216, -16.826 ), Vector2( -8.75989, -15.0891 ), Vector2( -4.892, -13.17 ), Vector2( -1, -6.997 ), Vector2( 1.16798, -2.49153 ), Vector2( 0.917702, 1.51299 ), Vector2( 0, 5.10038 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "Open"
+[sub_resource type="Animation" id=2]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Lid:region_rect")
@@ -92,7 +91,7 @@ tracks/1/keys = {
 position = Vector2( 0, 15.1004 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 909, 229, 62, 47 )
+region_rect = Rect2( 29, 229, 62, 47 )
 
 [node name="Lid" type="Sprite" parent="."]
 position = Vector2( 0, 5.10038 )
@@ -101,8 +100,8 @@ region_enabled = true
 region_rect = Rect2( 909, 369, 62, 37 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Close = SubResource( 2 )
-anims/Open = SubResource( 1 )
+anims/Close = SubResource( 1 )
+anims/Open = SubResource( 2 )
 anims/SETUP = SubResource( 3 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
