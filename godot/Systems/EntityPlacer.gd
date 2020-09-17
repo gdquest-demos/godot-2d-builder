@@ -28,14 +28,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	var has_placeable_blueprint: bool = gui.blueprint and gui.blueprint.placeable
 
 	# Place entities that have a placeable blue print on left button, if there is space.
-	if event.is_action_pressed("left_click") and has_placeable_blueprint:
+	if event.is_action_pressed("left_click"):
 		var cellv := world_to_map(event.position)
-		if not _simulation.is_cell_occupied(cellv):
-			if gui.blueprint.id == "wire":
-				_place_entity(cellv, _get_powered_neighbors(cellv))
-			else:
-				_place_entity(cellv)
-			_update_neighboring_flat_entities(cellv)
+		if has_placeable_blueprint:
+			if not _simulation.is_cell_occupied(cellv):
+				if gui.blueprint.id == "wire":
+					_place_entity(cellv, _get_powered_neighbors(cellv))
+				else:
+					_place_entity(cellv)
+				_update_neighboring_flat_entities(cellv)
+		elif _simulation.is_cell_occupied(cellv):
+			var entity := _simulation.get_entity_at(cellv)
+			if entity.is_in_group("gui_entities"):
+				gui.open_entity_gui(entity)
 	# Do hold-and-release entity removal using a yielded timer. If interrupted by
 	# another event, stop the timer.
 	# TODO: Put removed items in inventory instead of just erasing it from existence

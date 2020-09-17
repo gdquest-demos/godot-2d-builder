@@ -29,17 +29,17 @@ margin_right = 960.0
 margin_bottom = 540.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_left = 655.0
-margin_top = 41.0
-margin_right = 1265.0
-margin_bottom = 1038.0
+margin_left = 950.0
+margin_top = 80.0
+margin_right = 970.0
+margin_bottom = 1000.0
 mouse_filter = 2
 custom_constants/margin_top = 900
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 margin_top = 900.0
-margin_right = 610.0
-margin_bottom = 997.0
+margin_right = 20.0
+margin_bottom = 920.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -49,6 +49,6 @@ custom_constants/margin_bottom = 10
 modulate = Color( 0.823529, 0.823529, 0.823529, 1 )
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 600.0
-margin_bottom = 87.0
+margin_right = 10.0
+margin_bottom = 10.0
 script = ExtResource( 5 )

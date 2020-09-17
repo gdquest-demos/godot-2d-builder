@@ -109,13 +109,13 @@ wait_time = 0.033
 
 [node name="GUI" parent="." instance=ExtResource( 10 )]
 debug_items = {
-Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50,
 Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
-Resource( "res://Entities/Blueprints/FurnaceBlueprint.tscn" ): 1,
-ExtResource( 8 ): 2,
 Resource( "res://Entities/Blueprints/ElectricFurnaceBlueprint.tscn" ): 1,
 ExtResource( 3 ): 1,
-ExtResource( 6 ): 100
+Resource( "res://Entities/Blueprints/FurnaceBlueprint.tscn" ): 1,
+ExtResource( 6 ): 100,
+ExtResource( 8 ): 2,
+Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

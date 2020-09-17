@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/EntityGUIs/FurnaceGUI.gd" type="Script" id=2]
+[ext_resource path="res://GUI/Seperator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Shared/symbols.svg" type="Texture" id=4]
+
+[node name="FurnaceGUI" type="MarginContainer"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 158.0
+margin_bottom = 158.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 158.0
+
+[node name="OreBar" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 50.0
+margin_bottom = 0.0
+slot_count = 1
+item_filters = "ore"
+
+[node name="Seperator" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 50.0
+margin_bottom = 54.0
+
+[node name="FuelBar" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 58.0
+margin_right = 50.0
+margin_bottom = 58.0
+slot_count = 1
+item_filters = "fuel"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 158.0
+
+[node name="Seperator" parent="HBoxContainer/VBoxContainer2" instance=ExtResource( 3 )]
+margin_top = 0.0
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="Arrow" type="Control" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="Sprite" type="Sprite" parent="HBoxContainer/VBoxContainer2/Arrow"]
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 10, 10, 50, 50 )
+
+[node name="Seperator2" parent="HBoxContainer/VBoxContainer2" instance=ExtResource( 3 )]
+margin_top = 108.0
+margin_right = 50.0
+margin_bottom = 158.0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 158.0
+margin_bottom = 158.0
+
+[node name="Seperator" parent="HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
+margin_top = 0.0
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="Output" parent="HBoxContainer/VBoxContainer3" instance=ExtResource( 1 )]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 54.0
+slot_count = 1
+item_filters = "metal"
+
+[node name="Seperator2" parent="HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
+margin_top = 58.0
+margin_right = 50.0
+margin_bottom = 108.0
+[connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/OreBar" to="." method="_on_OreBar_inventory_changed"]
+[connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/FuelBar" to="." method="_on_FuelBar_inventory_changed"]
+[connection signal="inventory_changed" from="HBoxContainer/VBoxContainer3/Output" to="." method="_on_FuelBar_inventory_changed"]

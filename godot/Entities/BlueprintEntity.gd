@@ -8,6 +8,7 @@ export var Entity: PackedScene
 export var stack_size := 1
 export var placeable := true
 export var id := "entity"
+export var interactivity_id := ""
 
 var stack_count := 1
 

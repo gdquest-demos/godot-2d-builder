@@ -17,6 +17,8 @@ const QUICKBAR_ACTIONS := [
 export var debug_items := {}
 
 var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
+var _open_gui: Control
+var _is_open := false
 
 onready var player_inventory := $InventoryWindow
 onready var quickbar_container := $MarginContainer/MarginContainer
@@ -42,18 +44,31 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
-		player_inventory.visible = not player_inventory.visible
-
-		if player_inventory.visible:
-			player_inventory.claim_quickbar(quickbar)
+		if _is_open:
+			_close_inventories()
 		else:
-			_claim_quickbar()
+			_open_inventories()
 	
 	for i in QUICKBAR_ACTIONS.size():
 		var quick_action: String = QUICKBAR_ACTIONS[i]
 		if InputMap.event_is_action(event, quick_action) and event.is_pressed():
 			_simulate_input(quickbar.panels[i])
 			break
+
+
+func _open_inventories() -> void:
+	_is_open = true
+	player_inventory.visible = true
+	player_inventory.claim_quickbar(quickbar)
+
+
+func _close_inventories() -> void:
+	_is_open = false
+	player_inventory.visible = false
+	_claim_quickbar()
+	if _open_gui:
+		player_inventory.inventories.remove_child(_open_gui)
+		_open_gui = null
 
 
 func _simulate_input(panel: InventoryPanel) -> void:
@@ -84,3 +99,24 @@ func destroy_blueprint() -> void:
 
 func update_label() -> void:
 	_drag_preview.update_label()
+
+
+func open_entity_gui(entity: Entity) -> void:
+	var component := _get_gui_component_from(entity)
+	if not component:
+		return
+	
+	_open_gui = component.gui
+	player_inventory.inventories.add_child(_open_gui)
+	player_inventory.inventories.move_child(_open_gui, 0)
+	_open_gui.setup(self)
+	_open_inventories()
+	
+
+
+func _get_gui_component_from(entity: Node) -> GUIComponent:
+	for child in entity.get_children():
+		if child is GUIComponent:
+			return child
+	
+	return null

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/EntityGUIs/MachineGUI.gd" type="Script" id=1]
+[ext_resource path="res://GUI/Inventory/InventoryWindowStyle.tres" type="StyleBox" id=2]
+
+[node name="MachineGUIWindow" type="CenterContainer"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 7.0
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+custom_styles/panel = ExtResource( 2 )

@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Seperator" type="Control"]
+margin_top = 4.0
+margin_bottom = 4.0
+rect_min_size = Vector2( 50, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -4,9 +4,13 @@ class_name InventoryPanel
 extends Panel
 
 
+signal held_item_changed(panel, item)
+
+
 var held_item: BlueprintEntity setget _set_held_item
 var silent := false
 var gui: Control
+var _filter := ""
 
 onready var count_label := $Label
 
@@ -28,13 +32,13 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click:
+					if left_click and is_valid_filter(held_item.id):
 						_swap_items()
 			else:
-				if left_click:
+				if left_click and is_valid_filter(gui.blueprint.interactivity_id):
 					_grab_item()
 
-				elif right_click:
+				elif right_click  and is_valid_filter(held_item.id):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -50,8 +54,10 @@ func _gui_input(event: InputEvent) -> void:
 					_split_items()
 
 
-func setup(_gui: Control) -> void:
+func setup(_gui: Control, filter := "") -> void:
 	gui = _gui
+	if not filter.empty():
+		_filter = filter
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
@@ -64,6 +70,7 @@ func _set_held_item(value: BlueprintEntity) -> void:
 		move_child(held_item, 0)
 		held_item.make_inventory()
 	_update_label()
+	emit_signal("held_item_changed", self, held_item)
 
 
 func _update_label() -> void:
@@ -131,3 +138,7 @@ func _grab_split_items() -> void:
 	self.held_item = new_stack
 
 	_update_label()
+
+
+func is_valid_filter(type: String) -> bool:
+	return _filter.empty() or type.find(_filter) != -1
