@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
+[ext_resource path="res://Shared/blueprints.svg" type="Texture" id=2]
+
+[node name="MetalIngotBlueprint" type="Node2D"]
+script = ExtResource( 1 )
+stack_size = 50
+placeable = false
+id = "ingot"
+interactivity_id = "metal"
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 119, 229, 102, 62 )

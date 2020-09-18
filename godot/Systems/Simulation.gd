@@ -15,6 +15,7 @@ var tracker := EntityTracker.new()
 onready var _entity_placer := $GameWorld/YSort/EntityPlacer
 # System to update power and keep track of power-related entities
 onready var _power_system := PowerSystem.new()
+onready var _work_system := WorkSystem.new()
 onready var _gui := $GUI
 
 

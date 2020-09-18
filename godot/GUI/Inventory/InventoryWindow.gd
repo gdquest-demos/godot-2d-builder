@@ -29,6 +29,23 @@ func clear_held_item() -> void:
 		gui.clear_blueprint()
 
 
+func find_panels_with(item_id: String) -> Array:
+	var output := []
+	for inventory in inventories.get_children():
+		if not inventory is Quickbar:
+			output += inventory.find_panels_with(item_id)
+	
+	return output
+
+
+func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
+	for inventory in inventories.get_children():
+		if not inventory is Quickbar and inventory.add_to_first_available_inventory(item):
+			return true
+
+	return false
+
+
 func _set_held_item(value: BlueprintEntity) -> void:
 	gui.blueprint = value
 

@@ -8,6 +8,7 @@
 script = ExtResource( 1 )
 Entity = ExtResource( 2 )
 stack_size = 5
+id = "furnace"
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )

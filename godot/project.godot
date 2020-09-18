@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entities/BlueprintEntity.gd"
 }, {
-"base": "StaticBody2D",
+"base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
 "path": "res://Entities/Entities/Entity.gd"
@@ -64,6 +64,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Systems/Power/PowerSystem.gd"
 }, {
+"base": "InventoryBar",
+"class": "Quickbar",
+"language": "GDScript",
+"path": "res://GUI/Inventory/Quickbar.gd"
+}, {
+"base": "Resource",
+"class": "Recipe",
+"language": "GDScript",
+"path": "res://Systems/Recipe.gd"
+}, {
+"base": "Resource",
+"class": "Recipes",
+"language": "GDScript",
+"path": "res://Systems/Recipes.gd"
+}, {
 "base": "Node",
 "class": "Simulation",
 "language": "GDScript",
@@ -79,10 +94,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entities/Blueprints/WireBlueprint.gd"
 }, {
-"base": "Node2D",
+"base": "Entity",
 "class": "WireEntity",
 "language": "GDScript",
 "path": "res://Entities/Entities/Power/WireEntity.gd"
+}, {
+"base": "Node",
+"class": "WorkComponent",
+"language": "GDScript",
+"path": "res://Systems/Work/WorkComponent.gd"
+}, {
+"base": "Reference",
+"class": "WorkSystem",
+"language": "GDScript",
+"path": "res://Systems/Work/WorkSystem.gd"
 } ]
 _global_script_class_icons={
 "BaseMachineGUI": "",
@@ -96,10 +121,15 @@ _global_script_class_icons={
 "PowerReceiver": "",
 "PowerSource": "",
 "PowerSystem": "",
+"Quickbar": "",
+"Recipe": "",
+"Recipes": "",
 "Simulation": "",
 "Types": "",
 "WireBlueprint": "",
-"WireEntity": ""
+"WireEntity": "",
+"WorkComponent": "",
+"WorkSystem": ""
 }
 
 [application]

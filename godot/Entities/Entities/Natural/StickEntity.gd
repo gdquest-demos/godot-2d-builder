@@ -1,4 +1,4 @@
-extends Sprite
+extends Entity
 
 
 const REGIONS := [
@@ -10,4 +10,4 @@ const REGIONS := [
 
 
 func _ready() -> void:
-	region_rect = REGIONS[int(rand_range(0, REGIONS.size()-1))]
+	$Sprite.region_rect = REGIONS[int(rand_range(0, REGIONS.size()-1))]

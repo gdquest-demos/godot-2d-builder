@@ -2,17 +2,7 @@
 
 [ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=1]
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Entity
-
-
-func _ready() -> void:
-	yield(get_tree().create_timer(5), \"timeout\")
-	$AnimationPlayer.play(\"Work\")
-	yield(get_tree().create_timer(5), \"timeout\")
-	$AnimationPlayer.play(\"Shutdown\")
-"
+[ext_resource path="res://Entities/Entities/Entity.gd" type="Script" id=3]
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.788945, 1 )
@@ -240,7 +230,8 @@ tracks/4/keys = {
 }
 
 [node name="ElectricFurnaceEntity" type="StaticBody2D"]
-script = SubResource( 1 )
+script = ExtResource( 3 )
+pickup_blueprint = "res://Entities/Blueprints/ElectricFurnaceBlueprint.tscn"
 
 [node name="PowerReceiver" type="Node" parent="."]
 script = ExtResource( 1 )

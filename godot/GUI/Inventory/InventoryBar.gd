@@ -26,6 +26,52 @@ func setup(gui: Control) -> void:
 			panel.connect("held_item_changed", self, "_on_Panel_held_item_changed")
 
 
+func find_panels_with(item_id: String) -> Array:
+	var output := []
+	for panel in panels:
+		if panel.held_item and panel.held_item.id == item_id:
+			output.push_back(panel)
+	
+	return output
+
+
+func get_inventory() -> Array:
+	var output := []
+	for panel in panels:
+		if panel.held_item:
+			output.push_back(panel.held_item)
+	
+	return output
+
+
+func update_labels() -> void:
+	for panel in panels:
+		panel._update_label()
+
+
+func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
+	if not item_filters.empty() and item.interactivity_id.find(item_filters) == -1:
+		return false
+
+	for panel in panels:
+		if panel.held_item and panel.held_item.id == item.id and panel.held_item.stack_count < panel.held_item.stack_size:
+			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
+			if item.stack_count > available_space:
+				var transfer_count := item.stack_count - available_space
+				panel.held_item.stack_count += transfer_count
+				item.stack_count -= transfer_count
+			else:
+				panel.held_item.stack_count += item.stack_count
+				item.queue_free()
+				return true
+
+		elif not panel.held_item:
+			panel.held_item = item
+			return true
+
+	return false
+
+
 func _make_panels() -> void:
 	for _i in slot_count:
 		var panel := InventoryPanelScene.instance()

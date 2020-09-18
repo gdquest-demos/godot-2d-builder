@@ -86,4 +86,3 @@ margin_right = 50.0
 margin_bottom = 108.0
 [connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/OreBar" to="." method="_on_OreBar_inventory_changed"]
 [connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/FuelBar" to="." method="_on_FuelBar_inventory_changed"]
-[connection signal="inventory_changed" from="HBoxContainer/VBoxContainer3/Output" to="." method="_on_FuelBar_inventory_changed"]

@@ -1,31 +1,19 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
 [ext_resource path="res://GUI/EntityGUIs/GUIComponent.gd" type="Script" id=2]
 [ext_resource path="res://GUI/EntityGUIs/FurnaceGUI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Entities/Machines/FurnaceEntity.gd" type="Script" id=4]
+[ext_resource path="res://Systems/Work/WorkComponent.gd" type="Script" id=5]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends Entity
-
-
-onready var gui := $GUIComponent
-
-
-func _on_GUIComponent_gui_status_changed() -> void:
-	if gui.window.fuel and gui.window.ore:
-		$AnimationPlayer.play(\"Work\")
-		yield(get_tree().create_timer(5), \"timeout\")
-		$AnimationPlayer.play(\"Shutdown\")
-"
-
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.788945, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=4]
+[sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
 emission_box_extents = Vector3( 12, 2.5, 1 )
 flag_disable_z = true
@@ -36,9 +24,9 @@ initial_velocity_random = 0.5
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 2.0
-color_ramp = SubResource( 3 )
+color_ramp = SubResource( 2 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "SETUP"
 length = 0.001
 tracks/0/type = "value"
@@ -66,7 +54,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "Shutdown"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Vents:modulate")
@@ -93,7 +81,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Vents:modulate")
 tracks/0/interp = 1
@@ -121,12 +109,17 @@ tracks/1/keys = {
 
 [node name="FurnaceEntity" type="StaticBody2D" groups=[
 "gui_entities",
+"workers",
 ]]
-script = SubResource( 1 )
+script = ExtResource( 4 )
+pickup_blueprint = "res://Entities/Blueprints/FurnaceBlueprint.tscn"
 
 [node name="GUIComponent" type="Node" parent="."]
 script = ExtResource( 2 )
 GuiWindow = ExtResource( 3 )
+
+[node name="WorkComponent" type="Node" parent="."]
+script = ExtResource( 5 )
 
 [node name="Furnace" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -157,10 +150,13 @@ position = Vector2( -28.8214, 12.8615 )
 emitting = false
 lifetime = 0.5
 visibility_rect = Rect2( -36.2296, -9.99514, 45.9992, 40.6713 )
-process_material = SubResource( 4 )
+process_material = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/SETUP = SubResource( 5 )
-anims/Shutdown = SubResource( 6 )
-anims/Work = SubResource( 7 )
+anims/SETUP = SubResource( 4 )
+anims/Shutdown = SubResource( 5 )
+anims/Work = SubResource( 6 )
 [connection signal="gui_status_changed" from="GUIComponent" to="." method="_on_GUIComponent_gui_status_changed"]
+[connection signal="work_accomplished" from="WorkComponent" to="." method="_on_WorkComponent_work_accomplished"]
+[connection signal="work_done" from="WorkComponent" to="." method="_on_WorkComponent_work_done"]
+[connection signal="work_enabled_changed" from="WorkComponent" to="." method="_on_WorkComponent_work_enabled_changed"]

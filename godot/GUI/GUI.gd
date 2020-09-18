@@ -56,6 +56,70 @@ func _unhandled_input(event: InputEvent) -> void:
 			break
 
 
+func add_to_inventory(item: BlueprintEntity) -> bool:
+	if item.get_parent() != null:
+		item.get_parent().remove_child(item)
+	var existing_stacks: Array = quickbar.find_panels_with(item.id) + player_inventory.find_panels_with(item.id)
+	for panel in existing_stacks:
+		if panel.held_item.stack_count < panel.held_item.stack_size:
+			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
+			if item.stack_count > available_space:
+				panel.held_item.stack_count += available_space
+				item.stack_count -= available_space
+			else:
+				panel.held_item.stack_count += item.stack_count
+				item.queue_free()
+				return true
+	
+	if quickbar.add_to_first_available_inventory(item):
+		return true
+
+	return player_inventory.add_to_first_available_inventory(item)
+
+
+func destroy_blueprint() -> void:
+	_drag_preview.destroy_blueprint()
+
+
+func update_label() -> void:
+	_drag_preview.update_label()
+
+
+func open_entity_gui(entity: Entity) -> void:
+	var component := get_gui_component_from(entity)
+	if not component:
+		return
+	
+	_open_gui = component.gui
+	player_inventory.inventories.add_child(_open_gui)
+	player_inventory.inventories.move_child(_open_gui, 0)
+	_open_gui.setup(self)
+	_open_inventories()
+
+
+func get_gui_component_from(entity: Node) -> GUIComponent:
+	for child in entity.get_children():
+		if child is GUIComponent:
+			return child
+	
+	return null
+
+
+func find_inventory_bars_in(component: GUIComponent) -> Array:
+	var output := []
+	var parent_stack := [component.window]
+	
+	while not parent_stack.empty():
+		var current: Node = parent_stack.pop_back()
+		
+		if current is InventoryBar:
+			output.push_back(current)
+		
+		parent_stack += current.get_children()
+	
+	return output
+
+
 func _open_inventories() -> void:
 	_is_open = true
 	player_inventory.visible = true
@@ -91,32 +155,3 @@ func _set_blueprint(value: BlueprintEntity) -> void:
 
 func _get_blueprint() -> BlueprintEntity:
 	return _drag_preview.blueprint
-
-
-func destroy_blueprint() -> void:
-	_drag_preview.destroy_blueprint()
-
-
-func update_label() -> void:
-	_drag_preview.update_label()
-
-
-func open_entity_gui(entity: Entity) -> void:
-	var component := _get_gui_component_from(entity)
-	if not component:
-		return
-	
-	_open_gui = component.gui
-	player_inventory.inventories.add_child(_open_gui)
-	player_inventory.inventories.move_child(_open_gui, 0)
-	_open_gui.setup(self)
-	_open_inventories()
-	
-
-
-func _get_gui_component_from(entity: Node) -> GUIComponent:
-	for child in entity.get_children():
-		if child is GUIComponent:
-			return child
-	
-	return null

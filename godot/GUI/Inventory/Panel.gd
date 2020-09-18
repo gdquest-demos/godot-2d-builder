@@ -38,7 +38,7 @@ func _gui_input(event: InputEvent) -> void:
 				if left_click and is_valid_filter(gui.blueprint.interactivity_id):
 					_grab_item()
 
-				elif right_click  and is_valid_filter(held_item.id):
+				elif right_click and is_valid_filter(gui.blueprint.interactivity_id):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -89,9 +89,9 @@ func _stack_items(split := false) -> void:
 
 	if split:
 		gui.blueprint.stack_count -= count
-		owner._update_label()
+		gui.update_label()
 	else:
-		owner.destroy_held_item()
+		gui.destroy_blueprint()
 
 	held_item.stack_count += count
 	_update_label()

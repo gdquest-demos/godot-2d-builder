@@ -148,17 +148,37 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	_deconstruct_tween.interpolate_property(_deconstruct_indicator, "value", 0, 100, 0.2)
 	_deconstruct_tween.start()
 
+	_deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT)
 	_deconstruct_timer.start()
-	_deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv])
 
 
 func _finish_deconstruct(cellv: Vector2) -> void:
+	var entity := _simulation.get_entity_at(cellv)
+	if entity and not entity.pickup_blueprint.empty():
+		var new_blueprint: BlueprintEntity = load(entity.pickup_blueprint).instance()
+		new_blueprint.stack_count = entity.pickup_count
+		
+		if not gui.add_to_inventory(new_blueprint):
+			pass #TODO: drop on floor
+
+	if entity.is_in_group("gui_entities"):
+		var inventories: Array = gui.find_inventory_bars_in(gui.get_gui_component_from(entity))
+		var inventory_items := []
+		for inventory in inventories:
+			inventory_items += inventory.get_inventory()
+		
+		for item in inventory_items:
+			if not gui.add_to_inventory(item):
+				pass #TODO: drop on floor
+
 	_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
 	_deconstruct_indicator.hide()
 
 
 func _abort_deconstruct() -> void:
+	if _deconstruct_timer.is_connected("timeout", self, "_finish_deconstruct"):
+		_deconstruct_timer.disconnect("timeout", self, "_finish_deconstruct")
 	_deconstruct_timer.stop()
 	_deconstruct_indicator.hide()
 
