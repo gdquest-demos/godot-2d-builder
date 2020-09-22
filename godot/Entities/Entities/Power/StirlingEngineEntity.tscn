@@ -44,7 +44,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( -2, -2, -2 ),
 "update": 0,
-"values": [ Vector2( 0, 21 ), Vector2( 0, -7.66572 ), Vector2( 0, 21 ) ]
+"values": [ Vector2( 0, -4 ), Vector2( 0, -32.666 ), Vector2( 0, -4 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("PistonBack:position")
@@ -56,7 +56,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( -2, -2, -2 ),
 "update": 0,
-"values": [ Vector2( 0, -8 ), Vector2( 0, -37.6657 ), Vector2( 0, -8 ) ]
+"values": [ Vector2( 0, -33.9232 ), Vector2( 0, -63 ), Vector2( 0, -33.9232 ) ]
 }
 
 [node name="StirlingEngine" type="StaticBody2D" groups=[
@@ -70,36 +70,36 @@ script = ExtResource( 4 )
 power_amount = 25.0
 
 [node name="EngineBase" type="Sprite" parent="."]
-position = Vector2( 0, 18.2497 )
+position = Vector2( 0, -5.68882 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 449, 149, 102, 62 )
 
 [node name="PistonBack" type="Sprite" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -33.9232 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 780, 139, 100, 27 )
 
 [node name="PistonShaft" type="Sprite" parent="."]
 modulate = Color( 0.501961, 0.662745, 1, 1 )
-position = Vector2( 0, -7.88049 )
+position = Vector2( 0, -31.819 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 584, 119, 52, 70 )
 
 [node name="PistonFront" type="Sprite" parent="."]
-position = Vector2( 0, 21 )
+position = Vector2( 0, -4 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 669, 164, 102, 37 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, 4.185 )
+position = Vector2( 0, -19.7535 )
 polygon = PoolVector2Array( -50.2016, 19.1812, -50.5989, 3.68654, 0.255356, -21.3433, 49.9177, 3.42167, 50.0501, 19.0488, -0.274368, 43.8137 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( -1.98425, -31.5496 )
+position = Vector2( -1.98425, -55.4881 )
 emitting = false
 amount = 2
 lifetime = 2.0

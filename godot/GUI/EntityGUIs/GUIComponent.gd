@@ -2,6 +2,7 @@ class_name GUIComponent
 extends Node
 
 
+#warning-ignore: unused_signal
 signal gui_status_changed
 
 
@@ -18,7 +19,7 @@ func _ready() -> void:
 	var base := BaseWindow.instance()
 	window = GuiWindow.instance()
 	
-	window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"])
+	var _error := window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"])
 	
 	base.set_window(window)
 	gui = base

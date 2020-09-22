@@ -16,7 +16,7 @@ onready var _power_indicator := find_node("PowerDirection")
 
 
 func make_inventory() -> void:
-	position = Vector2(25, 25)
+	position = Vector2(25, 37.5)
 	scale = Vector2(0.5, 0.5)
 	modulate = Color.white
 	if _power_indicator:

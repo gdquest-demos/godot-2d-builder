@@ -7,7 +7,7 @@ export(String, FILE) var pickup_blueprint: String
 var pickup_count := 1 setget , _get_pickup_count
 
 
-func _setup(blueprint: BlueprintEntity) -> void:
+func _setup(_blueprint: BlueprintEntity) -> void:
 	pass
 
 

@@ -13,10 +13,11 @@ id = "stirling_engine"
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
-position = Vector2( 0, 5 )
+position = Vector2( 0, -20.362 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 889, 119, 102, 92 )
 
 [node name="PowerDirection" parent="." instance=ExtResource( 4 )]
 visible = false
+position = Vector2( 0, -25 )

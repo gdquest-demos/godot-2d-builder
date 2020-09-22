@@ -87,19 +87,19 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="GameWorld/YSort/EntityPlacer"]
 
 [node name="StickEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 607, 460 )
+position = Vector2( 607, 476 )
 
 [node name="StickEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 507, 358 )
+position = Vector2( 507, 374 )
 
 [node name="StickEntity3" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 409, 508 )
+position = Vector2( 409, 524 )
 
 [node name="StickEntity4" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 905, 460 )
+position = Vector2( 905, 476 )
 
 [node name="StickEntity5" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 1054, 732 )
+position = Vector2( 1054, 748 )
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )
@@ -110,12 +110,12 @@ wait_time = 0.033
 [node name="GUI" parent="." instance=ExtResource( 10 )]
 debug_items = {
 ExtResource( 3 ): 1,
-Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
 ExtResource( 8 ): 2,
-Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50,
+ExtResource( 6 ): 100,
+Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
 Resource( "res://Entities/Blueprints/FurnaceBlueprint.tscn" ): 1,
 Resource( "res://Entities/Blueprints/ElectricFurnaceBlueprint.tscn" ): 1,
-ExtResource( 6 ): 100
+Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

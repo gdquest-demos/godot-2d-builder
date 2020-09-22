@@ -24,15 +24,14 @@ func grab_output(item: BlueprintEntity) -> void:
 		output.held_item.stack_count += item.stack_count
 		item.queue_free()
 	output_container.update_labels()
-	
 
 
-func _on_OreBar_inventory_changed(panel, held_item) -> void:
+func _on_OreBar_inventory_changed(_panel, held_item) -> void:
 	ore = held_item
 	emit_signal("gui_status_changed")
 
 
-func _on_FuelBar_inventory_changed(panel, held_item) -> void:
+func _on_FuelBar_inventory_changed(_panel, held_item) -> void:
 	fuel = held_item
 	emit_signal("gui_status_changed")
 

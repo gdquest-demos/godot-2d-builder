@@ -2,6 +2,9 @@
 class_name EntityPlacer
 extends TileMap
 
+
+const POSITION_OFFSET := Vector2(0, 25)
+
 # Temporary hard coded values, until inventory/quickbar system
 export var StirlingEngine: PackedScene
 export var Slab: PackedScene
@@ -57,6 +60,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_hover(cellv)
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
 		gui.blueprint.rotate_blueprint()
+	elif event.is_action_pressed("drop") and gui.blueprint:
+		_drop_entity()
 
 
 func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control) -> void:
@@ -77,7 +82,7 @@ func replace_wire(wire: Node2D, directions: int) -> void:
 
 func move_blueprint_in_world(cellv: Vector2) -> void:
 	gui.blueprint.make_world()
-	gui.blueprint.global_position = map_to_world(cellv)
+	gui.blueprint.global_position = map_to_world(cellv) + POSITION_OFFSET
 
 	if not _simulation.is_cell_occupied(cellv):
 		gui.blueprint.modulate = Color.white
@@ -129,7 +134,7 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 	else:
 		add_child(new_entity)
 
-	new_entity.global_position = map_to_world(cellv)
+	new_entity.global_position = map_to_world(cellv) + POSITION_OFFSET
 
 	_simulation.place_entity(new_entity, cellv)
 	new_entity._setup(gui.blueprint)
@@ -141,6 +146,15 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 		gui.update_label()
 
 
+func _drop_entity() -> void:
+	var ground_entity := GroundEntity.new()
+	ground_entity.setup(gui.blueprint)
+	add_child(ground_entity)
+	
+	ground_entity.global_position = get_global_mouse_position()
+	gui.blueprint = null
+
+
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	_deconstruct_indicator.show()
 	_deconstruct_indicator.rect_position = event_position
@@ -148,7 +162,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	_deconstruct_tween.interpolate_property(_deconstruct_indicator, "value", 0, 100, 0.2)
 	_deconstruct_tween.start()
 
-	_deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT)
+	var _error := _deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT)
 	_deconstruct_timer.start()
 
 

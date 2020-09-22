@@ -13,11 +13,11 @@ id = "battery"
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
-position = Vector2( 0, 8 )
+position = Vector2( 0, -15.3597 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 339, 119, 102, 82 )
 
 [node name="PowerDirection" parent="." instance=ExtResource( 4 )]
-visible = false
+position = Vector2( 0, -25 )
 output_directions = 4

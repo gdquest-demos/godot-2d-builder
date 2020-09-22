@@ -22,8 +22,8 @@ func _on_entity_placed(entity, cellv: Vector2) -> void:
 		workers[cellv] = _get_work_component_from(entity)
 
 
-func _on_entity_removed(entity, cellv: Vector2) -> void:
-	workers.erase(cellv)
+func _on_entity_removed(_entity, cellv: Vector2) -> void:
+	var _erased := workers.erase(cellv)
 
 
 func _get_work_component_from(entity) -> WorkComponent:

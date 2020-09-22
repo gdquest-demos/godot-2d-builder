@@ -29,6 +29,7 @@ onready var _drag_preview := $DragPreview
 func _ready() -> void:
 	player_inventory.setup(self)
 	quickbar.setup(self)
+	var _error := Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area")
 	
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
@@ -155,3 +156,16 @@ func _set_blueprint(value: BlueprintEntity) -> void:
 
 func _get_blueprint() -> BlueprintEntity:
 	return _drag_preview.blueprint
+
+
+func _on_Player_entered_pickup_area(entity: GroundEntity, player: KinematicBody2D) -> void:
+	if add_to_inventory(entity.blueprint):
+		while entity:
+			if entity and entity.global_position.distance_to(player.global_position) < 5.0:
+				break
+
+			var distance_to_player := entity.global_position.distance_to(player.global_position)
+			entity.global_position = entity.global_position.move_toward(player.global_position, 100.0 / distance_to_player)
+
+			yield(get_tree(), "idle_frame")
+		entity.queue_free()

@@ -12,9 +12,11 @@ stack_size = 5
 id = "electric_furnace"
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -25.0283 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 559, 119, 102, 102 )
 
 [node name="PowerDirection" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -25.0283 )
 output_directions = 0

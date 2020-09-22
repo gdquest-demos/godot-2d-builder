@@ -12,6 +12,7 @@ interactivity_id = "ore"
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 0, -20.69 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 672, 119, 96, 70 )

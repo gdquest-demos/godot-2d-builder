@@ -122,15 +122,18 @@ GuiWindow = ExtResource( 3 )
 script = ExtResource( 5 )
 
 [node name="Furnace" type="Sprite" parent="."]
+position = Vector2( 0, -24.6946 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 119, 229, 102, 102 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -24.6946 )
 polygon = PoolVector2Array( -50.25, 24.75, -50.25, 9.75, -0.25, -11.75, 50.25, 9.75, 50, 25.25, 0, 49.75 )
 
 [node name="Vents" type="Node2D" parent="."]
 modulate = Color( 1.62353, 0.784314, 0.270588, 0 )
+position = Vector2( 0, -24.6946 )
 
 [node name="Vents" type="Sprite" parent="Vents"]
 position = Vector2( -28, 13.25 )
@@ -146,7 +149,7 @@ region_rect = Rect2( 292, 299, 26, 19 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 modulate = Color( 2, 1.07, 0.08, 1 )
-position = Vector2( -28.8214, 12.8615 )
+position = Vector2( -28.8214, -11.8331 )
 emitting = false
 lifetime = 0.5
 visibility_rect = Rect2( -36.2296, -9.99514, 45.9992, 40.6713 )

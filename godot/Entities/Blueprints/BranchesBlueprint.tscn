@@ -12,6 +12,7 @@ interactivity_id = "fuel"
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 0, -26 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 803, 120, 58, 99 )

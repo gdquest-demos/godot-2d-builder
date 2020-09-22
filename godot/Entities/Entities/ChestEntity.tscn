@@ -27,7 +27,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( -15.9347, -16.5908 ), Vector2( -12.216, -16.826 ), Vector2( -8.75989, -15.0891 ), Vector2( -4.892, -13.17 ), Vector2( -1, -6.997 ), Vector2( 1.16798, -2.49153 ), Vector2( 0.917702, 1.51299 ), Vector2( 0, 5.10038 ) ]
+"values": [ Vector2( -15.935, -41.591 ), Vector2( -12.216, -41.826 ), Vector2( -8.76, -40.089 ), Vector2( -4.892, -38.17 ), Vector2( -1, -31.997 ), Vector2( 1.168, -27.492 ), Vector2( 0.918, -23.487 ), Vector2( 0, -19.9 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -54,7 +54,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 5.10038 ), Vector2( 0.917702, 1.51299 ), Vector2( 1.16798, -2.49153 ), Vector2( -0.166855, -6.99661 ), Vector2( -4.892, -13.17 ), Vector2( -8.75989, -15.0891 ), Vector2( -12.216, -17.056 ), Vector2( -15.9347, -16.5908 ) ]
+"values": [ Vector2( 0, -19.9 ), Vector2( 0.918, -23.487 ), Vector2( 1.168, -27.492 ), Vector2( -0.167, -31.997 ), Vector2( -4.892, -38.17 ), Vector2( -8.76, -40.08 ), Vector2( -12.216, -42.056 ), Vector2( -15.935, -41.591 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 5.10038 ) ]
+"values": [ Vector2( 0, -19.9 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Lid:region_rect")
@@ -88,13 +88,13 @@ tracks/1/keys = {
 [node name="ChestEntity" type="StaticBody2D"]
 
 [node name="Box" type="Sprite" parent="."]
-position = Vector2( 0, 15.1004 )
+position = Vector2( 0, -8.25934 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 29, 229, 62, 47 )
 
 [node name="Lid" type="Sprite" parent="."]
-position = Vector2( 0, 5.10038 )
+position = Vector2( 0, -19.9 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 909, 369, 62, 37 )
@@ -105,4 +105,5 @@ anims/Open = SubResource( 2 )
 anims/SETUP = SubResource( 3 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -23.3597 )
 polygon = PoolVector2Array( -29.9732, 22.4296, -29.9846, 12.71, 0.0888214, -3.11261, 30.3222, 13.4592, 30.5095, 22.6363, -0.0184937, 37.2448 )

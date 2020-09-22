@@ -11,7 +11,7 @@ id = "slab"
 
 [node name="Slab" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
-position = Vector2( 0, 13.1889 )
+position = Vector2( 0, -12.5068 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 9, 9, 102, 77 )

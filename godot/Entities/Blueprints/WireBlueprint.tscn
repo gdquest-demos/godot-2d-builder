@@ -12,7 +12,7 @@ id = "wire"
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )
-position = Vector2( 0, 50 )
+position = Vector2( 0, 27 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 120, 0, 100, 100 )

@@ -24,12 +24,12 @@ script = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 17.2724 )
+position = Vector2( 0, -6.95771 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 669, 449, 102, 67 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( -2.4817, -1.91985 )
+position = Vector2( -2.4817, -26.15 )
 polygon = PoolVector2Array( -47.3274, 26.8011, -47.4677, 17.9617, 2.34153, -7.1534, 52.712, 17.9617, 52.712, 27.0817, 2.62216, 51.9162 )
 [connection signal="received_power" from="PowerReceiver" to="." method="_on_PowerReceiver_received_power"]

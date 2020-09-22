@@ -8,6 +8,7 @@ script = ExtResource( 2 )
 pickup_blueprint = "res://Entities/Blueprints/BranchesBlueprint.tscn"
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -23.9385 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 180, 498, 38, 52 )

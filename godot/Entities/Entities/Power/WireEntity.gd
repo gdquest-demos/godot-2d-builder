@@ -6,5 +6,5 @@ extends Entity
 onready var sprite := $Sprite
 
 
-func _setup(blueprint: BlueprintEntity) -> void:
+func _setup(_blueprint: BlueprintEntity) -> void:
 	pass

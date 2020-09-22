@@ -11,6 +11,7 @@ stack_size = 5
 id = "furnace"
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -25.0283 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 449, 119, 102, 102 )

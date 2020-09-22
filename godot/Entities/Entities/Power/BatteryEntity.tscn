@@ -29,7 +29,7 @@ power_amount = 200.0
 output_direction = 4
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 8 )
+position = Vector2( 0, -14.6923 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 339, 119, 102, 82 )
@@ -37,13 +37,13 @@ region_rect = Rect2( 339, 119, 102, 82 )
 [node name="Indicator" type="Sprite" parent="."]
 modulate = Color( 1, 0, 0, 1 )
 material = SubResource( 1 )
-position = Vector2( -23.385, 5.5 )
+position = Vector2( -23.385, -17.1923 )
 scale = Vector2( 0.65, 0.65 )
 texture = ExtResource( 1 )
 region_rect = Rect2( 0, 0, 32, 37 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( -0.25, 38 )
+position = Vector2( -0.25, 15.3077 )
 polygon = PoolVector2Array( -50.2676, -14.8475, -49.8217, -24.8071, 0.422333, -47.848, 50.369, -24.2125, 50.5177, -15.2934, 0.125031, 10.5718 )
 [connection signal="received_power" from="PowerReceiver" to="." method="_on_PowerReceiver_received_power"]
 [connection signal="power_updated" from="PowerSource" to="." method="_on_PowerSource_power_updated"]

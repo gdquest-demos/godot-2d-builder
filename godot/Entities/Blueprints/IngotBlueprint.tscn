@@ -11,6 +11,7 @@ id = "ingot"
 interactivity_id = "metal"
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -5 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 119, 229, 102, 62 )
