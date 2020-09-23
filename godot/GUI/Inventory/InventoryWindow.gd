@@ -4,8 +4,7 @@ extends Control
 
 var gui: Control
 
-onready var windows := $MarginContainer/VBoxContainer
-onready var inventories := $MarginContainer/VBoxContainer/WindowBack/Window/Inventories
+onready var inventories := $WindowBack/Window/Inventories
 
 
 func setup(_gui: Control) -> void:

@@ -5,12 +5,6 @@ extends TileMap
 
 const POSITION_OFFSET := Vector2(0, 25)
 
-# Temporary hard coded values, until inventory/quickbar system
-export var StirlingEngine: PackedScene
-export var Slab: PackedScene
-export var Wire: PackedScene
-export var Battery: PackedScene
-
 var gui: Control
 var last_hovered: Node2D = null
 
@@ -173,7 +167,8 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		new_blueprint.stack_count = entity.pickup_count
 		
 		if not gui.add_to_inventory(new_blueprint):
-			pass #TODO: drop on floor
+			gui.blueprint = new_blueprint
+			_drop_entity()
 
 	if entity.is_in_group("gui_entities"):
 		var inventories: Array = gui.find_inventory_bars_in(gui.get_gui_component_from(entity))
@@ -183,7 +178,8 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		
 		for item in inventory_items:
 			if not gui.add_to_inventory(item):
-				pass #TODO: drop on floor
+				gui.blueprint = item
+				_drop_entity()
 
 	_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)

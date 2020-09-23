@@ -9,6 +9,7 @@ stack_size = 100
 placeable = false
 id = "branches"
 interactivity_id = "fuel"
+hand_craftable = false
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )

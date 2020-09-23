@@ -8,3 +8,4 @@ inputs = [ "fuel", "ore" ]
 output = "res://Entities/Blueprints/IngotBlueprint.tscn"
 amount_produced = 1
 time_per_produce = 5.0
+hand_craftable = false

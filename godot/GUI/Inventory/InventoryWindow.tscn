@@ -4,63 +4,49 @@
 [ext_resource path="res://GUI/Inventory/InventoryWindow.gd" type="Script" id=2]
 [ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=4]
 
-[node name="InventoryWindow" type="CenterContainer"]
-mouse_filter = 2
-use_top_left = true
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-margin_left = -358.0
-margin_top = -55.0
-margin_right = 357.0
-margin_bottom = 55.0
+[node name="InventoryWindow" type="MarginContainer"]
+margin_right = 715.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 715, 0 )
 mouse_filter = 2
 custom_constants/margin_right = 25
 custom_constants/margin_top = 25
 custom_constants/margin_left = 25
 custom_constants/margin_bottom = 25
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="WindowBack" type="PanelContainer" parent="."]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 690.0
 margin_bottom = 85.0
-custom_constants/separation = 10
-
-[node name="WindowBack" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
-margin_right = 665.0
-margin_bottom = 60.0
 mouse_filter = 1
 custom_styles/panel = ExtResource( 1 )
 
-[node name="Window" type="MarginContainer" parent="MarginContainer/VBoxContainer/WindowBack"]
+[node name="Window" type="MarginContainer" parent="WindowBack"]
 margin_right = 665.0
 margin_bottom = 60.0
 mouse_filter = 1
 custom_constants/margin_top = 20
 custom_constants/margin_bottom = 20
 
-[node name="Inventories" type="VBoxContainer" parent="MarginContainer/VBoxContainer/WindowBack/Window"]
+[node name="Inventories" type="VBoxContainer" parent="WindowBack/Window"]
 margin_top = 20.0
 margin_right = 665.0
 margin_bottom = 40.0
 custom_constants/separation = 10
 alignment = 1
 
-[node name="Inventory1" parent="MarginContainer/VBoxContainer/WindowBack/Window/Inventories" instance=ExtResource( 4 )]
+[node name="Inventory1" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
 margin_bottom = 0.0
 
-[node name="Inventory2" parent="MarginContainer/VBoxContainer/WindowBack/Window/Inventories" instance=ExtResource( 4 )]
+[node name="Inventory2" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
 margin_top = 10.0
 margin_bottom = 10.0
 
-[node name="Inventory3" parent="MarginContainer/VBoxContainer/WindowBack/Window/Inventories" instance=ExtResource( 4 )]
+[node name="Inventory3" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
 margin_top = 20.0
 margin_bottom = 20.0

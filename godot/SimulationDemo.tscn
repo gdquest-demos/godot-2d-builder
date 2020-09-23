@@ -1,13 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Entities/Blueprints/StirlingEngineBlueprint.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
-[ext_resource path="res://Entities/Blueprints/SlabBlueprint.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Entities/Blueprints/WireBlueprint.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
-[ext_resource path="res://Entities/Blueprints/BatteryBlueprint.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Entities/Entities/Natural/RockEntity.tscn" type="PackedScene" id=11]
@@ -62,10 +58,6 @@ cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 cell_y_sort = true
 format = 1
 script = ExtResource( 7 )
-StirlingEngine = ExtResource( 3 )
-Slab = ExtResource( 5 )
-Wire = ExtResource( 6 )
-Battery = ExtResource( 8 )
 
 [node name="Timer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
 wait_time = 0.2
@@ -109,13 +101,13 @@ wait_time = 0.033
 
 [node name="GUI" parent="." instance=ExtResource( 10 )]
 debug_items = {
-ExtResource( 3 ): 1,
-ExtResource( 8 ): 2,
-ExtResource( 6 ): 100,
-Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 50,
-Resource( "res://Entities/Blueprints/FurnaceBlueprint.tscn" ): 1,
+Resource( "res://Entities/Blueprints/BranchesBlueprint.tscn" ): 100,
+Resource( "res://Entities/Blueprints/StirlingEngineBlueprint.tscn" ): 1,
+Resource( "res://Entities/Blueprints/WireBlueprint.tscn" ): 100,
+Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 100,
 Resource( "res://Entities/Blueprints/ElectricFurnaceBlueprint.tscn" ): 1,
-Resource( "res://Entities/Blueprints/StoneBlueprint.tscn" ): 50
+Resource( "res://Entities/Blueprints/FurnaceBlueprint.tscn" ): 1,
+Resource( "res://Entities/Blueprints/BatteryBlueprint.tscn" ): 2
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

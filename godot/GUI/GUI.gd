@@ -20,7 +20,8 @@ var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
 var _open_gui: Control
 var _is_open := false
 
-onready var player_inventory := $InventoryWindow
+onready var player_inventory := $HBoxContainer/InventoryWindow
+onready var crafting_window := $HBoxContainer/CraftingGUI
 onready var quickbar_container := $MarginContainer/MarginContainer
 onready var quickbar := $MarginContainer/MarginContainer/Quickbar
 onready var _drag_preview := $DragPreview
@@ -33,14 +34,12 @@ func _ready() -> void:
 	
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
-	var index := 0
 	for item in debug_items.keys():
 		var item_instance: Node = item.instance()
-		var panel: Panel = player_inventory.inventories.get_child(0).panels[index]
-		panel.held_item = item_instance
 		item_instance.stack_count = min(item_instance.stack_size, debug_items[item])
-		panel._update_label()
-		index += 1
+		if not add_to_inventory(item_instance):
+			item_instance.queue_free()
+			return
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,7 +47,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _is_open:
 			_close_inventories()
 		else:
-			_open_inventories()
+			_open_inventories(true)
 	
 	for i in QUICKBAR_ACTIONS.size():
 		var quick_action: String = QUICKBAR_ACTIONS[i]
@@ -95,7 +94,7 @@ func open_entity_gui(entity: Entity) -> void:
 	player_inventory.inventories.add_child(_open_gui)
 	player_inventory.inventories.move_child(_open_gui, 0)
 	_open_gui.setup(self)
-	_open_inventories()
+	_open_inventories(false)
 
 
 func get_gui_component_from(entity: Node) -> GUIComponent:
@@ -121,15 +120,18 @@ func find_inventory_bars_in(component: GUIComponent) -> Array:
 	return output
 
 
-func _open_inventories() -> void:
+func _open_inventories(open_crafting: bool) -> void:
 	_is_open = true
 	player_inventory.visible = true
 	player_inventory.claim_quickbar(quickbar)
+	if open_crafting:
+		crafting_window.visible = true
 
 
 func _close_inventories() -> void:
 	_is_open = false
 	player_inventory.visible = false
+	crafting_window.visible = false
 	_claim_quickbar()
 	if _open_gui:
 		player_inventory.inventories.remove_child(_open_gui)
@@ -159,13 +161,12 @@ func _get_blueprint() -> BlueprintEntity:
 
 
 func _on_Player_entered_pickup_area(entity: GroundEntity, player: KinematicBody2D) -> void:
+	var amount := entity.blueprint.stack_count
 	if add_to_inventory(entity.blueprint):
-		while entity:
-			if entity and entity.global_position.distance_to(player.global_position) < 5.0:
-				break
-
-			var distance_to_player := entity.global_position.distance_to(player.global_position)
-			entity.global_position = entity.global_position.move_toward(player.global_position, 100.0 / distance_to_player)
-
-			yield(get_tree(), "idle_frame")
-		entity.queue_free()
+		entity.do_pickup(player)
+	else:
+		if entity.blueprint.stack_count < amount:
+			var new_entity := entity.duplicate()
+			entity.get_parent().call_deferred("add_child", new_entity)
+			new_entity.call_deferred("setup", entity.blueprint)
+			new_entity.call_deferred("do_pickup", player)
