@@ -1,13 +1,11 @@
 extends Node2D
 
-
 const REGIONS := [
 	[Rect2(899, 134, 31, 17), Rect2(950, 179, 31, 17)],
 	[Rect2(950, 134, 31, 17), Rect2(899, 179, 31, 17)]
 ]
 
-export(Types.Direction, FLAGS) var output_directions: int = 15 setget _set_output_directions
-
+export (Types.Direction, FLAGS) var output_directions: int = 15 setget _set_output_directions
 
 onready var west := $W
 onready var north := $N

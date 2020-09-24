@@ -1,7 +1,6 @@
 class_name GroundEntity
 extends Node2D
 
-
 var blueprint: BlueprintEntity
 
 onready var area := $Area2D
@@ -16,7 +15,7 @@ func setup(_blueprint: BlueprintEntity) -> void:
 	sprite.region_enabled = blueprint_sprite.region_enabled
 	sprite.region_rect = blueprint_sprite.region_rect
 	sprite.centered = blueprint_sprite.centered
-	
+
 
 func do_pickup(target: KinematicBody2D) -> void:
 	var elapsed_time := 0.1

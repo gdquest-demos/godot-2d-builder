@@ -3,7 +3,6 @@ extends Reference
 
 enum Direction { RIGHT = 1, DOWN = 2, LEFT = 4, UP = 8 }
 
-
 const NEIGHBORS := {
 	Direction.RIGHT: Vector2.RIGHT,
 	Direction.DOWN: Vector2.DOWN,

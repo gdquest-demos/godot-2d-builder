@@ -2,7 +2,6 @@
 # TODO: Give inventory, require fuel
 extends Entity
 
-
 onready var animation_player := $AnimationPlayer
 onready var tween := $Tween
 onready var shaft := $PistonShaft

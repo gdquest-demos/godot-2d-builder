@@ -1,6 +1,5 @@
 extends Entity
 
-
 onready var gui := $GUIComponent
 onready var work := $WorkComponent
 
@@ -11,22 +10,28 @@ onready var animation := $AnimationPlayer
 
 func _setup_work() -> void:
 	if (gui.window.fuel or available_fuel > 0.0) and gui.window.ore and work.available_work <= 0.0:
-		
-		var fuel_interactivities: Array = gui.window.fuel.interactivity_id.split(",") if gui.window.fuel else ["fuel"]
+		var fuel_interactivities: Array = (
+			gui.window.fuel.interactivity_id.split(",")
+			if gui.window.fuel
+			else ["fuel"]
+		)
 		var ore_interactivities: Array = gui.window.ore.interactivity_id.split(",")
-		
+
 		var recipes := []
-		
+
 		for fuel_interactivity in fuel_interactivities:
 			for ore_interactivity in ore_interactivities:
 				recipes.push_back([fuel_interactivity, ore_interactivity])
-		
+
 		for recipe in recipes:
 			if work.setup_work(recipe):
 				break
 
 		if work.current_output:
-			work.is_enabled = not gui.window.output.held_item or work.current_output.id == gui.window.output.held_item.id
+			work.is_enabled = (
+				not gui.window.output.held_item
+				or work.current_output.id == gui.window.output.held_item.id
+			)
 			if available_fuel <= 0.0:
 				_consume_fuel(0.0)
 

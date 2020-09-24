@@ -50,3 +50,6 @@ margin_bottom = 10.0
 [node name="Inventory3" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
 margin_top = 20.0
 margin_bottom = 20.0
+[connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory1" to="." method="_on_Inventory_inventory_changed"]
+[connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory2" to="." method="_on_Inventory_inventory_changed"]
+[connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory3" to="." method="_on_Inventory_inventory_changed"]

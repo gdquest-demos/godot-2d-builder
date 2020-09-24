@@ -60,3 +60,5 @@ margin_top = 10.0
 margin_right = 10.0
 margin_bottom = 10.0
 script = ExtResource( 5 )
+[connection signal="inventory_changed" from="HBoxContainer/InventoryWindow" to="." method="_on_inventory_changed"]
+[connection signal="inventory_changed" from="MarginContainer/MarginContainer/Quickbar" to="." method="_on_inventory_changed"]

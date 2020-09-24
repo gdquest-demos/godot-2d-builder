@@ -2,7 +2,6 @@
 # blueprint sprite.
 extends Control
 
-
 var blueprint: BlueprintEntity setget _set_blueprint
 
 onready var count_label := $Label

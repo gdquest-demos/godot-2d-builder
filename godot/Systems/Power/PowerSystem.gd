@@ -4,7 +4,6 @@
 class_name PowerSystem
 extends Reference
 
-
 var power_sources := {}
 var power_receivers := {}
 var power_movers := {}
@@ -26,11 +25,11 @@ func _init() -> void:
 
 func _retrace_paths() -> void:
 	paths.clear()
-	
+
 	for source in power_sources.keys():
 		cells_travelled.clear()
 		var path := _trace_path_from(source, [source])
-		
+
 		paths.push_back(path)
 
 
@@ -40,32 +39,44 @@ func _retrace_paths() -> void:
 func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 	var new_path := path
 	cells_travelled.push_back(cellv)
-	
+
 	var direction := 15
-	
+
 	if power_sources.has(cellv):
 		direction = power_sources[cellv].output_direction
-	
+
 	var receivers := _find_neighbors_in(cellv, power_receivers, direction)
 	for receiver in receivers:
 		if not receiver in cells_travelled:
 			direction = _combine_directions(receiver, cellv)
-			
+
 			var power_receiver: PowerReceiver = power_receivers[receiver]
 			if (
-				(direction & Types.Direction.RIGHT != 0 and power_receiver.input_direction & Types.Direction.LEFT == 0) or
-				(direction & Types.Direction.DOWN != 0 and power_receiver.input_direction & Types.Direction.UP == 0) or
-				(direction & Types.Direction.LEFT != 0 and power_receiver.input_direction & Types.Direction.RIGHT == 0) or
-				(direction & Types.Direction.UP != 0 and power_receiver.input_direction & Types.Direction.DOWN == 0)
+				(
+					direction & Types.Direction.RIGHT != 0
+					and power_receiver.input_direction & Types.Direction.LEFT == 0
+				)
+				or (
+					direction & Types.Direction.DOWN != 0
+					and power_receiver.input_direction & Types.Direction.UP == 0
+				)
+				or (
+					direction & Types.Direction.LEFT != 0
+					and power_receiver.input_direction & Types.Direction.RIGHT == 0
+				)
+				or (
+					direction & Types.Direction.UP != 0
+					and power_receiver.input_direction & Types.Direction.DOWN == 0
+				)
 			):
 				continue
 			new_path.push_back(receiver)
-	
+
 	var movers := _find_neighbors_in(cellv, power_movers)
 	for mover in movers:
 		if not mover in cells_travelled:
 			new_path = _trace_path_from(mover, new_path)
-	
+
 	return new_path
 
 
@@ -80,7 +91,7 @@ func _combine_directions(receiver: Vector2, cellv: Vector2) -> int:
 		direction |= Types.Direction.UP
 	elif receiver.y > cellv.y:
 		direction |= Types.Direction.DOWN
-	
+
 	return direction
 
 
@@ -91,29 +102,29 @@ func _find_neighbors_in(cellv: Vector2, collection: Dictionary, output_direction
 			var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
 			if collection.has(key):
 				neighbors.push_back(key)
-	
+
 	return neighbors
 
 
 func _on_systems_ticked(delta: float) -> void:
 	receivers_already_provided.clear()
-	
+
 	for path in paths:
 		var power_source: PowerSource = power_sources[path[0]]
-		
+
 		var available_power := power_source.get_effective_power()
 		var power_draw := 0.0
-		
+
 		for cell in path:
 			if cell == path[0]:
 				continue
-			
+
 			if not power_receivers.has(cell):
 				continue
-			
+
 			var power_receiver: PowerReceiver = power_receivers[cell]
 			var power_required := power_receiver.get_effective_power()
-			
+
 			# Keep track of the total amount of power each receiver has already
 			# received, in case of multiple power sources. Subtract the power
 			# the receiver still needs so we don't draw more than necessary.
@@ -123,15 +134,17 @@ func _on_systems_ticked(delta: float) -> void:
 					continue
 				else:
 					power_required -= receiver_total
-			
+
 			power_draw += power_required
-			power_receiver.emit_signal("received_power", min(available_power, power_required), delta)
+			power_receiver.emit_signal(
+				"received_power", min(available_power, power_required), delta
+			)
 
 			if not receivers_already_provided.has(cell):
 				receivers_already_provided[cell] = min(available_power, power_required)
 			else:
 				receivers_already_provided[cell] += min(available_power, power_required)
-			
+
 			available_power -= power_required
 
 		if power_draw > 0:
@@ -142,7 +155,7 @@ func _get_power_source_from(entity: Node) -> PowerSource:
 	for child in entity.get_children():
 		if child is PowerSource:
 			return child
-	
+
 	return null
 
 
@@ -150,7 +163,7 @@ func _get_power_receiver_from(entity: Node) -> PowerReceiver:
 	for child in entity.get_children():
 		if child is PowerReceiver:
 			return child
-	
+
 	return null
 
 

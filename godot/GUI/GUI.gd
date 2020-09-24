@@ -1,6 +1,5 @@
 extends CenterContainer
 
-
 const QUICKBAR_ACTIONS := [
 	"quickbar_1",
 	"quickbar_2",
@@ -32,7 +31,7 @@ func _ready() -> void:
 	quickbar.setup(self)
 	crafting_window.setup(self)
 	var _error := Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area")
-	
+
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
 	for item in debug_items.keys():
@@ -52,7 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_inventories()
 		else:
 			_open_inventories(true)
-	
+
 	for i in QUICKBAR_ACTIONS.size():
 		var quick_action: String = QUICKBAR_ACTIONS[i]
 		if InputMap.event_is_action(event, quick_action) and event.is_pressed():
@@ -63,7 +62,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func add_to_inventory(item: BlueprintEntity) -> bool:
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
-	var existing_stacks: Array = quickbar.find_panels_with(item.id) + player_inventory.find_panels_with(item.id)
+	var item_name := Library.get_filename_from(item)
+	var existing_stacks: Array = (
+		quickbar.find_panels_with(item_name)
+		+ player_inventory.find_panels_with(item_name)
+	)
 	for panel in existing_stacks:
 		if panel.held_item.stack_count < panel.held_item.stack_size:
 			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
@@ -74,7 +77,7 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 				panel.held_item.stack_count += item.stack_count
 				item.queue_free()
 				return true
-	
+
 	if quickbar.add_to_first_available_inventory(item):
 		return true
 
@@ -82,22 +85,13 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 
 
 func is_in_inventory(item_id: String, amount: int) -> bool:
-	var existing_stacks: Array = quickbar.find_panels_with(item_id) + player_inventory.find_panels_with(item_id)
-	
+	var existing_stacks: Array = (
+		quickbar.find_panels_with(item_id)
+		+ player_inventory.find_panels_with(item_id)
+	)
+
 	var stack_with_amount := []
-	
-	for stack in existing_stacks:
-		if stack.held_item.stack_count >= amount:
-			stack_with_amount.push_back(stack)
 
-	return not stack_with_amount.empty()
-
-
-func is_interactable_in_inventory(interactivity_id: String, amount: int) -> bool:
-	var existing_stacks: Array = quickbar.find_panels_with_interactivity(interactivity_id) + player_inventory.find_panels_with_interactivity(interactivity_id)
-	
-	var stack_with_amount := []
-	
 	for stack in existing_stacks:
 		if stack.held_item.stack_count >= amount:
 			stack_with_amount.push_back(stack)
@@ -117,7 +111,7 @@ func open_entity_gui(entity: Entity) -> void:
 	var component := get_gui_component_from(entity)
 	if not component:
 		return
-	
+
 	_open_gui = component.gui
 	player_inventory.inventories.add_child(_open_gui)
 	player_inventory.inventories.move_child(_open_gui, 0)
@@ -129,22 +123,22 @@ func get_gui_component_from(entity: Node) -> GUIComponent:
 	for child in entity.get_children():
 		if child is GUIComponent:
 			return child
-	
+
 	return null
 
 
 func find_inventory_bars_in(component: GUIComponent) -> Array:
 	var output := []
 	var parent_stack := [component.window]
-	
+
 	while not parent_stack.empty():
 		var current: Node = parent_stack.pop_back()
-		
+
 		if current is InventoryBar:
 			output.push_back(current)
-		
+
 		parent_stack += current.get_children()
-	
+
 	return output
 
 
@@ -199,3 +193,7 @@ func _on_Player_entered_pickup_area(entity: GroundEntity, player: KinematicBody2
 			entity.get_parent().call_deferred("add_child", new_entity)
 			new_entity.call_deferred("setup", entity.blueprint)
 			new_entity.call_deferred("do_pickup", player)
+
+
+func _on_inventory_changed(panel, held_item) -> void:
+	crafting_window.update_recipes()

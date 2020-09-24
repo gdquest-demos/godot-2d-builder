@@ -1,7 +1,6 @@
 class_name WorkSystem
 extends Reference
 
-
 var workers := {}
 
 

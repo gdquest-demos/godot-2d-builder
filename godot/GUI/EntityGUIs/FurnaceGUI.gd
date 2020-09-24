@@ -1,6 +1,5 @@
 extends BaseMachineGUI
 
-
 var ore: BlueprintEntity
 var fuel: BlueprintEntity
 var output: Panel

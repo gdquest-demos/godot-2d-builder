@@ -1,6 +1,5 @@
 extends PanelContainer
 
-
 onready var sprite := $HBoxContainer/Control/Sprite
 onready var label := $HBoxContainer/Label
 

@@ -1,11 +1,9 @@
 class_name WorkComponent
 extends Node
 
-
 signal work_accomplished(amount)
 signal work_done(output)
 signal work_enabled_changed(enabled)
-
 
 var current_output: BlueprintEntity
 var available_work := 0.0

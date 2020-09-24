@@ -3,14 +3,11 @@
 class_name InventoryBar
 extends HBoxContainer
 
-
 signal inventory_changed(panel, held_item)
-
 
 export var InventoryPanelScene: PackedScene
 export var slot_count := 10
 export var item_filters := ""
-
 
 var panels := []
 
@@ -29,9 +26,9 @@ func setup(gui: Control) -> void:
 func find_panels_with(item_id: String) -> Array:
 	var output := []
 	for panel in panels:
-		if panel.held_item and panel.held_item.id == item_id:
+		if panel.held_item and Library.get_filename_from(panel.held_item) == item_id:
 			output.push_back(panel)
-	
+
 	return output
 
 
@@ -40,7 +37,7 @@ func find_panels_with_interactivity(interactivity_id: String) -> Array:
 	for panel in panels:
 		if panel.held_item and panel.held_item.interactivity_id.find(interactivity_id) != -1:
 			output.push_back(panel)
-	
+
 	return output
 
 
@@ -49,7 +46,7 @@ func get_inventory() -> Array:
 	for panel in panels:
 		if panel.held_item:
 			output.push_back(panel.held_item)
-	
+
 	return output
 
 
@@ -63,7 +60,11 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 		return false
 
 	for panel in panels:
-		if panel.held_item and panel.held_item.id == item.id and panel.held_item.stack_count < panel.held_item.stack_size:
+		if (
+			panel.held_item
+			and Library.get_filename_from(panel.held_item) == Library.get_filename_from(item)
+			and panel.held_item.stack_count < panel.held_item.stack_size
+		):
 			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
 			if item.stack_count > available_space:
 				var transfer_count := item.stack_count - available_space

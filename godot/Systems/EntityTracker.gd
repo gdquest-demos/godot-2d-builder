@@ -3,16 +3,15 @@
 class_name EntityTracker
 extends Reference
 
-
 var entities := {}
 
 
 func place_entity(entity, cellv: Vector2) -> void:
 	if entities.has(cellv):
 		return
-	
+
 	entities[cellv] = {"entity": entity}
-	
+
 	Events.emit_signal("entity_placed", entity, cellv)
 
 

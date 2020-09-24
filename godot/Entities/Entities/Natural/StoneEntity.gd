@@ -1,6 +1,5 @@
 extends Entity
 
-
 const REGIONS := [
 	Rect2(12, 452, 38, 24),
 	Rect2(52, 451, 25, 23),
@@ -15,4 +14,4 @@ const REGIONS := [
 
 
 func _ready() -> void:
-	$Sprite.region_rect = REGIONS[int(rand_range(0, REGIONS.size()-1))]
+	$Sprite.region_rect = REGIONS[int(rand_range(0, REGIONS.size() - 1))]

@@ -4,7 +4,6 @@
 class_name Simulation
 extends Node
 
-
 # Time for systems to update at.
 export var simulation_speed := 1.0 / 30
 

@@ -3,9 +3,7 @@
 class_name InventoryPanel
 extends Panel
 
-
 signal held_item_changed(panel, item)
-
 
 var held_item: BlueprintEntity setget _set_held_item
 var silent := false
@@ -18,13 +16,16 @@ onready var count_label := $Label
 func _gui_input(event: InputEvent) -> void:
 	var left_click := event.is_action_pressed("left_click")
 	var right_click := event.is_action_pressed("right_click")
-	
+
 	if left_click or right_click:
 		if gui.blueprint:
+			var blueprint_name := Library.get_filename_from(gui.blueprint)
 			if held_item:
-				var item_is_same_type: bool = held_item.id == gui.blueprint.id
-				var stack_has_space: bool = held_item.stack_count < held_item.stack_size
+				var held_item_name := Library.get_filename_from(held_item)
 				
+				var item_is_same_type: bool = held_item_name == blueprint_name
+				var stack_has_space: bool = held_item.stack_count < held_item.stack_size
+
 				if item_is_same_type and stack_has_space:
 					if left_click:
 						_stack_items()
@@ -32,13 +33,13 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click and is_valid_filter(held_item.id):
+					if left_click and is_valid_filter(held_item_name):
 						_swap_items()
 			else:
-				if left_click and is_valid_filter(gui.blueprint.interactivity_id):
+				if left_click and is_valid_filter(blueprint_name):
 					_grab_item()
 
-				elif right_click and is_valid_filter(gui.blueprint.interactivity_id):
+				elif right_click and is_valid_filter(blueprint_name):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -119,7 +120,7 @@ func _release_item() -> void:
 
 
 func _split_items() -> void:
-	var count := int(held_item.stack_count/2.0)
+	var count := int(held_item.stack_count / 2.0)
 
 	var new_stack := held_item.duplicate()
 	new_stack.stack_count = count
@@ -130,7 +131,7 @@ func _split_items() -> void:
 
 
 func _grab_split_items() -> void:
-	var count: int = gui.blueprint.stack_count/2
+	var count: int = gui.blueprint.stack_count / 2
 
 	var new_stack: BlueprintEntity = gui.blueprint.duplicate()
 	new_stack.stack_count = count

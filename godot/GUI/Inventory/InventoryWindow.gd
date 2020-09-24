@@ -1,6 +1,7 @@
 # Class to hold and setup bars that are part of the inventory window.
 extends Control
 
+signal inventory_changed(panel, held_item)
 
 var gui: Control
 
@@ -33,7 +34,7 @@ func find_panels_with(item_id: String) -> Array:
 	for inventory in inventories.get_children():
 		if not inventory is Quickbar:
 			output += inventory.find_panels_with(item_id)
-	
+
 	return output
 
 
@@ -42,7 +43,7 @@ func find_panels_with_interactivity(interactivity_id: String) -> Array:
 	for inventory in inventories.get_children():
 		if not inventory is Quickbar:
 			output += inventory.find_panels_with_interactivity(interactivity_id)
-	
+
 	return output
 
 
@@ -63,3 +64,7 @@ func _get_held_item() -> BlueprintEntity:
 		return gui.blueprint
 	else:
 		return null
+
+
+func _on_Inventory_inventory_changed(panel, held_item) -> void:
+	emit_signal("inventory_changed", panel, held_item)

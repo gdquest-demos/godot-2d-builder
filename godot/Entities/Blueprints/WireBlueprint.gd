@@ -3,16 +3,13 @@
 class_name WireBlueprint
 extends BlueprintEntity
 
-
 const _directions_data := {
 	1: {"tile": 4, "region": Rect2(120, 10, 100, 100)},
 	4: {"tile": 4, "region": Rect2(120, 10, 100, 100)},
 	5: {"tile": 4, "region": Rect2(120, 10, 100, 100)},
-	
 	2: {"tile": 5, "region": Rect2(230, 10, 100, 100)},
 	8: {"tile": 5, "region": Rect2(230, 10, 100, 100)},
 	10: {"tile": 5, "region": Rect2(230, 10, 100, 100)},
-	
 	15: {"tile": 6, "region": Rect2(340, 10, 100, 100)},
 	6: {"tile": 7, "region": Rect2(450, 10, 100, 100)},
 	12: {"tile": 8, "region": Rect2(560, 10, 100, 100)},
@@ -36,7 +33,6 @@ static func get_region_for_direction(directions: int) -> Rect2:
 		directions = 10
 
 	return _directions_data[directions].region
-
 
 static func get_direction_tile_id(directions: int) -> int:
 	if not _directions_data.has(directions):

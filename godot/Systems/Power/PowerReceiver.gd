@@ -4,9 +4,8 @@ extends Node
 #warning-ignore: unused_signal
 signal received_power(amount, delta)
 
-
 export var power_required := 10.0
-export(Types.Direction, FLAGS) var input_direction := 15
+export (Types.Direction, FLAGS) var input_direction := 15
 
 var efficiency := 0.0
 

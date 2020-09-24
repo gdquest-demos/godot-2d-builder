@@ -7,8 +7,8 @@
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Entities/Entities/Natural/RockEntity.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Entities/Entities/Natural/StickEntity.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Entities/Entities/Natural/StoneEntity.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Entities/Entities/Natural/BranchesEntity.tscn" type="PackedScene" id=12]
 [ext_resource path="res://default_env.tres" type="Environment" id=14]
 
 [node name="Simulation" type="Node"]
@@ -105,6 +105,7 @@ wait_time = 0.033
 debug_items = {
 "Battery": 2,
 "Branches": 100,
+"Ingot": 3,
 "StirlingEngine": 1,
 "Stone": 50,
 "Wire": 50

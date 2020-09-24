@@ -2,7 +2,6 @@
 class_name EntityPlacer
 extends TileMap
 
-
 const POSITION_OFFSET := Vector2(0, 25)
 
 export var GroundEntityScene: PackedScene
@@ -31,7 +30,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var cellv := world_to_map(event.position)
 		if has_placeable_blueprint:
 			if not _simulation.is_cell_occupied(cellv):
-				if gui.blueprint.id == "wire":
+				if Library.get_filename_from(gui.blueprint) == "wire":
 					_place_entity(cellv, _get_powered_neighbors(cellv))
 				else:
 					_place_entity(cellv)
@@ -64,9 +63,12 @@ func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control) -> void
 	gui = _gui
 	_simulation = simulation
 	_flat_entities = flat_entities
-	
-	var existing_entities := flat_entities.get_children() + get_children().slice(3, get_child_count())
-	
+
+	var existing_entities := (
+		flat_entities.get_children()
+		+ get_children().slice(3, get_child_count())
+	)
+
 	for entity in existing_entities:
 		_simulation.place_entity(entity, world_to_map(entity.global_position))
 
@@ -85,7 +87,7 @@ func move_blueprint_in_world(cellv: Vector2) -> void:
 	else:
 		gui.blueprint.modulate = Color.red
 
-	if gui.blueprint.id == "wire":
+	if Library.get_filename_from(gui.blueprint) == "wire":
 		gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
@@ -122,9 +124,9 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 
 # Places an entity or wire and informs the simulation
 func _place_entity(cellv: Vector2, directions := 0) -> void:
-	var new_entity: Node2D = Library.entities[gui.blueprint.entity].instance()
+	var new_entity: Node2D = Library.entities[Library.get_filename_from(gui.blueprint)].instance()
 
-	if gui.blueprint.id == "wire":
+	if Library.get_filename_from(gui.blueprint) == "wire":
 		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 	else:
@@ -146,7 +148,7 @@ func _drop_entity() -> void:
 	var ground_entity := GroundEntityScene.instance()
 	add_child(ground_entity)
 	ground_entity.setup(gui.blueprint)
-	
+
 	ground_entity.global_position = get_global_mouse_position()
 	gui.blueprint = null
 
@@ -158,16 +160,19 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	_deconstruct_tween.interpolate_property(_deconstruct_indicator, "value", 0, 100, 0.2)
 	_deconstruct_tween.start()
 
-	var _error := _deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT)
+	var _error := _deconstruct_timer.connect(
+		"timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT
+	)
 	_deconstruct_timer.start()
 
 
 func _finish_deconstruct(cellv: Vector2) -> void:
 	var entity := _simulation.get_entity_at(cellv)
-	if entity and not entity.pickup_blueprint.empty():
-		var new_blueprint: BlueprintEntity = Library.blueprints[entity.pickup_blueprint].instance()
+	var entity_name := Library.get_filename_from(entity)
+	if entity and Library.blueprints.has(entity_name):
+		var new_blueprint: BlueprintEntity = Library.blueprints[entity_name].instance()
 		new_blueprint.stack_count = entity.pickup_count
-		
+
 		if not gui.add_to_inventory(new_blueprint):
 			gui.blueprint = new_blueprint
 			_drop_entity()
@@ -177,7 +182,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		var inventory_items := []
 		for inventory in inventories:
 			inventory_items += inventory.get_inventory()
-		
+
 		for item in inventory_items:
 			if not gui.add_to_inventory(item):
 				gui.blueprint = item
