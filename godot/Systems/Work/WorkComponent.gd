@@ -15,10 +15,10 @@ func setup_work(inputs: Dictionary, recipe_map: Dictionary) -> bool:
 	for output in recipe_map.keys():
 		if not Library.blueprints.has(output):
 			continue
-		
+
 		var can_craft := true
 		var recipe_inputs: Array = recipe_map[output].inputs.keys()
-		
+
 		for input in inputs.keys():
 			if not input in recipe_inputs or inputs[input] < recipe_map[output].inputs[input]:
 				can_craft = false

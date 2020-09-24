@@ -12,10 +12,13 @@ func _setup_work() -> void:
 	if (gui.window.fuel or available_fuel > 0.0) and gui.window.ore and work.available_work <= 0.0:
 		var ore_id: String = Library.get_filename_from(gui.window.ore)
 
-		if work.setup_work({ore_id : gui.window.ore.stack_count}, Recipes.Smelting):
+		if work.setup_work({ore_id: gui.window.ore.stack_count}, Recipes.Smelting):
 			work.is_enabled = (
 				not gui.window.output.held_item
-				or Library.get_filename_from(work.current_output) == Library.get_filename_from(gui.window.output.held_item)
+				or (
+					Library.get_filename_from(work.current_output)
+					== Library.get_filename_from(gui.window.output.held_item)
+				)
 			)
 			if available_fuel <= 0.0:
 				_consume_fuel(0.0)
@@ -43,7 +46,9 @@ func _consume_fuel(amount: float) -> void:
 
 
 func _consume_ore() -> bool:
-	var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(gui.window.ore)]
+	var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(
+		gui.window.ore
+	)]
 	if gui.window.ore and gui.window.ore.stack_count >= consumption_count:
 		gui.window.ore.stack_count -= consumption_count
 		if gui.window.ore.stack_count == 0:
