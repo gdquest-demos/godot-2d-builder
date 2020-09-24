@@ -231,7 +231,7 @@ tracks/4/keys = {
 
 [node name="ElectricFurnaceEntity" type="StaticBody2D"]
 script = ExtResource( 3 )
-pickup_blueprint = "res://Entities/Blueprints/ElectricFurnaceBlueprint.tscn"
+pickup_blueprint = "ElectricFurnace"
 
 [node name="PowerReceiver" type="Node" parent="."]
 script = ExtResource( 1 )

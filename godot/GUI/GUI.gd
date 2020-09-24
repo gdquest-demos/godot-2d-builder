@@ -30,12 +30,16 @@ onready var _drag_preview := $DragPreview
 func _ready() -> void:
 	player_inventory.setup(self)
 	quickbar.setup(self)
+	crafting_window.setup(self)
 	var _error := Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area")
 	
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
 	for item in debug_items.keys():
-		var item_instance: Node = item.instance()
+		if not Library.blueprints.has(item):
+			continue
+
+		var item_instance: Node = Library.blueprints[item].instance()
 		item_instance.stack_count = min(item_instance.stack_size, debug_items[item])
 		if not add_to_inventory(item_instance):
 			item_instance.queue_free()
@@ -75,6 +79,30 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 		return true
 
 	return player_inventory.add_to_first_available_inventory(item)
+
+
+func is_in_inventory(item_id: String, amount: int) -> bool:
+	var existing_stacks: Array = quickbar.find_panels_with(item_id) + player_inventory.find_panels_with(item_id)
+	
+	var stack_with_amount := []
+	
+	for stack in existing_stacks:
+		if stack.held_item.stack_count >= amount:
+			stack_with_amount.push_back(stack)
+
+	return not stack_with_amount.empty()
+
+
+func is_interactable_in_inventory(interactivity_id: String, amount: int) -> bool:
+	var existing_stacks: Array = quickbar.find_panels_with_interactivity(interactivity_id) + player_inventory.find_panels_with_interactivity(interactivity_id)
+	
+	var stack_with_amount := []
+	
+	for stack in existing_stacks:
+		if stack.held_item.stack_count >= amount:
+			stack_with_amount.push_back(stack)
+
+	return not stack_with_amount.empty()
 
 
 func destroy_blueprint() -> void:
@@ -125,6 +153,7 @@ func _open_inventories(open_crafting: bool) -> void:
 	player_inventory.visible = true
 	player_inventory.claim_quickbar(quickbar)
 	if open_crafting:
+		crafting_window.update_recipes()
 		crafting_window.visible = true
 
 

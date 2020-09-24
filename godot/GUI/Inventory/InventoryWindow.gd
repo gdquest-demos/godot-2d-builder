@@ -37,6 +37,15 @@ func find_panels_with(item_id: String) -> Array:
 	return output
 
 
+func find_panels_with_interactivity(interactivity_id: String) -> Array:
+	var output := []
+	for inventory in inventories.get_children():
+		if not inventory is Quickbar:
+			output += inventory.find_panels_with_interactivity(interactivity_id)
+	
+	return output
+
+
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 	for inventory in inventories.get_children():
 		if not inventory is Quickbar and inventory.add_to_first_available_inventory(item):

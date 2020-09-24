@@ -11,8 +11,20 @@ onready var animation := $AnimationPlayer
 
 func _setup_work() -> void:
 	if (gui.window.fuel or available_fuel > 0.0) and gui.window.ore and work.available_work <= 0.0:
-		var fuel_interactivity: String = gui.window.fuel.interactivity_id if gui.window.fuel else "fuel"
-		work.setup_work([fuel_interactivity, gui.window.ore.interactivity_id])
+		
+		var fuel_interactivities: Array = gui.window.fuel.interactivity_id.split(",") if gui.window.fuel else ["fuel"]
+		var ore_interactivities: Array = gui.window.ore.interactivity_id.split(",")
+		
+		var recipes := []
+		
+		for fuel_interactivity in fuel_interactivities:
+			for ore_interactivity in ore_interactivities:
+				recipes.push_back([fuel_interactivity, ore_interactivity])
+		
+		for recipe in recipes:
+			if work.setup_work(recipe):
+				break
+
 		if work.current_output:
 			work.is_enabled = not gui.window.output.held_item or work.current_output.id == gui.window.output.held_item.id
 			if available_fuel <= 0.0:
@@ -40,19 +52,25 @@ func _consume_fuel(amount: float) -> void:
 	work.is_enabled = available_fuel > 0.0
 
 
-func _consume_ore() -> void:
-	gui.window.ore.stack_count -= 1
-	if gui.window.ore.stack_count == 0:
-		gui.window.ore.queue_free()
-		gui.window.ore = null
-	else:
-		gui.window.update_labels()
+func _consume_ore() -> bool:
+	if gui.window.ore and gui.window.ore.stack_count >= 1:
+		gui.window.ore.stack_count -= 1
+		if gui.window.ore.stack_count == 0:
+			gui.window.ore.queue_free()
+			gui.window.ore = null
+		else:
+			gui.window.update_labels()
+		return true
+	return false
 
 
 func _on_WorkComponent_work_done(output: BlueprintEntity) -> void:
-	_consume_ore()
-	gui.window.grab_output(output)
-	_setup_work()
+	if _consume_ore():
+		gui.window.grab_output(output)
+		_setup_work()
+	else:
+		output.queue_free()
+		work.is_enabled = false
 
 
 func _on_WorkComponent_work_enabled_changed(enabled) -> void:

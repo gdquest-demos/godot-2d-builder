@@ -39,7 +39,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GUI/EntityGUIs/GUIComponent.gd"
 }, {
-"base": "Sprite",
+"base": "Node2D",
 "class": "GroundEntity",
 "language": "GDScript",
 "path": "res://Entities/GroundEntity.gd"
@@ -90,6 +90,11 @@ _global_script_classes=[ {
 "path": "res://Systems/Simulation.gd"
 }, {
 "base": "Reference",
+"class": "Smelting",
+"language": "GDScript",
+"path": "res://Systems/Work/Smelting.gd"
+}, {
+"base": "Reference",
 "class": "Types",
 "language": "GDScript",
 "path": "res://Shared/Types.gd"
@@ -131,6 +136,7 @@ _global_script_class_icons={
 "Recipe": "",
 "Recipes": "",
 "Simulation": "",
+"Smelting": "",
 "Types": "",
 "WireBlueprint": "",
 "WireEntity": "",
@@ -148,6 +154,7 @@ config/icon="res://icon.png"
 
 Events="*res://Autoload/Events.gd"
 Log="*res://Autoload/Log.gd"
+Library="*res://Autoload/Library.gd"
 
 [display]
 

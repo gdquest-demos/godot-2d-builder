@@ -35,6 +35,15 @@ func find_panels_with(item_id: String) -> Array:
 	return output
 
 
+func find_panels_with_interactivity(interactivity_id: String) -> Array:
+	var output := []
+	for panel in panels:
+		if panel.held_item and panel.held_item.interactivity_id.find(interactivity_id) != -1:
+			output.push_back(panel)
+	
+	return output
+
+
 func get_inventory() -> Array:
 	var output := []
 	for panel in panels:

@@ -11,21 +11,24 @@ var current_output: BlueprintEntity
 var available_work := 0.0
 var is_enabled := false setget _set_is_enabled
 
-onready var recipes := preload("recipes.tres")
 
-
-func setup_work(inputs: Array) -> void:
-	inputs.sort()
-
-	for recipe in recipes.recipes:
-		recipe.inputs.sort()
-		
-		if inputs == recipe.inputs:
-			var Blueprint: PackedScene = load(recipe.output)
-			if Blueprint:
-				current_output = Blueprint.instance()
-				current_output.stack_count = recipe.amount_produced
-				available_work = recipe.time_per_produce
+func setup_work(inputs: Array) -> bool:
+#	for recipe in recipes.recipes:
+#		var can_craft := true
+#		for input in inputs:
+#			if not input in recipe.inputs:
+#				can_craft = false
+#				break
+#
+#		if can_craft:
+#			var Blueprint: PackedScene = load(recipe.output)
+#			if Blueprint:
+#				current_output = Blueprint.instance()
+#				current_output.stack_count = recipe.amount_produced
+#				available_work = recipe.time_per_produce
+#				return true
+#
+	return false
 
 
 func work(delta: float) -> void:

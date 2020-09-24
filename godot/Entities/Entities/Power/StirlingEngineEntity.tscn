@@ -63,7 +63,7 @@ tracks/1/keys = {
 "power_sources",
 ]]
 script = ExtResource( 5 )
-pickup_blueprint = "res://Entities/Blueprints/StirlingEngineBlueprint.tscn"
+pickup_blueprint = "StirlingEngine"
 
 [node name="PowerSource" type="Node" parent="."]
 script = ExtResource( 4 )

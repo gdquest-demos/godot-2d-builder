@@ -5,6 +5,7 @@
 
 [node name="MetalIngotBlueprint" type="Node2D"]
 script = ExtResource( 1 )
+entity = "Ingot"
 stack_size = 50
 placeable = false
 id = "ingot"

@@ -17,7 +17,7 @@ shader_param/amount = 0.0
 "power_sources",
 ]]
 script = ExtResource( 3 )
-pickup_blueprint = "res://Entities/Blueprints/BatteryBlueprint.tscn"
+pickup_blueprint = "Battery"
 
 [node name="PowerReceiver" type="Node" parent="."]
 script = ExtResource( 4 )

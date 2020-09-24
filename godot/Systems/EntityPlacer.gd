@@ -5,6 +5,8 @@ extends TileMap
 
 const POSITION_OFFSET := Vector2(0, 25)
 
+export var GroundEntityScene: PackedScene
+
 var gui: Control
 var last_hovered: Node2D = null
 
@@ -120,7 +122,7 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 
 # Places an entity or wire and informs the simulation
 func _place_entity(cellv: Vector2, directions := 0) -> void:
-	var new_entity: Node2D = gui.blueprint.Entity.instance()
+	var new_entity: Node2D = Library.entities[gui.blueprint.entity].instance()
 
 	if gui.blueprint.id == "wire":
 		_flat_entities.add_child(new_entity)
@@ -141,9 +143,9 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 
 
 func _drop_entity() -> void:
-	var ground_entity := GroundEntity.new()
-	ground_entity.setup(gui.blueprint)
+	var ground_entity := GroundEntityScene.instance()
 	add_child(ground_entity)
+	ground_entity.setup(gui.blueprint)
 	
 	ground_entity.global_position = get_global_mouse_position()
 	gui.blueprint = null
@@ -163,7 +165,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 func _finish_deconstruct(cellv: Vector2) -> void:
 	var entity := _simulation.get_entity_at(cellv)
 	if entity and not entity.pickup_blueprint.empty():
-		var new_blueprint: BlueprintEntity = load(entity.pickup_blueprint).instance()
+		var new_blueprint: BlueprintEntity = Library.blueprints[entity.pickup_blueprint].instance()
 		new_blueprint.stack_count = entity.pickup_count
 		
 		if not gui.add_to_inventory(new_blueprint):

@@ -140,5 +140,5 @@ func _grab_split_items() -> void:
 	_update_label()
 
 
-func is_valid_filter(type: String) -> bool:
-	return _filter.empty() or type.find(_filter) != -1
+func is_valid_filter(types: String) -> bool:
+	return _filter.empty() or types.find(_filter) != -1

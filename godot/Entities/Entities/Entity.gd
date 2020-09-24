@@ -2,7 +2,7 @@ class_name Entity
 extends Node2D
 
 
-export(String, FILE) var pickup_blueprint: String
+export var pickup_blueprint: String
 
 var pickup_count := 1 setget , _get_pickup_count
 

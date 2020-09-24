@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-inputs = [ "fuel", "ore" ]
-output = "res://Entities/Blueprints/IngotBlueprint.tscn"
+inputs = [ "wood", "metal" ]
+input_amounts = [ 2.0, 3.0 ]
+output = "res://Entities/Blueprints/PickaxeBlueprint.tscn"
 amount_produced = 1
-time_per_produce = 5.0
-hand_craftable = false
+time_per_produce = 1.0
+hand_craftable = true

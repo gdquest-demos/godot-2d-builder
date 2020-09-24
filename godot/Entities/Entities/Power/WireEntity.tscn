@@ -7,7 +7,7 @@
 "power_movers",
 ]]
 script = ExtResource( 2 )
-pickup_blueprint = "res://Entities/Blueprints/WireBlueprint.tscn"
+pickup_blueprint = "Wire"
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, 27 )
