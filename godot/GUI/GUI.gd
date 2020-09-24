@@ -84,19 +84,24 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 	return player_inventory.add_to_first_available_inventory(item)
 
 
-func is_in_inventory(item_id: String, amount: int) -> bool:
+func find_panels_with(item_id: String) -> Array:
 	var existing_stacks: Array = (
 		quickbar.find_panels_with(item_id)
 		+ player_inventory.find_panels_with(item_id)
 	)
+	
+	return existing_stacks
 
-	var stack_with_amount := []
+
+func is_in_inventory(item_id: String, amount: int) -> bool:
+	var existing_stacks := find_panels_with(item_id)
+
+	var total := 0
 
 	for stack in existing_stacks:
-		if stack.held_item.stack_count >= amount:
-			stack_with_amount.push_back(stack)
+		total += stack.held_item.stack_count
 
-	return not stack_with_amount.empty()
+	return total >= amount
 
 
 func destroy_blueprint() -> void:

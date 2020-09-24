@@ -46,17 +46,18 @@ func _consume_fuel(amount: float) -> void:
 
 
 func _consume_ore() -> bool:
-	var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(
-		gui.window.ore
-	)]
-	if gui.window.ore and gui.window.ore.stack_count >= consumption_count:
-		gui.window.ore.stack_count -= consumption_count
-		if gui.window.ore.stack_count == 0:
-			gui.window.ore.queue_free()
-			gui.window.ore = null
-		else:
-			gui.window.update_labels()
-		return true
+	if gui.window.ore:
+		var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(
+			gui.window.ore
+		)]
+		if gui.window.ore.stack_count >= consumption_count:
+			gui.window.ore.stack_count -= consumption_count
+			if gui.window.ore.stack_count == 0:
+				gui.window.ore.queue_free()
+				gui.window.ore = null
+			else:
+				gui.window.update_labels()
+			return true
 	return false
 
 

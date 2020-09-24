@@ -3,7 +3,7 @@
 [ext_resource path="res://Entities/BlueprintEntity.gd" type="Script" id=1]
 [ext_resource path="res://Shared/blueprints.svg" type="Texture" id=2]
 
-[node name="PickaxeBlueprint" type="Node2D"]
+[node name="AxeBlueprint" type="Node2D"]
 script = ExtResource( 1 )
 placeable = false
 
@@ -11,4 +11,4 @@ placeable = false
 position = Vector2( 0, -25 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 242, 229, 68, 75 )
+region_rect = Rect2( 357, 229, 67, 85 )

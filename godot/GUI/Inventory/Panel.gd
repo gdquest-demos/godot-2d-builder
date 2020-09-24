@@ -33,13 +33,13 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click and is_valid_filter(held_item_name):
+					if left_click and _is_valid_filter(held_item_name):
 						_swap_items()
 			else:
-				if left_click and is_valid_filter(blueprint_name):
+				if left_click and _is_valid_filter(blueprint_name):
 					_grab_item()
 
-				elif right_click and is_valid_filter(blueprint_name):
+				elif right_click and _is_valid_filter(blueprint_name):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -141,5 +141,5 @@ func _grab_split_items() -> void:
 	_update_label()
 
 
-func is_valid_filter(types: String) -> bool:
+func _is_valid_filter(types: String) -> bool:
 	return _filter.empty() or _filter.find(types) != -1
