@@ -23,7 +23,7 @@ margin_bottom = 158.0
 margin_right = 50.0
 margin_bottom = 0.0
 slot_count = 1
-item_filters = "ore"
+item_filters = "Ore"
 
 [node name="Seperator" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 margin_right = 50.0
@@ -34,7 +34,7 @@ margin_top = 58.0
 margin_right = 50.0
 margin_bottom = 58.0
 slot_count = 1
-item_filters = "fuel"
+item_filters = "Branches, Coal"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 54.0
@@ -78,7 +78,7 @@ margin_top = 54.0
 margin_right = 50.0
 margin_bottom = 54.0
 slot_count = 1
-item_filters = "metal"
+item_filters = "Ingot"
 
 [node name="Seperator2" parent="HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
 margin_top = 58.0

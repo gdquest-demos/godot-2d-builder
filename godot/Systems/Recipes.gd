@@ -1,4 +1,23 @@
 class_name Recipes
-extends Resource
+extends Reference
 
-export (Array, Resource) var recipes := []
+const Smelting := {
+	Ingot = {
+		inputs = {
+			"Ore": 1
+		},
+		amount = 1,
+		time = 5.0
+	}
+}
+
+const Crafting := {
+	Pickaxe = {
+		inputs = {
+			"Branches": 2,
+			"Ingot": 3
+		},
+		amount = 1,
+		time = 1.0
+	}
+}

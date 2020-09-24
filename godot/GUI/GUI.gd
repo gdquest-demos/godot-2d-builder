@@ -113,8 +113,8 @@ func open_entity_gui(entity: Entity) -> void:
 		return
 
 	_open_gui = component.gui
-	player_inventory.inventories.add_child(_open_gui)
-	player_inventory.inventories.move_child(_open_gui, 0)
+	player_inventory.inventory_path.add_child(_open_gui)
+	player_inventory.inventory_path.move_child(_open_gui, 0)
 	_open_gui.setup(self)
 	_open_inventories(false)
 
@@ -157,7 +157,7 @@ func _close_inventories() -> void:
 	crafting_window.visible = false
 	_claim_quickbar()
 	if _open_gui:
-		player_inventory.inventories.remove_child(_open_gui)
+		player_inventory.inventory_path.remove_child(_open_gui)
 		_open_gui = null
 
 

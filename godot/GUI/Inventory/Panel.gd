@@ -22,7 +22,7 @@ func _gui_input(event: InputEvent) -> void:
 			var blueprint_name := Library.get_filename_from(gui.blueprint)
 			if held_item:
 				var held_item_name := Library.get_filename_from(held_item)
-				
+
 				var item_is_same_type: bool = held_item_name == blueprint_name
 				var stack_has_space: bool = held_item.stack_count < held_item.stack_size
 
@@ -142,4 +142,4 @@ func _grab_split_items() -> void:
 
 
 func is_valid_filter(types: String) -> bool:
-	return _filter.empty() or types.find(_filter) != -1
+	return _filter.empty() or _filter.find(types) != -1

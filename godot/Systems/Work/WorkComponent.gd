@@ -5,27 +5,32 @@ signal work_accomplished(amount)
 signal work_done(output)
 signal work_enabled_changed(enabled)
 
+var current_recipe: Dictionary
 var current_output: BlueprintEntity
 var available_work := 0.0
 var is_enabled := false setget _set_is_enabled
 
 
-func setup_work(inputs: Array) -> bool:
-#	for recipe in recipes.recipes:
-#		var can_craft := true
-#		for input in inputs:
-#			if not input in recipe.inputs:
-#				can_craft = false
-#				break
-#
-#		if can_craft:
-#			var Blueprint: PackedScene = load(recipe.output)
-#			if Blueprint:
-#				current_output = Blueprint.instance()
-#				current_output.stack_count = recipe.amount_produced
-#				available_work = recipe.time_per_produce
-#				return true
-#
+func setup_work(inputs: Dictionary, recipe_map: Dictionary) -> bool:
+	for output in recipe_map.keys():
+		if not Library.blueprints.has(output):
+			continue
+		
+		var can_craft := true
+		var recipe_inputs: Array = recipe_map[output].inputs.keys()
+		
+		for input in inputs.keys():
+			if not input in recipe_inputs or inputs[input] < recipe_map[output].inputs[input]:
+				can_craft = false
+				break
+
+		if can_craft:
+			current_recipe = recipe_map[output]
+			current_output = Library.blueprints[output].instance()
+			current_output.stack_count = current_recipe.amount
+			available_work = current_recipe.time
+			return true
+
 	return false
 
 

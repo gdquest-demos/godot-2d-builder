@@ -112,7 +112,6 @@ tracks/1/keys = {
 "workers",
 ]]
 script = ExtResource( 4 )
-pickup_blueprint = "Furnace"
 
 [node name="GUIComponent" type="Node" parent="."]
 script = ExtResource( 2 )

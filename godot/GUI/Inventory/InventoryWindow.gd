@@ -5,18 +5,19 @@ signal inventory_changed(panel, held_item)
 
 var gui: Control
 
-onready var inventories := $WindowBack/Window/Inventories
+onready var inventory_path := $WindowBack/Window/Inventories
+onready var inventories := inventory_path.get_children()
 
 
 func setup(_gui: Control) -> void:
 	gui = _gui
-	for bar in inventories.get_children():
+	for bar in inventories:
 		bar.setup(gui)
 
 
 func claim_quickbar(quickbar: Control) -> void:
 	quickbar.get_parent().remove_child(quickbar)
-	inventories.add_child(quickbar)
+	inventory_path.add_child(quickbar)
 
 
 func update_label() -> void:
@@ -31,25 +32,16 @@ func clear_held_item() -> void:
 
 func find_panels_with(item_id: String) -> Array:
 	var output := []
-	for inventory in inventories.get_children():
+	for inventory in inventories:
 		if not inventory is Quickbar:
 			output += inventory.find_panels_with(item_id)
 
 	return output
 
 
-func find_panels_with_interactivity(interactivity_id: String) -> Array:
-	var output := []
-	for inventory in inventories.get_children():
-		if not inventory is Quickbar:
-			output += inventory.find_panels_with_interactivity(interactivity_id)
-
-	return output
-
-
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
-	for inventory in inventories.get_children():
-		if not inventory is Quickbar and inventory.add_to_first_available_inventory(item):
+	for inventory in inventories:
+		if inventory.add_to_first_available_inventory(item):
 			return true
 
 	return false

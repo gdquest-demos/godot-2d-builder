@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=3 format=2]
-
-[ext_resource path="res://Systems/Recipes.gd" type="Script" id=1]
-[ext_resource path="res://Systems/Work/Recipes/pickaxe.tres" type="Resource" id=3]
-
-[resource]
-script = ExtResource( 1 )
-recipes = [ ExtResource( 3 ) ]

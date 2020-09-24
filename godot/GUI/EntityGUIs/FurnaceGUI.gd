@@ -19,9 +19,12 @@ func _setup(gui: Control) -> void:
 func grab_output(item: BlueprintEntity) -> void:
 	if not output.held_item:
 		output.held_item = item
-	elif output.held_item.id == item.id:
-		output.held_item.stack_count += item.stack_count
-		item.queue_free()
+	else:
+		var held_item_id := Library.get_filename_from(output.held_item)
+		var item_id := Library.get_filename_from(item)
+		if held_item_id == item_id:
+			output.held_item.stack_count += item.stack_count
+			item.queue_free()
 	output_container.update_labels()
 
 

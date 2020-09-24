@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GUI/Inventory/InventoryWindowStyle.tres" type="StyleBox" id=1]
 [ext_resource path="res://GUI/Crafting/Crafting.gd" type="Script" id=2]
-[ext_resource path="res://Systems/Work/recipes.tres" type="Resource" id=3]
 [ext_resource path="res://GUI/Inventory/InventoryPanel.tscn" type="PackedScene" id=4]
 
 [node name="CraftingGUI" type="MarginContainer"]
@@ -17,7 +16,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-recipes = ExtResource( 3 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 25.0
