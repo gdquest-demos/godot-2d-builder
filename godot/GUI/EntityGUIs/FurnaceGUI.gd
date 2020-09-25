@@ -7,6 +7,28 @@ var output: Panel
 onready var ore_container := $HBoxContainer/VBoxContainer/OreBar
 onready var fuel_container := $HBoxContainer/VBoxContainer/FuelBar
 onready var output_container := $HBoxContainer/VBoxContainer3/Output
+onready var tween := $Tween
+onready var arrow := $HBoxContainer/VBoxContainer2/Arrow/Sprite
+onready var fuel_bar := $HBoxContainer/VBoxContainer/FuelBar/ColorRect
+
+
+func work(time: float) -> void:
+	tween.interpolate_method(self, "_advance_work_time", 0, 1, time)
+	tween.start()
+
+
+func abort() -> void:
+	tween.stop_all()
+	tween.remove_all()
+	arrow.material.set_shader_param("fill_amount", 0)
+
+
+func set_fuel(amount: float) -> void:
+	fuel_bar.material.set_shader_param("fill_amount", amount)
+
+
+func _advance_work_time(amount: float) -> void:
+	arrow.material.set_shader_param("fill_amount", amount)
 
 
 func _setup(gui: Control) -> void:

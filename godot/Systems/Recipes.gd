@@ -1,11 +1,7 @@
 class_name Recipes
 extends Reference
 
-const Fuels := {
-	Lumber = 50.0,
-	Coal = 100.0,
-	Branches = 10.0
-}
+const Fuels := {Lumber = 50.0, Coal = 100.0, Branches = 10.0}
 
 const Smelting := {
 	Ingot = {inputs = {"Ore": 1}, amount = 1, time = 5.0},

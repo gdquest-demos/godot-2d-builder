@@ -16,7 +16,7 @@ func _ready() -> void:
 func _find_entities_in(path: String) -> void:
 	var directory := Directory.new()
 	var error := directory.open(path)
-	
+
 	if error != OK:
 		Log.log_error(error)
 		return
