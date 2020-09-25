@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
+[ext_resource path="res://Entities/Entities/Natural/BoulderEntity.gd" type="Script" id=2]
+
+[node name="BoulderEntity" type="StaticBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -18.1335 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240, 805, 82, 60 )
+
+[node name="CollisionPolygon2D1" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 25.3984 )
+polygon = PoolVector2Array( -15.9743, -8.63891, -22.9822, -23.3221, 2.54662, -31.9986, 31.0788, -26.4924, 22.7361, -13.3108, 7.55226, -5.3018 )
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 25.3984 )
+polygon = PoolVector2Array( -21.6474, -2.63213, -29.9901, -16.9817, 0.0437775, -30.8306, 34.9165, -26.4924, 29.9108, -17.3154 )
+disabled = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 25.3984 )
+polygon = PoolVector2Array( -23.4828, -13.6446, -40.1683, -24.4901, -39.5009, -30.3301, -1.12421, -42.1768, 40.4227, -39.1734, 40.5896, -34.1677, 22.2355, -20.8193 )
+disabled = true
