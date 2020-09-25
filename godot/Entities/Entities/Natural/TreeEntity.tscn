@@ -28,6 +28,7 @@ hue_variation = 0.05
 
 [node name="TreeEntity" type="StaticBody2D"]
 script = ExtResource( 2 )
+deconstruct_filter = "Axe"
 
 [node name="Roots" type="Sprite" parent="."]
 position = Vector2( 0, -12 )

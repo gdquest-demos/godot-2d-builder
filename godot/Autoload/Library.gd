@@ -7,6 +7,7 @@ const ENTITY := "Entity.tscn"
 
 var entities := {}
 var blueprints := {}
+var substitutions := {"Boulder": "Stone", "Tree": "Lumber"}
 
 
 func _ready() -> void:
@@ -43,6 +44,10 @@ func _find_entities_in(path: String) -> void:
 
 
 func get_filename_from(node: Node) -> String:
-	return node.filename.substr(node.filename.rfind("/") + 1).replace(BLUEPRINT, "").replace(
+	var filename := node.filename.substr(node.filename.rfind("/") + 1).replace(BLUEPRINT, "").replace(
 		ENTITY, ""
 	)
+	if substitutions.has(filename):
+		filename = substitutions[filename]
+
+	return filename

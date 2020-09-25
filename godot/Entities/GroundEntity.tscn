@@ -40,5 +40,6 @@ scale = Vector2( 0.25, 0.25 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Float"
 anims/Float = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]

@@ -60,7 +60,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
 		gui.blueprint.rotate_blueprint()
 	elif event.is_action_pressed("drop") and gui.blueprint:
-		_drop_entity()
+		_drop_entity(gui.blueprint, get_global_mouse_position())
+		gui.blueprint = null
 
 
 func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control) -> void:
@@ -148,16 +149,19 @@ func _place_entity(cellv: Vector2, directions := 0) -> void:
 		gui.update_label()
 
 
-func _drop_entity() -> void:
+func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
+	if entity.get_parent():
+		entity.get_parent().remove_child(entity)
 	var ground_entity := GroundEntityScene.instance()
 	add_child(ground_entity)
-	ground_entity.setup(gui.blueprint)
-
-	ground_entity.global_position = get_global_mouse_position()
-	gui.blueprint = null
+	ground_entity.setup(entity, location)
 
 
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
+	var entity := _simulation.get_entity_at(cellv)
+	if not entity.deconstruct_filter.empty() and (not gui.blueprint or not Library.get_filename_from(gui.blueprint) in entity.deconstruct_filter):
+		return
+	
 	_deconstruct_indicator.show()
 	_deconstruct_indicator.rect_position = event_position
 
@@ -174,24 +178,23 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 func _finish_deconstruct(cellv: Vector2) -> void:
 	var entity := _simulation.get_entity_at(cellv)
 	var entity_name := Library.get_filename_from(entity)
-	if entity and Library.blueprints.has(entity_name):
-		var new_blueprint: BlueprintEntity = Library.blueprints[entity_name].instance()
-		new_blueprint.stack_count = entity.pickup_count
 
-		if not gui.add_to_inventory(new_blueprint):
-			gui.blueprint = new_blueprint
-			_drop_entity()
+	var location := map_to_world(cellv)
+
+	if entity and Library.blueprints.has(entity_name):
+		var Blueprint: PackedScene = Library.blueprints[entity_name]
+
+		for _i in entity.pickup_count:
+			_drop_entity(Blueprint.instance(), location)
 
 	if entity.is_in_group("gui_entities"):
 		var inventories: Array = gui.find_inventory_bars_in(gui.get_gui_component_from(entity))
 		var inventory_items := []
 		for inventory in inventories:
 			inventory_items += inventory.get_inventory()
-
+	
 		for item in inventory_items:
-			if not gui.add_to_inventory(item):
-				gui.blueprint = item
-				_drop_entity()
+			_drop_entity(item, location)
 
 	_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)

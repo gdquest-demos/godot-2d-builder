@@ -13,3 +13,7 @@ func _ready() -> void:
 	collision.disabled = false
 	collision.show()
 	scale.x = 1 if rand_range(0, 10) < 5.5 else -1
+
+
+func _get_pickup_count() -> int:
+	return 10
