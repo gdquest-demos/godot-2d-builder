@@ -128,6 +128,7 @@ debug_items = {
 "Branches": 100,
 "Furnace": 1,
 "Ingot": 3,
+"Lumber": 1,
 "Ore": 20,
 "StirlingEngine": 1,
 "Stone": 50,

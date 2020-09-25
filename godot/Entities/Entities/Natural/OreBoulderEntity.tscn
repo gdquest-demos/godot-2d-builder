@@ -13,9 +13,11 @@ region_enabled = true
 region_rect = Rect2( 463, 793, 78, 69 )
 
 [node name="CollisionPolygon2D1" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PoolVector2Array( -18.3212, 7.90971, 24.9891, 8.08649, 33.8279, -6.23242, -0.466782, -19.3139, -35.8221, -10.6518, -36.706, -6.93953 )
 disabled = true
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PoolVector2Array( -38.4911, -6.6043, -37.9299, -15.0228, 0.0934906, -22.7397, 38.3975, -11.7957, 38.6781, -6.18338, 7.10887, 6.44432, -12.8148, 7.14586 )
 disabled = true

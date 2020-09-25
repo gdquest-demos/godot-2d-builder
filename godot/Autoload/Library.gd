@@ -15,9 +15,17 @@ func _ready() -> void:
 
 func _find_entities_in(path: String) -> void:
 	var directory := Directory.new()
-	directory.open(path)
+	var error := directory.open(path)
+	
+	if error != OK:
+		Log.log_error(error)
+		return
 
-	directory.list_dir_begin(true, true)
+	error = directory.list_dir_begin(true, true)
+	if error != OK:
+		Log.log_error(error)
+		return
+
 	var filename := directory.get_next()
 	while not filename.empty():
 		if directory.current_is_dir():

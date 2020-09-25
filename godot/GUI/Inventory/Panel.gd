@@ -142,4 +142,10 @@ func _grab_split_items() -> void:
 
 
 func _is_valid_filter(types: String) -> bool:
-	return _filter.empty() or _filter.find(types) != -1
+	if _filter.empty() or _filter.find(types) != -1:
+		return true
+	
+	if _filter.find("Fuels") != -1 and Recipes.Fuels.has(types):
+		return true
+	
+	return false

@@ -38,7 +38,9 @@ func update_recipes() -> void:
 			sprite.region_enabled,
 			sprite.region_rect
 		)
-		item.connect("recipe_activated", self, "_on_recipe_activated")
+		var error := item.connect("recipe_activated", self, "_on_recipe_activated")
+		if error != OK:
+			Log.log_error(error)
 
 		temp.free()
 

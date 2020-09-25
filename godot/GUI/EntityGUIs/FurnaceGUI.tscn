@@ -23,7 +23,7 @@ margin_bottom = 158.0
 margin_right = 50.0
 margin_bottom = 0.0
 slot_count = 1
-item_filters = "Ore"
+item_filters = "Ore, Lumber"
 
 [node name="Seperator" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 margin_right = 50.0
@@ -34,7 +34,7 @@ margin_top = 58.0
 margin_right = 50.0
 margin_bottom = 58.0
 slot_count = 1
-item_filters = "Branches, Coal"
+item_filters = "Fuels"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 54.0

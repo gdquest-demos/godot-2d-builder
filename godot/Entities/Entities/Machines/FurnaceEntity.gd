@@ -22,20 +22,15 @@ func _setup_work() -> void:
 			)
 			if available_fuel <= 0.0:
 				_consume_fuel(0.0)
-
-
-func _on_GUIComponent_gui_status_changed() -> void:
-	_setup_work()
-
-
-func _on_WorkComponent_work_accomplished(amount: float) -> void:
-	_consume_fuel(amount)
+	else:
+		work.is_enabled = false
 
 
 func _consume_fuel(amount: float) -> void:
 	available_fuel -= amount
 	if available_fuel <= 0.0 and gui.window.fuel:
-		available_fuel += 10.0
+		available_fuel += Recipes.Fuels[Library.get_filename_from(gui.window.fuel)]
+
 		gui.window.fuel.stack_count -= 1
 		if gui.window.fuel.stack_count == 0:
 			gui.window.fuel.queue_free()
@@ -60,6 +55,12 @@ func _consume_ore() -> bool:
 			return true
 	return false
 
+func _on_GUIComponent_gui_status_changed() -> void:
+	_setup_work()
+
+
+func _on_WorkComponent_work_accomplished(amount: float) -> void:
+	_consume_fuel(amount)
 
 func _on_WorkComponent_work_done(output: BlueprintEntity) -> void:
 	if _consume_ore():

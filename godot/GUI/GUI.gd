@@ -95,6 +95,8 @@ func find_panels_with(item_id: String) -> Array:
 
 func is_in_inventory(item_id: String, amount: int) -> bool:
 	var existing_stacks := find_panels_with(item_id)
+	if existing_stacks.empty():
+		return false
 
 	var total := 0
 
@@ -200,5 +202,5 @@ func _on_Player_entered_pickup_area(entity: GroundEntity, player: KinematicBody2
 			new_entity.call_deferred("do_pickup", player)
 
 
-func _on_inventory_changed(panel, held_item) -> void:
+func _on_inventory_changed(_panel: Panel, _held_item: BlueprintEntity) -> void:
 	crafting_window.update_recipes()
