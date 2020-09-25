@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Entities/GroundEntity.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
+[ext_resource path="res://Entities/Entities/Natural/TreeEntity.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
 [ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
@@ -94,6 +95,15 @@ position = Vector2( 905, 476 )
 
 [node name="StickEntity5" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
 position = Vector2( 1054, 748 )
+
+[node name="TreeEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
+position = Vector2( 951, 588 )
+
+[node name="TreeEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
+position = Vector2( 749, 439 )
+
+[node name="TreeEntity3" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
+position = Vector2( 350, 441 )
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )

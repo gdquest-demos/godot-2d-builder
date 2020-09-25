@@ -6,7 +6,6 @@ export var regular_style: StyleBoxFlat
 export var highlight_style: StyleBoxFlat
 export var bright_style: StyleBoxFlat
 
-
 onready var sprite := $HBoxContainer/Control/Sprite
 onready var label := $HBoxContainer/Label
 

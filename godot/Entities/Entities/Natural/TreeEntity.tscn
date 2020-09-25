@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
+[ext_resource path="res://Entities/Entities/Natural/TreeEntity.gd" type="Script" id=2]
+
+[node name="TreeEntity" type="StaticBody2D"]
+script = ExtResource( 2 )
+
+[node name="Roots" type="Sprite" parent="."]
+position = Vector2( 0, -12 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 914, 452, 52, 56 )
+
+[node name="Trunk" type="Sprite" parent="."]
+position = Vector2( 0, -59 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 814, 454, 32, 80 )
+
+[node name="Foliage" type="Sprite" parent="."]
+position = Vector2( 1.7818, -123.618 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 10, 560, 200, 200 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -12 )
+polygon = PoolVector2Array( -25.484, 15.4138, 0.240723, 27.5523, 25.52, 15.1911, 15.1633, -5.29957, -0.0933533, -12.204, -14.6818, -6.07911 )

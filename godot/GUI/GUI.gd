@@ -89,7 +89,7 @@ func find_panels_with(item_id: String) -> Array:
 		quickbar.find_panels_with(item_id)
 		+ player_inventory.find_panels_with(item_id)
 	)
-	
+
 	return existing_stacks
 
 
