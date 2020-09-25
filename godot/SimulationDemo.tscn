@@ -97,13 +97,13 @@ position = Vector2( 905, 476 )
 position = Vector2( 1054, 748 )
 
 [node name="TreeEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
-position = Vector2( 951, 588 )
+position = Vector2( 950, 599 )
 
 [node name="TreeEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
-position = Vector2( 749, 439 )
+position = Vector2( 749, 450 )
 
 [node name="TreeEntity3" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 5 )]
-position = Vector2( 350, 441 )
+position = Vector2( 350, 452 )
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 722.614, 595.161 )

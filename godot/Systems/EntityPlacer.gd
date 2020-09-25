@@ -11,6 +11,7 @@ var last_hovered: Node2D = null
 
 var _simulation: Simulation
 var _flat_entities: Node2D
+var _current_deconstruct_location := Vector2(INF, INF)
 
 onready var _deconstruct_timer := $Timer
 onready var _deconstruct_indicator := $TextureProgress
@@ -20,7 +21,7 @@ onready var _deconstruct_tween := $Tween
 func _unhandled_input(event: InputEvent) -> void:
 	# Abort deconstruction by stopping timer if the mouse moves/clicks/releases
 	# TODO: Grace period/area? Check Factorio deconstruction
-	if event is InputEventMouse:
+	if event is InputEventMouseButton:
 		_abort_deconstruct()
 
 	var has_placeable_blueprint: bool = gui.blueprint and gui.blueprint.placeable
@@ -49,6 +50,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Move or highlight devices and blueprints.
 	elif event is InputEventMouseMotion:
 		var cellv := world_to_map(event.position)
+		if cellv != _current_deconstruct_location:
+			_abort_deconstruct()
+
 		if has_placeable_blueprint:
 			move_blueprint_in_world(cellv)
 		else:
@@ -164,6 +168,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 		"timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT
 	)
 	_deconstruct_timer.start()
+	_current_deconstruct_location = cellv
 
 
 func _finish_deconstruct(cellv: Vector2) -> void:
