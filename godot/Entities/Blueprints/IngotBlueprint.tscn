@@ -5,11 +5,9 @@
 
 [node name="MetalIngotBlueprint" type="Node2D"]
 script = ExtResource( 1 )
-entity = "Ingot"
 stack_size = 50
 placeable = false
-id = "ingot"
-interactivity_id = "metal"
+description = "Smelted ore."
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -5 )

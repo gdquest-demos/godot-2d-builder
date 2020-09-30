@@ -18,6 +18,10 @@ func _ready() -> void:
 		receiver.input_direction = 15 ^ source.output_direction
 
 
+func get_info() -> String:
+	return ""
+
+
 func _setup(blueprint: BlueprintEntity) -> void:
 	source.output_direction = blueprint._power_indicator.output_directions
 	receiver.input_direction = 15 ^ source.output_direction

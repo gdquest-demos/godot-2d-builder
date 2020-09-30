@@ -159,9 +159,15 @@ func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
 
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	var entity := _simulation.get_entity_at(cellv)
-	if not entity.deconstruct_filter.empty() and (not gui.blueprint or not Library.get_filename_from(gui.blueprint) in entity.deconstruct_filter):
+	if (
+		not entity.deconstruct_filter.empty()
+		and (
+			not gui.blueprint
+			or not Library.get_filename_from(gui.blueprint) in entity.deconstruct_filter
+		)
+	):
 		return
-	
+
 	_deconstruct_indicator.show()
 	_deconstruct_indicator.rect_position = event_position
 
@@ -192,7 +198,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		var inventory_items := []
 		for inventory in inventories:
 			inventory_items += inventory.get_inventory()
-	
+
 		for item in inventory_items:
 			_drop_entity(item, location)
 
@@ -220,9 +226,11 @@ func _hover_entity(cellv: Vector2) -> void:
 	var entity: Node2D = _simulation.get_entity_at(cellv)
 	entity.modulate = Color.green
 	last_hovered = entity
+	Events.emit_signal("hovered_over_entity", entity)
 
 
 func _clear_hover_entity() -> void:
 	if last_hovered:
 		last_hovered.modulate = Color.white
 		last_hovered = null
+		Events.emit_signal("hovered_over_entity", null)

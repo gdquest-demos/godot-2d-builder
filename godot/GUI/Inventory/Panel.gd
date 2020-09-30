@@ -53,6 +53,8 @@ func _gui_input(event: InputEvent) -> void:
 					_release_item()
 				else:
 					_split_items()
+	elif event is InputEventMouseMotion and held_item:
+		Events.emit_signal("hovered_over_entity", held_item)
 
 
 func setup(_gui: Control, filter := "") -> void:
@@ -149,3 +151,7 @@ func _is_valid_filter(types: String) -> bool:
 		return true
 
 	return false
+
+
+func _on_InventoryPanel_mouse_exited() -> void:
+	Events.emit_signal("hovered_over_entity", null)

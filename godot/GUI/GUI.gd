@@ -24,6 +24,7 @@ onready var crafting_window := $HBoxContainer/CraftingGUI
 onready var quickbar_container := $MarginContainer/MarginContainer
 onready var quickbar := $MarginContainer/MarginContainer/Quickbar
 onready var _drag_preview := $DragPreview
+onready var info_gui := $InfoGUI
 
 
 func _ready() -> void:
@@ -49,6 +50,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
 		if _is_open:
 			_close_inventories()
+			info_gui.hide()
 		else:
 			_open_inventories(true)
 

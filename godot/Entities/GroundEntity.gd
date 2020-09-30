@@ -37,13 +37,23 @@ func do_pickup(target: KinematicBody2D) -> void:
 func _pop() -> void:
 	var direction := Vector2.UP.rotated(rand_range(-PI, PI))
 	direction.y /= 2.0
-	direction *= rand_range(20,70)
-	
+	direction *= rand_range(20, 70)
+
 	var target_position := global_position + direction
 	var height_position := global_position + direction * Vector2(0.5, 2 * -sign(direction.y))
-	
-	tween.interpolate_property(self, "global_position", global_position, height_position, 0.15, Tween.TRANS_SINE, Tween.EASE_OUT)
-	tween.interpolate_property(self, "global_position", height_position, target_position, 0.25, 0, Tween.EASE_IN, 0.15)
+
+	tween.interpolate_property(
+		self,
+		"global_position",
+		global_position,
+		height_position,
+		0.15,
+		Tween.TRANS_SINE,
+		Tween.EASE_OUT
+	)
+	tween.interpolate_property(
+		self, "global_position", height_position, target_position, 0.25, 0, Tween.EASE_IN, 0.15
+	)
 	tween.start()
 	yield(tween, "tween_all_completed")
 	animation.play("Float")

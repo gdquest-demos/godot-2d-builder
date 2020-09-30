@@ -4,12 +4,12 @@ var ore: BlueprintEntity
 var fuel: BlueprintEntity
 var output: Panel
 
-onready var ore_container := $HBoxContainer/VBoxContainer/OreBar
-onready var fuel_container := $HBoxContainer/VBoxContainer/FuelBar
-onready var output_container := $HBoxContainer/VBoxContainer3/Output
+onready var ore_container := $Control/OreBar
+onready var fuel_container := $Control/FuelBar
+onready var output_container := $Control/Output
 onready var tween := $Tween
-onready var arrow := $HBoxContainer/VBoxContainer2/Arrow/Sprite
-onready var fuel_bar := $HBoxContainer/VBoxContainer/FuelBar/ColorRect
+onready var arrow := $Control/Arrow/Sprite
+onready var fuel_bar := $Control/ColorRect
 
 
 func work(time: float) -> void:

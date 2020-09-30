@@ -6,9 +6,10 @@
 [node name="PickaxeBlueprint" type="Node2D"]
 script = ExtResource( 1 )
 placeable = false
+description = "Enables the deconstruction of larger or harder rock and ore formations."
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -25 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 242, 229, 68, 75 )
+region_rect = Rect2( 246, 229, 70, 75 )

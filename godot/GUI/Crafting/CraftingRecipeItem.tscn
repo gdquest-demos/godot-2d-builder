@@ -18,29 +18,27 @@ regular_style = ExtResource( 2 )
 highlight_style = ExtResource( 4 )
 bright_style = ExtResource( 5 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Control" type="Control" parent="."]
 margin_right = 200.0
-margin_bottom = 50.0
-custom_constants/separation = 10
-
-[node name="Control" type="Control" parent="HBoxContainer"]
-margin_right = 50.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="Sprite" type="Sprite" parent="HBoxContainer/Control"]
-position = Vector2( 0, 6.25 )
+[node name="Sprite" type="Sprite" parent="Control"]
+position = Vector2( 4.5, 4.5 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 339, 119, 102, 82 )
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="Control"]
 margin_left = 60.0
-margin_top = 18.0
-margin_right = 106.0
-margin_bottom = 32.0
+margin_top = 17.576
+margin_right = 260.0
+margin_bottom = 31.576
 text = "Battery"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="mouse_entered" from="." to="." method="_on_CraftingRecipe_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_CraftingRecipe_mouse_exited"]

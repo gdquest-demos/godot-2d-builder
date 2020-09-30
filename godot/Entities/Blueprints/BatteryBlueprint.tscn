@@ -6,9 +6,8 @@
 
 [node name="BatteryBlueprint" type="Node2D"]
 script = ExtResource( 3 )
-entity = "Battery"
 stack_size = 8
-id = "battery"
+description = "Takes power in its input sides and provides its stored power from its output."
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )

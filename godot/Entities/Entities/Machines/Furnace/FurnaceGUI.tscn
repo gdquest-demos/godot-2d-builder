@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Entities/Machines/Furnace/FurnaceGUI.gd" type="Script" id=2]
+[ext_resource path="res://Shared/symbols.svg" type="Texture" id=4]
+
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float fill_amount : hint_range(0, 1.0) = 0.0;
+
+void fragment() {
+	vec4 color = MODULATE;
+	float pixel_fill = step(1.0 - fill_amount, UV.y);
+	
+	COLOR = clamp(color + (color * pixel_fill), 0, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/fill_amount = 0.0
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform float fill_amount : hint_range(0, 1.0) = 0.0;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	float pixel_fill = step(UV.x * 8.0, fill_amount);
+	
+	COLOR = clamp(color + (color * pixel_fill), 0, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/fill_amount = 0.0
+
+[node name="FurnaceGUI" type="MarginContainer"]
+margin_right = 185.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 185, 128 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+margin_right = 185.0
+margin_bottom = 128.0
+
+[node name="OreBar" parent="Control" instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_right = 16.0
+margin_bottom = 0.0
+slot_count = 1
+item_filters = "Ore, Lumber"
+
+[node name="FuelBar" parent="Control" instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 64.0
+margin_right = 16.0
+margin_bottom = 64.0
+slot_count = 1
+item_filters = "Fuels"
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+modulate = Color( 0.188235, 0.462745, 1, 1 )
+material = SubResource( 2 )
+margin_top = 64.0
+margin_right = 5.0
+margin_bottom = 89.0
+rect_min_size = Vector2( 5, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrow" type="Control" parent="Control"]
+margin_left = 72.0
+margin_top = 32.0
+margin_right = 122.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 50, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/Arrow"]
+material = SubResource( 4 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 10, 10, 50, 50 )
+
+[node name="Output" parent="Control" instance=ExtResource( 1 )]
+margin_left = 128.0
+margin_top = 32.0
+margin_right = 178.0
+margin_bottom = 32.0
+slot_count = 1
+item_filters = "Ingot"
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="inventory_changed" from="Control/OreBar" to="." method="_on_OreBar_inventory_changed"]
+[connection signal="inventory_changed" from="Control/FuelBar" to="." method="_on_FuelBar_inventory_changed"]

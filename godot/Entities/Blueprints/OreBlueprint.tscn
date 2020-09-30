@@ -7,6 +7,7 @@
 script = ExtResource( 2 )
 stack_size = 50
 placeable = false
+description = "Raw, natural metal ore."
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -25 )

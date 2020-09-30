@@ -10,3 +10,8 @@ signal entity_removed(entity, cellv)
 
 #warning-ignore: unused_signal
 signal entered_pickup_area(entity, player)
+
+#warning-ignore: unused_signal
+signal hovered_over_entity(entity)
+#warning-ignore: unused_signal
+signal info_updated(entity)

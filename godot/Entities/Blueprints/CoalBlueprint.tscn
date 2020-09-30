@@ -5,6 +5,7 @@
 
 [node name="CoalBlueprint" type="Node2D"]
 script = ExtResource( 2 )
+description = "Refined lumber. Burns more efficiently."
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -25 )

@@ -24,3 +24,4 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="mouse_exited" from="." to="." method="_on_InventoryPanel_mouse_exited"]

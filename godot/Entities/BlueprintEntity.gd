@@ -5,6 +5,7 @@ extends Node2D
 
 export var stack_size := 1
 export var placeable := true
+export var description := ""
 
 var stack_count := 1
 

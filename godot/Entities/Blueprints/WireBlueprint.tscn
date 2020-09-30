@@ -5,10 +5,8 @@
 
 [node name="WireBlueprint" type="Node2D"]
 script = ExtResource( 2 )
-entity = "Wire"
 stack_size = 100
-id = "wire"
-interactivity_id = "wire"
+description = "Transfers power from sources to receivers."
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.882353 )

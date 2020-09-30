@@ -6,6 +6,7 @@
 [node name="AxeBlueprint" type="Node2D"]
 script = ExtResource( 1 )
 placeable = false
+description = "Enables the deconstruction of large lumber structures like trees."
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -25 )

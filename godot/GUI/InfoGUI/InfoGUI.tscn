@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/Inventory/InventoryWindowStyle.tres" type="StyleBox" id=1]
+[ext_resource path="res://GUI/InfoGUI/InfoGUI.gd" type="Script" id=2]
+[ext_resource path="res://GUI/Inventory/QuickbarInventoryPanel.tres" type="DynamicFont" id=3]
+
+[node name="InfoGUI" type="PanelContainer"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 125.0
+margin_bottom = 45.0
+custom_styles/panel = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 100.0
+margin_bottom = 43.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 90.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 3 )

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Inventory/QuickbarInventoryPanel.tres" type="DynamicFont" id=1]
+
+[node name="InfoLabel" type="Label"]
+margin_bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
