@@ -122,8 +122,9 @@ func open_entity_gui(entity: Entity) -> void:
 		return
 
 	_open_gui = component.gui
-	player_inventory.inventory_path.add_child(_open_gui)
-	player_inventory.inventory_path.move_child(_open_gui, 0)
+	if not _open_gui.get_parent() == player_inventory.inventory_path:
+		player_inventory.inventory_path.add_child(_open_gui)
+		player_inventory.inventory_path.move_child(_open_gui, 0)
 	_open_gui.setup(self)
 	_open_inventories(false)
 

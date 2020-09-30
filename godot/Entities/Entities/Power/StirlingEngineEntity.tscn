@@ -63,11 +63,10 @@ tracks/1/keys = {
 "power_sources",
 ]]
 script = ExtResource( 5 )
-pickup_blueprint = "StirlingEngine"
 
 [node name="PowerSource" type="Node" parent="."]
 script = ExtResource( 4 )
-power_amount = 25.0
+power_amount = 5.0
 
 [node name="EngineBase" type="Sprite" parent="."]
 position = Vector2( 0, -5.68882 )

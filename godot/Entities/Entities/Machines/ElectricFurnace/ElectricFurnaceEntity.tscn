@@ -1,8 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=1]
+[ext_resource path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceEntity.gd" type="Script" id=1]
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
-[ext_resource path="res://Entities/Entities/Entity.gd" type="Script" id=3]
+[ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=3]
+[ext_resource path="res://GUI/EntityGUIs/GUIComponent.gd" type="Script" id=4]
+[ext_resource path="res://Systems/Work/WorkComponent.gd" type="Script" id=5]
+[ext_resource path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceGUI.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.788945, 1 )
@@ -229,11 +232,22 @@ tracks/4/keys = {
 "values": [ 0.0, 225.0 ]
 }
 
-[node name="ElectricFurnaceEntity" type="StaticBody2D"]
-script = ExtResource( 3 )
+[node name="ElectricFurnaceEntity" type="StaticBody2D" groups=[
+"gui_entities",
+"power_receivers",
+"workers",
+]]
+script = ExtResource( 1 )
 
 [node name="PowerReceiver" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="WorkComponent" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="GUIComponent" type="Node" parent="."]
+script = ExtResource( 4 )
+GuiWindow = ExtResource( 6 )
 
 [node name="Furnace" type="Sprite" parent="."]
 position = Vector2( 0, -25.5679 )
@@ -253,7 +267,7 @@ region_enabled = true
 region_rect = Rect2( 242, 282, 20, 22 )
 
 [node name="IdleIndicator" type="Sprite" parent="."]
-modulate = Color( 0.572549, 1.4, 0.701961, 1 )
+modulate = Color( 0.572549, 1.4, 0.701961, 0 )
 position = Vector2( -32.6917, -42.4048 )
 texture = ExtResource( 2 )
 region_enabled = true
@@ -288,3 +302,9 @@ anims/Powered = SubResource( 4 )
 anims/SETUP = SubResource( 5 )
 anims/Shutdown = SubResource( 6 )
 anims/Work = SubResource( 7 )
+[connection signal="received_power" from="PowerReceiver" to="." method="_on_PowerReceiver_received_power"]
+[connection signal="work_accomplished" from="WorkComponent" to="." method="_on_WorkComponent_work_accomplished"]
+[connection signal="work_done" from="WorkComponent" to="." method="_on_WorkComponent_work_done"]
+[connection signal="work_enabled_changed" from="WorkComponent" to="." method="_on_WorkComponent_work_enabled_changed"]
+[connection signal="gui_opened" from="GUIComponent" to="." method="_on_GUIComponent_gui_opened"]
+[connection signal="gui_status_changed" from="GUIComponent" to="." method="_on_GUIComponent_gui_status_changed"]

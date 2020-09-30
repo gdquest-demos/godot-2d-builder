@@ -8,6 +8,7 @@ signal work_enabled_changed(enabled)
 var current_recipe: Dictionary
 var current_output: BlueprintEntity
 var available_work := 0.0
+var work_speed := 0.0
 var is_enabled := false setget _set_is_enabled
 
 
@@ -36,7 +37,7 @@ func setup_work(inputs: Dictionary, recipe_map: Dictionary) -> bool:
 
 func work(delta: float) -> void:
 	if is_enabled and available_work > 0.0:
-		var work_done := min(available_work, delta)
+		var work_done := delta * work_speed
 		available_work -= work_done
 		emit_signal("work_accomplished", work_done)
 		if available_work <= 0.0:

@@ -126,6 +126,7 @@ wait_time = 0.033
 debug_items = {
 "Battery": 2,
 "Branches": 100,
+"ElectricFurnace": 1,
 "Furnace": 1,
 "Ingot": 3,
 "Lumber": 1,
