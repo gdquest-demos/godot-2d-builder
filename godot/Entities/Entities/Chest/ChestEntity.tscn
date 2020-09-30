@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
-[ext_resource path="res://Entities/Entities/Entity.gd" type="Script" id=2]
+[ext_resource path="res://Entities/Entities/Chest/ChestEntity.gd" type="Script" id=2]
+[ext_resource path="res://GUI/EntityGUIs/GUIComponent.gd" type="Script" id=3]
+[ext_resource path="res://Entities/Entities/Chest/ChestGUI.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Close"
-length = 0.7
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Lid:region_rect")
 tracks/0/interp = 1
@@ -13,7 +16,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 23, 341, 38, 53 ), Rect2( 134, 341, 44, 51 ), Rect2( 244, 344, 52, 47 ), Rect2( 354, 348, 60, 43 ), Rect2( 575, 360, 68, 31 ), Rect2( 686, 368, 69, 23 ), Rect2( 797, 369, 67, 29 ), Rect2( 909, 369, 62, 37 ) ]
@@ -25,14 +28,15 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( -15.935, -41.591 ), Vector2( -12.216, -41.826 ), Vector2( -8.76, -40.089 ), Vector2( -4.892, -38.17 ), Vector2( -1, -31.997 ), Vector2( 1.168, -27.492 ), Vector2( 0.918, -23.487 ), Vector2( 0, -19.9 ) ]
 }
 
 [sub_resource type="Animation" id=2]
-length = 0.7
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Lid:region_rect")
 tracks/0/interp = 1
@@ -40,7 +44,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 909, 369, 62, 37 ), Rect2( 797, 369, 67, 29 ), Rect2( 686, 368, 69, 23 ), Rect2( 575, 360, 68, 31 ), Rect2( 354, 348, 60, 43 ), Rect2( 244, 344, 52, 47 ), Rect2( 134, 341, 44, 51 ), Rect2( 23, 341, 38, 53 ) ]
@@ -52,7 +56,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 0, -19.9 ), Vector2( 0.918, -23.487 ), Vector2( 1.168, -27.492 ), Vector2( -0.167, -31.997 ), Vector2( -4.892, -38.17 ), Vector2( -8.76, -40.08 ), Vector2( -12.216, -42.056 ), Vector2( -15.935, -41.591 ) ]
@@ -86,9 +90,14 @@ tracks/1/keys = {
 "values": [ Rect2( 909, 369, 62, 37 ) ]
 }
 
-[node name="ChestEntity" type="StaticBody2D"]
+[node name="ChestEntity" type="StaticBody2D" groups=[
+"gui_entities",
+]]
 script = ExtResource( 2 )
-pickup_blueprint = "Chest"
+
+[node name="GUIComponent" type="Node" parent="."]
+script = ExtResource( 3 )
+GuiWindow = ExtResource( 4 )
 
 [node name="Box" type="Sprite" parent="."]
 position = Vector2( 0, -8.25934 )
@@ -110,3 +119,5 @@ anims/SETUP = SubResource( 3 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, -23.3597 )
 polygon = PoolVector2Array( -29.9732, 22.4296, -29.9846, 12.71, 0.0888214, -3.11261, 30.3222, 13.4592, 30.5095, 22.6363, -0.0184937, 37.2448 )
+[connection signal="gui_closed" from="GUIComponent" to="." method="_on_GUIComponent_gui_closed"]
+[connection signal="gui_opened" from="GUIComponent" to="." method="_on_GUIComponent_gui_opened"]

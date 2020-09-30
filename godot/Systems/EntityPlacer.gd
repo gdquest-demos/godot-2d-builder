@@ -49,6 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var entity := _simulation.get_entity_at(cellv)
 			if entity.is_in_group("gui_entities"):
 				gui.open_entity_gui(entity)
+				_clear_hover_entity()
 	# Do hold-and-release entity removal using a yielded timer. If interrupted by
 	# another event, stop the timer.
 	elif event.is_action_pressed("right_click") and not has_placeable_blueprint:

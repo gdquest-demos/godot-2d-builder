@@ -5,6 +5,9 @@ extends Node
 signal gui_status_changed
 #warning-ignore: unused_signal
 signal gui_opened
+#warning-ignore: unused_signal
+signal gui_closed
+
 
 const BaseWindow := preload("MachineGUI.tscn")
 
@@ -20,6 +23,7 @@ func _ready() -> void:
 
 	var _error := window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"])
 	_error = window.connect("gui_opened", self, "emit_signal", ["gui_opened"])
+	_error = window.connect("gui_closed", self, "emit_signal", ["gui_closed"])
 
 	base.set_window(window)
 	gui = base

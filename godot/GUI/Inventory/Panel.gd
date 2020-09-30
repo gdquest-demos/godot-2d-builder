@@ -64,7 +64,7 @@ func setup(_gui: Control, filter := "") -> void:
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
-	if held_item:
+	if held_item and held_item.get_parent() == self:
 		remove_child(held_item)
 	held_item = value
 
