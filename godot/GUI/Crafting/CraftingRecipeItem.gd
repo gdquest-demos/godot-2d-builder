@@ -33,7 +33,9 @@ func setup(name: String, texture: Texture, uses_region_rect: bool, region_rect: 
 
 func _on_CraftingRecipe_mouse_exited() -> void:
 	set("custom_styles/panel", regular_style)
+	Events.emit_signal("hovered_over_entity", null)
 
 
 func _on_CraftingRecipe_mouse_entered() -> void:
 	set("custom_styles/panel", highlight_style)
+	Events.emit_signal("hovered_over_recipe", label.text, Recipes.Crafting[label.text])

@@ -9,6 +9,20 @@ var last_max_fuel := 0.0
 onready var animation := $AnimationPlayer
 
 
+func get_info() -> String:
+	if work.is_enabled:
+		return (
+			"Smelting: %s into %s\nTime left: %ss"
+			% [
+				Library.get_filename_from(gui.window.ore),
+				Library.get_filename_from(work.current_output),
+				stepify(work.available_work, 0.1)
+			]
+		)
+	else:
+		return ""
+
+
 func _setup_work() -> void:
 	if (gui.window.fuel or available_fuel > 0.0) and gui.window.ore and work.available_work <= 0.0:
 		var ore_id: String = Library.get_filename_from(gui.window.ore)
@@ -72,6 +86,7 @@ func _on_GUIComponent_gui_status_changed() -> void:
 
 func _on_WorkComponent_work_accomplished(amount: float) -> void:
 	_consume_fuel(amount)
+	Events.emit_signal("info_updated", self)
 
 
 func _on_WorkComponent_work_done(output: BlueprintEntity) -> void:
@@ -81,6 +96,7 @@ func _on_WorkComponent_work_done(output: BlueprintEntity) -> void:
 	else:
 		output.queue_free()
 		work.is_enabled = false
+	Events.emit_signal("info_updated", self)
 
 
 func _on_WorkComponent_work_enabled_changed(enabled) -> void:

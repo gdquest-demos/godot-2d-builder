@@ -11,6 +11,7 @@ func _ready() -> void:
 	set_as_toplevel(true)
 	Events.connect("hovered_over_entity", self, "_on_hovered_over_entity")
 	Events.connect("info_updated", self, "_on_info_updated")
+	Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe")
 
 
 func _process(delta: float) -> void:
@@ -36,25 +37,37 @@ func _set_info(entity: Node) -> void:
 		output += "\n%s" % entity.description
 	else:
 		if entity.has_method("get_info"):
-			output += "\n%s" % entity.get_info()
+			var info: String = entity.get_info()
+			if not info.empty():
+				output += "\n%s" % info
 
 	label.text = output
-	rect_size = Vector2(0, 0)
 	show()
 
 
 func _on_hovered_over_entity(entity: Node) -> void:
-	if entity != current_entity:
+	if not entity == current_entity:
 		current_entity = entity
-	else:
-		return
+
 	if not entity:
+		label.text = ""
 		hide()
 		return
 
 	_set_info(entity)
+	set_deferred("rect_size", Vector2.ZERO)
 
 
 func _on_info_updated(entity: Node) -> void:
 	if current_entity and entity == current_entity:
 		_set_info(current_entity)
+		set_deferred("rect_size", Vector2.ZERO)
+
+
+func _on_hovered_over_recipe(output: String, recipe: Dictionary) -> void:
+	var blueprint: BlueprintEntity = Library.blueprints[output].instance()
+	_set_info(blueprint)
+	var inputs: Dictionary = recipe.inputs
+	for input in inputs.keys():
+		label.text += "\n%s %s" % [inputs[input], input]
+	set_deferred("rect_size", Vector2.ZERO)

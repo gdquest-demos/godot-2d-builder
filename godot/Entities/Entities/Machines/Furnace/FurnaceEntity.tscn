@@ -6,7 +6,6 @@
 [ext_resource path="res://Entities/Entities/Machines/Furnace/FurnaceEntity.gd" type="Script" id=4]
 [ext_resource path="res://Systems/Work/WorkComponent.gd" type="Script" id=5]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.788945, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )

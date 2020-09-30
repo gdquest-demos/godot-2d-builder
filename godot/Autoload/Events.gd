@@ -15,3 +15,6 @@ signal entered_pickup_area(entity, player)
 signal hovered_over_entity(entity)
 #warning-ignore: unused_signal
 signal info_updated(entity)
+
+#warning-ignore: unused_signal
+signal hovered_over_recipe(output, recipe)

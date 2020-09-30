@@ -22,6 +22,7 @@ bright_style = ExtResource( 5 )
 margin_right = 200.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
+mouse_filter = 2
 
 [node name="Sprite" type="Sprite" parent="Control"]
 position = Vector2( 4.5, 4.5 )
