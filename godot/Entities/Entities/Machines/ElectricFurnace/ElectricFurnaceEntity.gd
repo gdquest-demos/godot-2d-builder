@@ -14,8 +14,8 @@ func get_info() -> String:
 				Library.get_filename_from(gui.window.ore),
 				Library.get_filename_from(work.current_output),
 				(
-					stepify(work.available_work / work.work_speed, 0.1)
-					if work.work_speed > 0.0
+					str(stepify(work.available_work / work.work_speed, 0.1))
+					if work.work_speed != 0.0
 					else "INF"
 				)
 			]
@@ -73,7 +73,7 @@ func _on_GUIComponent_gui_status_changed() -> void:
 	_setup_work()
 
 
-func _on_WorkComponent_work_accomplished(amount: float) -> void:
+func _on_WorkComponent_work_accomplished(_amount: float) -> void:
 	Events.emit_signal("info_updated", self)
 
 
@@ -87,14 +87,14 @@ func _on_WorkComponent_work_done(output: BlueprintEntity) -> void:
 	Events.emit_signal("info_updated", self)
 
 
-func _on_WorkComponent_work_enabled_changed(enabled) -> void:
+func _on_WorkComponent_work_enabled_changed(enabled: bool) -> void:
 	if enabled:
 		animation.play("Work")
 	else:
 		animation.play("Shutdown")
 
 
-func _on_PowerReceiver_received_power(amount, delta) -> void:
+func _on_PowerReceiver_received_power(amount: float, _delta: float) -> void:
 	var new_work_speed: float = amount / power.power_required
 	if not is_zero_approx(abs(new_work_speed - work.work_speed)):
 		gui.window.update_speed(new_work_speed)

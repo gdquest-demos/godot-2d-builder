@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.gd" type="Script" id=1]
+[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float fill_amount : hint_range(0, 1.0) = 0.0;
+
+void fragment() {
+	vec4 color = MODULATE;
+	float pixel_fill = step(1.0 - fill_amount, UV.y);
+	
+	COLOR = clamp(color + (color * pixel_fill), 0, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/fill_amount = 0.0
+
+[node name="StirlingEngineGUI" type="MarginContainer"]
+margin_right = 185.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 185, 128 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+margin_right = 185.0
+margin_bottom = 128.0
+
+[node name="FuelBar" parent="Control" instance=ExtResource( 2 )]
+margin_left = 16.0
+margin_right = 16.0
+margin_bottom = 0.0
+slot_count = 1
+item_filters = "Fuels"
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+modulate = Color( 0.188235, 0.462745, 1, 1 )
+material = SubResource( 2 )
+margin_right = 5.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 5, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="inventory_changed" from="Control/FuelBar" to="." method="_on_FuelBar_inventory_changed"]

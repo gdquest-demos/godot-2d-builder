@@ -147,8 +147,7 @@ func _on_systems_ticked(delta: float) -> void:
 
 			available_power -= power_required
 
-		if power_draw > 0:
-			power_source.emit_signal("power_updated", power_draw, delta)
+		power_source.emit_signal("power_updated", power_draw, delta)
 
 
 func _get_power_source_from(entity: Node) -> PowerSource:

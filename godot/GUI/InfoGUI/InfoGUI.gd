@@ -9,12 +9,12 @@ onready var label := $MarginContainer/Label
 
 func _ready() -> void:
 	set_as_toplevel(true)
-	Events.connect("hovered_over_entity", self, "_on_hovered_over_entity")
-	Events.connect("info_updated", self, "_on_info_updated")
-	Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe")
+	var _error := Events.connect("hovered_over_entity", self, "_on_hovered_over_entity")
+	_error = Events.connect("info_updated", self, "_on_info_updated")
+	_error = Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe")
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	rect_global_position = get_global_mouse_position() + OFFSET
 
 
@@ -31,7 +31,6 @@ func _get_components_from(entity: Node) -> Array:
 func _set_info(entity: Node) -> void:
 	var entity_filename: String = Library.get_filename_from(entity).capitalize()
 	var output := entity_filename
-	var components := []
 
 	if entity is BlueprintEntity:
 		output += "\n%s" % entity.description

@@ -3,6 +3,7 @@ extends Node
 
 #warning-ignore: unused_signal
 signal gui_status_changed
+#warning-ignore: unused_signal
 signal gui_opened
 
 const BaseWindow := preload("MachineGUI.tscn")
