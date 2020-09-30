@@ -15,12 +15,18 @@ onready var _entity_placer := $GameWorld/YSort/EntityPlacer
 # System to update power and keep track of power-related entities
 onready var _power_system := PowerSystem.new()
 onready var _work_system := WorkSystem.new()
-onready var _gui := $GUI
+onready var _gui := $CanvasLayer/GUI
+onready var player := $GameWorld/YSort/Player
+onready var ground := $GameWorld/Ground
 
 
 func _ready() -> void:
 	$Timer.start(simulation_speed)
-	_entity_placer.setup(self, $GameWorld/FlatEntities, $GUI)
+	_entity_placer.setup(self, $GameWorld/FlatEntities, _gui, ground)
+
+	var barriers: Array = ground.get_used_cells_by_id(1)
+	for cellv in barriers:
+		ground.set_cellv(cellv, 2)
 
 
 func place_entity(entity, cellv: Vector2) -> void:

@@ -24,4 +24,8 @@ shape = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
 shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
 [connection signal="area_entered" from="PickupRadius" to="." method="_on_PickupRadius_area_entered"]

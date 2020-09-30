@@ -27,7 +27,7 @@ func update_label() -> void:
 
 
 func _set_blueprint(value: BlueprintEntity) -> void:
-	if blueprint:
+	if blueprint and blueprint.get_parent() == self:
 		remove_child(blueprint)
 	blueprint = value
 	if blueprint:

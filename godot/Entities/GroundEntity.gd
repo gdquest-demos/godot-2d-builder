@@ -22,7 +22,7 @@ func setup(_blueprint: BlueprintEntity, location: Vector2) -> void:
 
 func do_pickup(target: KinematicBody2D) -> void:
 	var elapsed_time := 0.1
-	area.monitoring = false
+	area.hide()
 	while true:
 		var distance_to_target := global_position.distance_to(target.global_position)
 		if distance_to_target < 5.0:

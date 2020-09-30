@@ -2,6 +2,7 @@
 class_name EntityPlacer
 extends TileMap
 
+const MAXIMUM_WORK_DISTANCE := 275.0
 const POSITION_OFFSET := Vector2(0, 25)
 
 export var GroundEntityScene: PackedScene
@@ -12,6 +13,7 @@ var last_hovered: Node2D = null
 var _simulation: Simulation
 var _flat_entities: Node2D
 var _current_deconstruct_location := Vector2(INF, INF)
+var _ground: TileMap
 
 onready var _deconstruct_timer := $Timer
 onready var _deconstruct_indicator := $TextureProgress
@@ -20,36 +22,42 @@ onready var _deconstruct_tween := $Tween
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Abort deconstruction by stopping timer if the mouse moves/clicks/releases
-	# TODO: Grace period/area? Check Factorio deconstruction
 	if event is InputEventMouseButton:
 		_abort_deconstruct()
 
+	var global_mouse_position := get_global_mouse_position()
 	var has_placeable_blueprint: bool = gui.blueprint and gui.blueprint.placeable
+	var is_close_to_player := (
+		global_mouse_position.distance_to(_simulation.player.global_position)
+		< MAXIMUM_WORK_DISTANCE
+	)
 
 	# Place entities that have a placeable blue print on left button, if there is space.
 	if event.is_action_pressed("left_click"):
-		var cellv := world_to_map(event.position)
+		var cellv := world_to_map(global_mouse_position)
+
+		var is_on_ground: bool = _ground.get_cellv(cellv) == 0
+
 		if has_placeable_blueprint:
-			if not _simulation.is_cell_occupied(cellv):
+			if not _simulation.is_cell_occupied(cellv) and is_close_to_player and is_on_ground:
 				if Library.get_filename_from(gui.blueprint) == "wire":
 					_place_entity(cellv, _get_powered_neighbors(cellv))
 				else:
 					_place_entity(cellv)
 				_update_neighboring_flat_entities(cellv)
-		elif _simulation.is_cell_occupied(cellv):
+		elif _simulation.is_cell_occupied(cellv) and is_close_to_player:
 			var entity := _simulation.get_entity_at(cellv)
 			if entity.is_in_group("gui_entities"):
 				gui.open_entity_gui(entity)
 	# Do hold-and-release entity removal using a yielded timer. If interrupted by
 	# another event, stop the timer.
-	# TODO: Put removed items in inventory instead of just erasing it from existence
 	elif event.is_action_pressed("right_click") and not has_placeable_blueprint:
-		var cellv := world_to_map(event.position)
-		if _simulation.is_cell_occupied(cellv):
-			_deconstruct(event.position, cellv)
+		var cellv := world_to_map(global_mouse_position)
+		if _simulation.is_cell_occupied(cellv) and is_close_to_player:
+			_deconstruct(global_mouse_position, cellv)
 	# Move or highlight devices and blueprints.
 	elif event is InputEventMouseMotion:
-		var cellv := world_to_map(event.position)
+		var cellv := world_to_map(global_mouse_position)
 		if cellv != _current_deconstruct_location:
 			_abort_deconstruct()
 
@@ -59,15 +67,35 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_hover(cellv)
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
 		gui.blueprint.rotate_blueprint()
-	elif event.is_action_pressed("drop") and gui.blueprint:
-		_drop_entity(gui.blueprint, get_global_mouse_position())
-		gui.blueprint = null
+	elif event.is_action_pressed("drop") and gui.blueprint and is_close_to_player:
+		var is_on_ground: bool = _ground.get_cellv(world_to_map(global_mouse_position)) == 0
+
+		if is_on_ground:
+			_drop_entity(gui.blueprint, global_mouse_position)
+			gui.blueprint = null
+	elif event.is_action_pressed("sample") and not gui.blueprint:
+		_sample_entity_at(world_to_map(global_mouse_position))
 
 
-func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control) -> void:
+func _process(_delta: float) -> void:
+	var has_placeable_blueprint: bool = gui.blueprint and gui.blueprint.placeable
+	if (
+		has_placeable_blueprint
+		and (
+			Input.is_action_pressed("left")
+			or Input.is_action_pressed("right")
+			or Input.is_action_pressed("down")
+			or Input.is_action_pressed("up")
+		)
+	):
+		move_blueprint_in_world(world_to_map(get_global_mouse_position()))
+
+
+func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control, ground: TileMap) -> void:
 	gui = _gui
 	_simulation = simulation
 	_flat_entities = flat_entities
+	_ground = ground
 
 	var existing_entities := (
 		flat_entities.get_children()
@@ -85,9 +113,16 @@ func replace_wire(wire: Node2D, directions: int) -> void:
 
 func move_blueprint_in_world(cellv: Vector2) -> void:
 	gui.blueprint.make_world()
-	gui.blueprint.global_position = map_to_world(cellv) + POSITION_OFFSET
+	gui.blueprint.global_position = get_viewport_transform().xform(
+		map_to_world(cellv) + POSITION_OFFSET
+	)
+	var is_close_to_player := (
+		get_global_mouse_position().distance_to(_simulation.player.global_position)
+		< MAXIMUM_WORK_DISTANCE
+	)
+	var is_on_ground: bool = _ground.get_cellv(cellv) == 0
 
-	if not _simulation.is_cell_occupied(cellv):
+	if not _simulation.is_cell_occupied(cellv) and is_close_to_player and is_on_ground:
 		gui.blueprint.modulate = Color.white
 	else:
 		gui.blueprint.modulate = Color.red
@@ -205,6 +240,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 	_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
 	_deconstruct_indicator.hide()
+	Events.emit_signal("hovered_over_entity", null)
 
 
 func _abort_deconstruct() -> void:
@@ -215,7 +251,12 @@ func _abort_deconstruct() -> void:
 
 
 func _update_hover(cellv: Vector2) -> void:
-	if _simulation.is_cell_occupied(cellv):
+	var is_close_to_player := (
+		get_global_mouse_position().distance_to(_simulation.player.global_position)
+		< MAXIMUM_WORK_DISTANCE
+	)
+
+	if _simulation.is_cell_occupied(cellv) and is_close_to_player:
 		_hover_entity(cellv)
 	else:
 		_clear_hover_entity()
@@ -234,3 +275,18 @@ func _clear_hover_entity() -> void:
 		last_hovered.modulate = Color.white
 		last_hovered = null
 		Events.emit_signal("hovered_over_entity", null)
+
+
+func _sample_entity_at(cellv: Vector2) -> void:
+	var entity: Node = _simulation.get_entity_at(cellv)
+	if not entity:
+		return
+
+	var inventories_with: Array = gui.find_panels_with(Library.get_filename_from(entity))
+	if inventories_with.empty():
+		return
+
+	var input := InputEventMouseButton.new()
+	input.button_index = BUTTON_LEFT
+	input.pressed = true
+	inventories_with.front()._gui_input(input)
