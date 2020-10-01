@@ -8,7 +8,6 @@ signal gui_opened
 #warning-ignore: unused_signal
 signal gui_closed
 
-
 const BaseWindow := preload("MachineGUI.tscn")
 
 var gui: Control
@@ -21,9 +20,10 @@ func _ready() -> void:
 	var base := BaseWindow.instance()
 	window = GuiWindow.instance()
 
-	var _error := window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"])
-	_error = window.connect("gui_opened", self, "emit_signal", ["gui_opened"])
-	_error = window.connect("gui_closed", self, "emit_signal", ["gui_closed"])
+	Log.header = "GUI Component"
+	Log.log_error(window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"]))
+	Log.log_error(window.connect("gui_opened", self, "emit_signal", ["gui_opened"]))
+	Log.log_error(window.connect("gui_closed", self, "emit_signal", ["gui_closed"]))
 
 	base.set_window(window)
 	gui = base

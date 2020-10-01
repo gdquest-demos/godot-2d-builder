@@ -17,10 +17,11 @@ func _ready() -> void:
 
 
 func setup(gui: Control) -> void:
+	Log.header = "Inventory bar"
 	for panel in panels:
 		panel.setup(gui, item_filters)
 		if not panel.is_connected("held_item_changed", self, "_on_Panel_held_item_changed"):
-			panel.connect("held_item_changed", self, "_on_Panel_held_item_changed")
+			Log.log_error(panel.connect("held_item_changed", self, "_on_Panel_held_item_changed"))
 
 
 func find_panels_with(item_id: String) -> Array:

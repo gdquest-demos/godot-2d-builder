@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "MarginContainer",
 "class": "BaseMachineGUI",
 "language": "GDScript",
-"path": "res://GUI/EntityGUIs/BaseMachineGUI.gd"
+"path": "res://GUI/GUIEntities/BaseMachineGUI.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "BlueprintEntity",
 "language": "GDScript",
-"path": "res://Entities/BlueprintEntity.gd"
+"path": "res://Entities/Blueprints/BlueprintEntity.gd"
 }, {
 "base": "Node2D",
 "class": "Entity",
@@ -37,12 +37,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "GUIComponent",
 "language": "GDScript",
-"path": "res://GUI/EntityGUIs/GUIComponent.gd"
+"path": "res://GUI/GUIEntities/GUIComponent.gd"
 }, {
 "base": "Node2D",
 "class": "GroundEntity",
 "language": "GDScript",
-"path": "res://Entities/GroundEntity.gd"
+"path": "res://Entities/GroundItem.gd"
 }, {
 "base": "HBoxContainer",
 "class": "InventoryBar",
@@ -85,24 +85,19 @@ _global_script_classes=[ {
 "path": "res://Systems/Simulation.gd"
 }, {
 "base": "Reference",
-"class": "Smelting",
-"language": "GDScript",
-"path": "res://Systems/Work/Smelting.gd"
-}, {
-"base": "Reference",
 "class": "Types",
 "language": "GDScript",
 "path": "res://Shared/Types.gd"
 }, {
-"base": "BlueprintEntity",
+"base": "Reference",
 "class": "WireBlueprint",
 "language": "GDScript",
-"path": "res://Entities/Blueprints/WireBlueprint.gd"
+"path": "res://Entities/Blueprints/Wire/WireBlueprint.gd"
 }, {
 "base": "Entity",
 "class": "WireEntity",
 "language": "GDScript",
-"path": "res://Entities/Entities/Power/WireEntity.gd"
+"path": "res://Entities/Entities/Power/Wire/WireEntity.gd"
 }, {
 "base": "Node",
 "class": "WorkComponent",
@@ -130,7 +125,6 @@ _global_script_class_icons={
 "Quickbar": "",
 "Recipes": "",
 "Simulation": "",
-"Smelting": "",
 "Types": "",
 "WireBlueprint": "",
 "WireEntity": "",
@@ -272,6 +266,5 @@ sample={
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
 environment/default_clear_color=Color( 0.2, 0.290196, 0.592157, 1 )
 environment/default_environment="res://default_env.tres"

@@ -9,9 +9,10 @@ onready var label := $MarginContainer/Label
 
 func _ready() -> void:
 	set_as_toplevel(true)
-	var _error := Events.connect("hovered_over_entity", self, "_on_hovered_over_entity")
-	_error = Events.connect("info_updated", self, "_on_info_updated")
-	_error = Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe")
+	Log.header = "Info GUI"
+	Log.log_error(Events.connect("hovered_over_entity", self, "_on_hovered_over_entity"))
+	Log.log_error(Events.connect("info_updated", self, "_on_info_updated"))
+	Log.log_error(Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe"))
 
 
 func _process(_delta: float) -> void:

@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=4 format=2]
+
+[ext_resource path="res://Shared/Theme/WindowStyle.tres" type="StyleBox" id=1]
+[ext_resource path="res://Shared/Theme/InventoryPanelStyle.tres" type="StyleBox" id=2]
+[ext_resource path="res://Shared/Theme/BagnardSans.tres" type="DynamicFont" id=3]
+
+
+
+[resource]
+default_font = ExtResource( 3 )
+Label/fonts/font = null
+Panel/styles/panel = ExtResource( 2 )
+PanelContainer/styles/panel = ExtResource( 1 )

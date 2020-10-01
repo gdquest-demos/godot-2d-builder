@@ -1,6 +1,5 @@
 extends Entity
 
-
 onready var animation := $AnimationPlayer
 
 

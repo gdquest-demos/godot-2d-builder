@@ -3,9 +3,12 @@
 [ext_resource path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceEntity.gd" type="Script" id=1]
 [ext_resource path="res://Shared/tileset.svg" type="Texture" id=2]
 [ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=3]
-[ext_resource path="res://GUI/EntityGUIs/GUIComponent.gd" type="Script" id=4]
+[ext_resource path="res://GUI/GUIEntities/GUIComponent.gd" type="Script" id=4]
 [ext_resource path="res://Systems/Work/WorkComponent.gd" type="Script" id=5]
 [ext_resource path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceGUI.tscn" type="PackedScene" id=6]
+
+
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.788945, 1 )

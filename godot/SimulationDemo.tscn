@@ -1,16 +1,16 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Shared/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Entities/GroundEntity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/GroundItem.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
-[ext_resource path="res://Entities/Entities/Natural/TreeEntity.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Entities/Entities/Natural/BoulderEntity.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Entities/Entities/Natural/Tree/TreeEntity.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/Entities/Natural/Boulder/BoulderEntity.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
-[ext_resource path="res://Entities/Entities/Natural/OreEntity.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Entities/Entities/Natural/Ore/OreEntity.tscn" type="PackedScene" id=8]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Entities/Entities/Natural/StoneEntity.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Entities/Entities/Natural/BranchesEntity.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Entities/Entities/Natural/Stone/StoneEntity.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Entities/Entities/Natural/Branches/BranchesEntity.tscn" type="PackedScene" id=12]
 [ext_resource path="res://default_env.tres" type="Environment" id=14]
 
 [node name="Simulation" type="Node"]
@@ -66,8 +66,8 @@ wait_time = 0.2
 
 [node name="Tween" type="Tween" parent="GameWorld/YSort/EntityPlacer"]
 
-[node name="StickEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
-position = Vector2( 954.738, 304.651 )
+[node name="StickEntity1" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
+position = Vector2( 900.738, 323.651 )
 
 [node name="StickEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource( 12 )]
 position = Vector2( 854.738, 202.651 )

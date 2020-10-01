@@ -13,5 +13,9 @@ func _ready() -> void:
 	$Foliage.flip_h = rand_range(0, 10) < 5.5
 
 
+func get_entity_filename() -> String:
+	return "Lumber"
+
+
 func _get_pickup_count() -> int:
 	return 5

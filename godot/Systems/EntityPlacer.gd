@@ -46,7 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_update_neighboring_flat_entities(cellv)
 		elif _simulation.is_cell_occupied(cellv) and is_close_to_player:
 			var entity := _simulation.get_entity_at(cellv)
-			if entity.is_in_group("gui_entities"):
+			if entity.is_in_group(Types.GUI_ENTITIES):
 				gui.open_entity_gui(entity)
 				_clear_hover_entity()
 	# Do hold-and-release entity removal using a yielded timer. If interrupted by
@@ -97,10 +97,11 @@ func setup(simulation: Simulation, flat_entities: Node2D, _gui: Control, ground:
 	_flat_entities = flat_entities
 	_ground = ground
 
-	var existing_entities := (
-		flat_entities.get_children()
-		+ get_children().slice(3, get_child_count())
-	)
+	var existing_entities := flat_entities.get_children()
+
+	for child in get_children():
+		if child is Node2D or child is StaticBody2D:
+			existing_entities.push_back(child)
 
 	for entity in existing_entities:
 		_simulation.place_entity(entity, world_to_map(entity.global_position))
@@ -232,7 +233,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		for _i in entity.pickup_count:
 			_drop_entity(Blueprint.instance(), location)
 
-	if entity.is_in_group("gui_entities"):
+	if entity.is_in_group(Types.GUI_ENTITIES):
 		var inventories: Array = gui.find_inventory_bars_in(gui.get_gui_component_from(entity))
 		var inventory_items := []
 		for inventory in inventories:

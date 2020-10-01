@@ -32,7 +32,8 @@ func _ready() -> void:
 	player_inventory.setup(self)
 	quickbar.setup(self)
 	crafting_window.setup(self)
-	var _error := Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area")
+	Log.header = "GUI"
+	Log.log_error(Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area"))
 
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system
@@ -54,12 +55,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			info_gui.hide()
 		else:
 			_open_inventories(true)
-
-	for i in QUICKBAR_ACTIONS.size():
-		var quick_action: String = QUICKBAR_ACTIONS[i]
-		if InputMap.event_is_action(event, quick_action) and event.is_pressed():
-			_simulate_input(quickbar.panels[i])
-			break
+	else:
+		for i in QUICKBAR_ACTIONS.size():
+			var quick_action: String = QUICKBAR_ACTIONS[i]
+			if InputMap.event_is_action(event, quick_action) and event.is_pressed():
+				_simulate_input(quickbar.panels[i])
+				break
 
 
 func add_to_inventory(item: BlueprintEntity) -> bool:

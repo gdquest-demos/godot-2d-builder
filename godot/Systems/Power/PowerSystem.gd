@@ -17,7 +17,7 @@ var receivers_already_provided := {}
 
 
 func _init() -> void:
-	Log.log_message("Power system init")
+	Log.header = "Power System"
 	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"))
 	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"))
 	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"))
@@ -169,15 +169,15 @@ func _get_power_receiver_from(entity: Node) -> PowerReceiver:
 func _on_entity_placed(entity, cellv: Vector2) -> void:
 	var retrace := false
 
-	if entity.is_in_group("power_sources"):
+	if entity.is_in_group(Types.POWER_SOURCES):
 		power_sources[cellv] = _get_power_source_from(entity)
 		retrace = true
 
-	if entity.is_in_group("power_receivers"):
+	if entity.is_in_group(Types.POWER_RECEIVERS):
 		power_receivers[cellv] = _get_power_receiver_from(entity)
 		retrace = true
 
-	if entity.is_in_group("power_movers"):
+	if entity.is_in_group(Types.POWER_MOVERS):
 		power_movers[cellv] = entity
 		retrace = true
 

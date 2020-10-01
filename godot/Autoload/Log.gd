@@ -53,15 +53,13 @@ const ERROR_MESSAGES := {
 }
 
 var file: File
+var header := ""
 
 
 func _ready() -> void:
 	if ENABLED:
 		file = File.new()
-		var result := file.open("res://log.txt", File.READ_WRITE)
-
-		if result == ERR_FILE_NOT_FOUND:
-			result = file.open("res://log.txt", File.WRITE)
+		var result := file.open("res://log.txt", File.WRITE_READ)
 
 		if result == OK:
 			file.seek_end()
@@ -69,11 +67,7 @@ func _ready() -> void:
 		else:
 			print_debug("Couldn't open log.txt file! %s" % [ERROR_MESSAGES[result]])
 
-
-func _exit_tree() -> void:
-	if file:
-		file.store_string("\n")
-		file.close()
+		var _error := connect("tree_exiting", self, "_on_tree_exiting")
 
 
 func _notification(what: int) -> void:
@@ -85,16 +79,28 @@ func _notification(what: int) -> void:
 func log_error(error: int) -> void:
 	if ENABLED:
 		if error != OK:
+			var error_notification := "*****ERROR"
+			if not header.empty():
+				error_notification += " in %s" % header
+			error_notification += "*****"
+
 			var time := OS.get_datetime()
 			file.store_string(
 				(
-					"*****ERROR***** (%s:%s:%s) %s : %s"
-					% [time.hour, time.minute, time.second, ERROR_MESSAGES[error]]
+					"%s (%s:%s:%s) %s : %s\n"
+					% [
+						error_notification,
+						time.hour,
+						time.minute,
+						time.second,
+						error,
+						ERROR_MESSAGES[error]
+					]
 				)
 			)
 
 
-func log_message(message: String) -> void:
-	if ENABLED:
-		var time := OS.get_datetime()
-		file.store_string("(%s:%s:%s) %s" % [time.hour, time.minute, time.second, message])
+func _on_tree_exiting() -> void:
+	if file:
+		file.store_string("\n")
+		file.close()

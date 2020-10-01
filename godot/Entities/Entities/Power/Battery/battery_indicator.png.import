@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightning_symbol.png-46a0dc1b500ec0eeba2415d7b1e57201.stex"
+path="res://.import/battery_indicator.png-6679c40fe1cdbc0901c3586d3d39c00b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lightning_symbol.png"
-dest_files=[ "res://.import/lightning_symbol.png-46a0dc1b500ec0eeba2415d7b1e57201.stex" ]
+source_file="res://Entities/Entities/Power/Battery/battery_indicator.png"
+dest_files=[ "res://.import/battery_indicator.png-6679c40fe1cdbc0901c3586d3d39c00b.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
