@@ -53,17 +53,17 @@ func _setup_work() -> void:
 
 func _consume_ore() -> bool:
 	if gui.window.ore:
-		var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(
-			gui.window.ore
-		)]
-		if gui.window.ore.stack_count >= consumption_count:
-			gui.window.ore.stack_count -= consumption_count
-			if gui.window.ore.stack_count == 0:
-				gui.window.ore.queue_free()
-				gui.window.ore = null
-			else:
-				gui.window.update_labels()
-			return true
+		var ore_filename := Library.get_filename_from(gui.window.ore)
+		if work.current_recipe.inputs.has(ore_filename):
+			var consumption_count: int = work.current_recipe.inputs[ore_filename]
+			if gui.window.ore.stack_count >= consumption_count:
+				gui.window.ore.stack_count -= consumption_count
+				if gui.window.ore.stack_count == 0:
+					gui.window.ore.queue_free()
+					gui.window.ore = null
+				else:
+					gui.window.update_labels()
+				return true
 	else:
 		gui.window.abort()
 	return false

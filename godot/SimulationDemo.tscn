@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Entities/Entities/Natural/BoulderEntity.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Systems/EntityPlacer.gd" type="Script" id=7]
 [ext_resource path="res://Entities/Entities/Natural/OreEntity.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Shared/progress_circle.png" type="Texture" id=9]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Entities/Entities/Natural/StoneEntity.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Entities/Entities/Natural/BranchesEntity.tscn" type="PackedScene" id=12]
@@ -64,20 +63,6 @@ GroundEntityScene = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
 wait_time = 0.2
-
-[node name="TextureProgress" type="TextureProgress" parent="GameWorld/YSort/EntityPlacer"]
-visible = false
-margin_right = 56.0
-margin_bottom = 56.0
-rect_min_size = Vector2( 56, 56 )
-rect_scale = Vector2( 0.5, 0.5 )
-mouse_filter = 2
-value = 100.0
-texture_progress = ExtResource( 9 )
-fill_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Tween" type="Tween" parent="GameWorld/YSort/EntityPlacer"]
 

@@ -16,7 +16,6 @@ var _current_deconstruct_location := Vector2(INF, INF)
 var _ground: TileMap
 
 onready var _deconstruct_timer := $Timer
-onready var _deconstruct_indicator := $TextureProgress
 onready var _deconstruct_tween := $Tween
 
 
@@ -40,7 +39,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if has_placeable_blueprint:
 			if not _simulation.is_cell_occupied(cellv) and is_close_to_player and is_on_ground:
-				if Library.get_filename_from(gui.blueprint) == "wire":
+				if Library.get_filename_from(gui.blueprint) == "Wire":
 					_place_entity(cellv, _get_powered_neighbors(cellv))
 				else:
 					_place_entity(cellv)
@@ -128,7 +127,7 @@ func move_blueprint_in_world(cellv: Vector2) -> void:
 	else:
 		gui.blueprint.modulate = Color.red
 
-	if Library.get_filename_from(gui.blueprint) == "wire":
+	if Library.get_filename_from(gui.blueprint) == "Wire":
 		gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
@@ -167,7 +166,7 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 func _place_entity(cellv: Vector2, directions := 0) -> void:
 	var new_entity: Node2D = Library.entities[Library.get_filename_from(gui.blueprint)].instance()
 
-	if Library.get_filename_from(gui.blueprint) == "wire":
+	if Library.get_filename_from(gui.blueprint) == "Wire":
 		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 	else:
@@ -204,16 +203,20 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	):
 		return
 
-	_deconstruct_indicator.show()
-	_deconstruct_indicator.rect_position = event_position
+	gui.deconstruct_bar.rect_global_position = get_viewport_transform().xform(event_position)
+	gui.deconstruct_bar.show()
 
-	_deconstruct_tween.interpolate_property(_deconstruct_indicator, "value", 0, 100, 0.2)
+	var modifier := 1.0
+	if Library.get_filename_from(gui.blueprint).find("Crude") != -1:
+		modifier = 10.0
+
+	_deconstruct_tween.interpolate_property(gui.deconstruct_bar, "value", 0, 100, 0.2 * modifier)
 	_deconstruct_tween.start()
 
 	var _error := _deconstruct_timer.connect(
 		"timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT
 	)
-	_deconstruct_timer.start()
+	_deconstruct_timer.start(0.2 * modifier)
 	_current_deconstruct_location = cellv
 
 
@@ -240,7 +243,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 
 	_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
-	_deconstruct_indicator.hide()
+	gui.deconstruct_bar.hide()
 	Events.emit_signal("hovered_over_entity", null)
 
 
@@ -248,7 +251,7 @@ func _abort_deconstruct() -> void:
 	if _deconstruct_timer.is_connected("timeout", self, "_finish_deconstruct"):
 		_deconstruct_timer.disconnect("timeout", self, "_finish_deconstruct")
 	_deconstruct_timer.stop()
-	_deconstruct_indicator.hide()
+	gui.deconstruct_bar.hide()
 
 
 func _update_hover(cellv: Vector2) -> void:

@@ -17,8 +17,9 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
-		var recipe: Dictionary = Recipes.Crafting[label.text]
-		emit_signal("recipe_activated", recipe, label.text)
+		var recipe_filename: String = label.text.replace(" ", "")
+		var recipe: Dictionary = Recipes.Crafting[recipe_filename]
+		emit_signal("recipe_activated", recipe, recipe_filename)
 		set("custom_styles/panel", bright_style)
 	if event is InputEventMouseMotion:
 		_on_CraftingRecipe_mouse_entered()
@@ -38,4 +39,5 @@ func _on_CraftingRecipe_mouse_exited() -> void:
 
 func _on_CraftingRecipe_mouse_entered() -> void:
 	set("custom_styles/panel", highlight_style)
-	Events.emit_signal("hovered_over_recipe", label.text, Recipes.Crafting[label.text])
+	var recipe_filename: String = label.text.replace(" ", "")
+	Events.emit_signal("hovered_over_recipe", recipe_filename, Recipes.Crafting[recipe_filename])

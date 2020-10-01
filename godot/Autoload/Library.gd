@@ -44,10 +44,12 @@ func _find_entities_in(path: String) -> void:
 
 
 func get_filename_from(node: Node) -> String:
-	var filename := node.filename.substr(node.filename.rfind("/") + 1).replace(BLUEPRINT, "").replace(
-		ENTITY, ""
-	)
-	if substitutions.has(filename):
-		filename = substitutions[filename]
+	if node:
+		var filename := node.filename.substr(node.filename.rfind("/") + 1).replace(BLUEPRINT, "").replace(
+			ENTITY, ""
+		)
+		if substitutions.has(filename):
+			filename = substitutions[filename]
 
-	return filename
+		return filename
+	return ""

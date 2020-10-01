@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GUI/Inventory/InventoryWindow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/GUI.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://GUI/Inventory/Quickbar.gd" type="Script" id=5]
 [ext_resource path="res://GUI/Crafting/CraftingGUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GUI/InfoGUI/InfoGUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GUI/DeconstructProgressBar.tscn" type="PackedScene" id=8]
 
 [node name="GUI" type="CenterContainer"]
 anchor_right = 1.0
@@ -70,5 +71,8 @@ margin_left = 960.0
 margin_top = 540.0
 margin_right = 960.0
 margin_bottom = 540.0
+
+[node name="DeconstructProgressBar" parent="." instance=ExtResource( 8 )]
+visible = false
 [connection signal="inventory_changed" from="HBoxContainer/InventoryWindow" to="." method="_on_inventory_changed"]
 [connection signal="inventory_changed" from="MarginContainer/MarginContainer/Quickbar" to="." method="_on_inventory_changed"]

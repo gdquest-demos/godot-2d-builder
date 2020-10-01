@@ -7,10 +7,9 @@
 "power_movers",
 ]]
 script = ExtResource( 2 )
-pickup_blueprint = "Wire"
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, 27 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 450, 10, 100, 100 )
+region_rect = Rect2( 120, 10, 100, 100 )

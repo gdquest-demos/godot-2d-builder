@@ -25,6 +25,7 @@ onready var quickbar_container := $MarginContainer/MarginContainer
 onready var quickbar := $MarginContainer/MarginContainer/Quickbar
 onready var _drag_preview := $DragPreview
 onready var info_gui := $InfoGUI
+onready var deconstruct_bar := $DeconstructProgressBar
 
 
 func _ready() -> void:
@@ -194,15 +195,16 @@ func _get_blueprint() -> BlueprintEntity:
 
 
 func _on_Player_entered_pickup_area(entity: GroundEntity, player: KinematicBody2D) -> void:
-	var amount := entity.blueprint.stack_count
-	if add_to_inventory(entity.blueprint):
-		entity.do_pickup(player)
-	else:
-		if entity.blueprint.stack_count < amount:
-			var new_entity := entity.duplicate()
-			entity.get_parent().call_deferred("add_child", new_entity)
-			new_entity.call_deferred("setup", entity.blueprint)
-			new_entity.call_deferred("do_pickup", player)
+	if entity and entity.blueprint:
+		var amount := entity.blueprint.stack_count
+		if add_to_inventory(entity.blueprint):
+			entity.do_pickup(player)
+		else:
+			if entity.blueprint.stack_count < amount:
+				var new_entity := entity.duplicate()
+				entity.get_parent().call_deferred("add_child", new_entity)
+				new_entity.call_deferred("setup", entity.blueprint)
+				new_entity.call_deferred("do_pickup", player)
 
 
 func _on_inventory_changed(_panel: Panel, _held_item: BlueprintEntity) -> void:

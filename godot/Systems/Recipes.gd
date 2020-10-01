@@ -10,6 +10,7 @@ const Smelting := {
 
 const Crafting := {
 	Pickaxe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1, time = 1.0},
+	CrudePickaxe = {inputs = {"Branches": 2, "Stone": 8}, amount = 1, time = 1.0},
 	Axe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1, time = 1.0},
 	Branches = {inputs = {"Lumber": 1, "Axe": 0}, amount = 5, time = 1.0},
 	Chest = {inputs = {"Lumber": 2, "Branches": 3, "Ingot": 1}, amount = 1, time = 1.0}
