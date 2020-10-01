@@ -27,6 +27,11 @@ func set_fuel(amount: float) -> void:
 	fuel_bar.material.set_shader_param("fill_amount", amount)
 
 
+func seek(time: float) -> void:
+	if tween.is_active():
+		tween.seek(time)
+
+
 func _advance_work_time(amount: float) -> void:
 	arrow.material.set_shader_param("fill_amount", amount)
 

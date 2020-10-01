@@ -270,14 +270,14 @@ func _update_hover(cellv: Vector2) -> void:
 func _hover_entity(cellv: Vector2) -> void:
 	_clear_hover_entity()
 	var entity: Node2D = _simulation.get_entity_at(cellv)
-	entity.modulate = Color.green
+	entity.toggle_outline(true)
 	last_hovered = entity
 	Events.emit_signal("hovered_over_entity", entity)
 
 
 func _clear_hover_entity() -> void:
 	if last_hovered:
-		last_hovered.modulate = Color.white
+		last_hovered.toggle_outline(false)
 		last_hovered = null
 		Events.emit_signal("hovered_over_entity", null)
 

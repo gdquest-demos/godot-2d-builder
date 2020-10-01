@@ -4,7 +4,6 @@
 [ext_resource path="res://Entities/Entities/Machines/Furnace/FurnaceGUI.gd" type="Script" id=2]
 [ext_resource path="res://Shared/symbols.svg" type="Texture" id=4]
 
-
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
@@ -38,17 +37,17 @@ shader = SubResource( 3 )
 shader_param/fill_amount = 0.0
 
 [node name="FurnaceGUI" type="MarginContainer"]
-margin_right = 185.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 185, 128 )
+margin_right = 184.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 184, 120 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control" type="Control" parent="."]
-margin_right = 185.0
-margin_bottom = 128.0
+margin_right = 184.0
+margin_bottom = 120.0
 
 [node name="OreBar" parent="Control" instance=ExtResource( 1 )]
 margin_left = 16.0

@@ -7,9 +7,6 @@
 [ext_resource path="res://Entities/Entities/Power/Battery/battery_indicator.shader" type="Shader" id=5]
 [ext_resource path="res://Systems/Power/PowerSource.gd" type="Script" id=6]
 
-
-
-
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 5 )

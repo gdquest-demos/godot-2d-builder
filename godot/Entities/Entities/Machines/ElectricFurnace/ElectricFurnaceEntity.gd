@@ -14,7 +14,7 @@ func get_info() -> String:
 				Library.get_filename_from(gui.window.ore),
 				Library.get_filename_from(work.current_output),
 				(
-					str(stepify(work.available_work / work.work_speed, 0.1))
+					"%.1f" % [work.available_work / work.work_speed]
 					if work.work_speed != 0.0
 					else "INF"
 				)
@@ -25,6 +25,24 @@ func get_info() -> String:
 
 
 func _setup_work() -> void:
+	if work.available_work > 0.0 and gui.window.ore:
+		if gui.window.output.held_item:
+			var held_item_id := Library.get_filename_from(gui.window.output.held_item)
+			var output_id: String = (
+				Recipes.get_outputs_with_ingredient(Library.get_filename_from(gui.window.ore), Recipes.Smelting).front()
+			)
+			
+			if held_item_id == output_id:
+				return
+			else:
+				_stop_all_work()
+		elif not work.is_enabled:
+			work.is_enabled = true
+			power.efficiency = 1.0
+			gui.window.work(work.current_recipe.time, work.work_speed)
+		else:
+			return
+
 	if gui.window.ore and work.available_work <= 0.0:
 		var ore_id: String = Library.get_filename_from(gui.window.ore)
 
@@ -37,18 +55,14 @@ func _setup_work() -> void:
 						== Library.get_filename_from(gui.window.output.held_item)
 					)
 				)
-				and work.work_speed > 0.0
 			)
-			gui.window.work(work.current_recipe.time, work.work_speed)
-			power.efficiency = 1.0
-	elif work.available_work > 0.0 and not gui.window.ore:
-		work.available_work = 0.0
-		power.efficiency = 0.0
-		work.is_enabled = false
-		gui.window.abort()
-	elif work.available_work <= 0.0:
-		work.is_enabled = false
-		power.efficiency = 0.0
+			if work.is_enabled:
+				gui.window.work(work.current_recipe.time, work.work_speed)
+				power.efficiency = 1.0
+			else:
+				power.efficiency = 0.0
+	elif not gui.window.ore:
+		_stop_all_work()
 
 
 func _consume_ore() -> bool:
@@ -67,6 +81,13 @@ func _consume_ore() -> bool:
 	else:
 		gui.window.abort()
 	return false
+
+
+func _stop_all_work() -> void:
+	work.available_work = 0.0
+	gui.window.abort()
+	power.efficiency = 0.0
+	work.is_enabled = false
 
 
 func _on_GUIComponent_gui_status_changed() -> void:

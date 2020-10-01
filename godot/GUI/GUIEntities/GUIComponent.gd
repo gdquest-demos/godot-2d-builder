@@ -25,7 +25,7 @@ func _ready() -> void:
 	Log.log_error(window.connect("gui_opened", self, "emit_signal", ["gui_opened"]))
 	Log.log_error(window.connect("gui_closed", self, "emit_signal", ["gui_closed"]))
 
-	base.set_window(window)
+	base.gui_window = window
 	gui = base
 
 

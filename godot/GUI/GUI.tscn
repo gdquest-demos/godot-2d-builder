@@ -31,6 +31,7 @@ size_flags_horizontal = 3
 
 [node name="InventoryWindow" parent="HBoxContainer" instance=ExtResource( 1 )]
 visible = false
+margin_bottom = 50.0
 size_flags_horizontal = 3
 
 [node name="DragPreview" parent="." instance=ExtResource( 3 )]

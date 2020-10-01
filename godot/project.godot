@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GUI/GUIEntities/BaseMachineGUI.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "BlueprintEntity",
 "language": "GDScript",
 "path": "res://Entities/Blueprints/BlueprintEntity.gd"
@@ -89,7 +89,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Shared/Types.gd"
 }, {
-"base": "Reference",
+"base": "BlueprintEntity",
 "class": "WireBlueprint",
 "language": "GDScript",
 "path": "res://Entities/Blueprints/Wire/WireBlueprint.gd"

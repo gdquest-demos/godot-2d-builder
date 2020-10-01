@@ -107,3 +107,10 @@ func _on_WorkComponent_work_enabled_changed(enabled) -> void:
 		animation.play("Work")
 	else:
 		animation.play("Shutdown")
+
+
+func _on_GUIComponent_gui_opened() -> void:
+	gui.window.set_fuel(available_fuel / last_max_fuel if last_max_fuel else 0.0)
+	if work.is_enabled:
+		gui.window.work(work.current_recipe.time)
+		gui.window.seek(work.current_recipe.time - work.available_work)

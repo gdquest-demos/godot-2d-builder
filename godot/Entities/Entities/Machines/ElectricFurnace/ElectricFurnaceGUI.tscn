@@ -21,21 +21,21 @@ shader = SubResource( 1 )
 shader_param/fill_amount = 0.0
 
 [node name="ElectricFurnaceGUI" type="MarginContainer"]
-margin_right = 185.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 185, 128 )
+margin_right = 176.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 192, 52 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control" type="Control" parent="."]
-margin_right = 185.0
-margin_bottom = 128.0
+margin_right = 192.0
+margin_bottom = 52.0
 
 [node name="OreBar" parent="Control" instance=ExtResource( 3 )]
-margin_left = 16.0
-margin_right = 16.0
+margin_left = 8.0
+margin_right = 8.0
 margin_bottom = 0.0
 slot_count = 1
 item_filters = "Ore, Lumber"
@@ -58,10 +58,11 @@ region_rect = Rect2( 10, 10, 50, 50 )
 
 [node name="Output" parent="Control" instance=ExtResource( 3 )]
 margin_left = 128.0
-margin_right = 178.0
+margin_right = 128.0
 margin_bottom = 0.0
 slot_count = 1
 item_filters = "Ingot"
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="Control/OreBar" to="." method="_on_OreBar_inventory_changed"]
+[connection signal="inventory_changed" from="Control/Output" to="." method="_on_Output_inventory_changed"]

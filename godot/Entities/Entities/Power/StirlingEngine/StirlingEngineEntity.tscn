@@ -6,10 +6,7 @@
 [ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineEntity.gd" type="Script" id=5]
 [ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.tscn" type="PackedScene" id=6]
 
-
-
-
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=1]
 resource_name = "Shutdown"
 length = 3.0
 tracks/0/type = "value"
@@ -37,7 +34,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -33.9232 ), Vector2( 0, -63 ), Vector2( 0, -33.9232 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 resource_name = "Work"
 length = 0.6
 loop = true
@@ -109,8 +106,8 @@ position = Vector2( 0, -19.7535 )
 polygon = PoolVector2Array( -50.2016, 19.1812, -50.5989, 3.68654, 0.255356, -21.3433, 49.9177, 3.42167, 50.0501, 19.0488, -0.274368, 43.8137 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Shutdown = SubResource( 7 )
-anims/Work = SubResource( 6 )
+anims/Shutdown = SubResource( 1 )
+anims/Work = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="power_updated" from="PowerSource" to="." method="_on_PowerSource_power_updated"]

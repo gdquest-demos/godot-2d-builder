@@ -11,25 +11,25 @@ onready var arrow := $Control/Arrow/Sprite
 
 func work(time: float, speed: float) -> void:
 	if not is_inside_tree():
-		return
+		yield(self, "ready")
 
-	if speed > 0.0:
-		tween.playback_speed = speed
-		tween.interpolate_method(self, "_advance_work_time", 0.0, 1, time)
-		tween.start()
+	tween.interpolate_method(self, "_advance_work_time", 0.0, 1, time)
+	tween.start()
+	tween.playback_speed = speed
 
 
 func update_speed(speed: float) -> void:
 	if not is_inside_tree():
-		return
+		yield(self, "ready")
 
 	tween.playback_speed = speed
 
 
 func seek(time: float) -> void:
-	if not is_inside_tree() or not tween.is_active():
-		return
-	tween.seek(time)
+	if not is_inside_tree():
+		yield(self, "ready")
+	if tween.is_active():
+		tween.seek(time)
 
 
 func abort() -> void:
@@ -65,6 +65,11 @@ func _on_OreBar_inventory_changed(_panel, held_item) -> void:
 	emit_signal("gui_status_changed")
 
 
+func _on_Output_inventory_changed(_panel, _held_item) -> void:
+	emit_signal("gui_status_changed")
+
+
 func update_labels() -> void:
 	ore_container.update_labels()
 	output_container.update_labels()
+

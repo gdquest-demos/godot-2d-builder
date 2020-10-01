@@ -6,9 +6,6 @@
 [ext_resource path="res://Entities/Entities/Machines/Furnace/FurnaceEntity.gd" type="Script" id=4]
 [ext_resource path="res://Systems/Work/WorkComponent.gd" type="Script" id=5]
 
-
-
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.788945, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
@@ -161,6 +158,7 @@ process_material = SubResource( 3 )
 anims/SETUP = SubResource( 4 )
 anims/Shutdown = SubResource( 5 )
 anims/Work = SubResource( 6 )
+[connection signal="gui_opened" from="GUIComponent" to="." method="_on_GUIComponent_gui_opened"]
 [connection signal="gui_status_changed" from="GUIComponent" to="." method="_on_GUIComponent_gui_status_changed"]
 [connection signal="work_accomplished" from="WorkComponent" to="." method="_on_WorkComponent_work_accomplished"]
 [connection signal="work_done" from="WorkComponent" to="." method="_on_WorkComponent_work_done"]
