@@ -2,7 +2,7 @@ class_name Entity
 extends Node2D
 
 const OUTLINE_SIZE := 3.0
-const OutlineMaterial := preload("res://shared/outline_material.tres")
+const OutlineMaterial := preload("res://Shared/outline_material.tres")
 
 export var deconstruct_filter: String
 
