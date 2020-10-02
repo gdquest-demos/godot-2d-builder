@@ -32,8 +32,7 @@ func _ready() -> void:
 	player_inventory.setup(self)
 	quickbar.setup(self)
 	crafting_window.setup(self)
-	Log.header = "GUI"
-	Log.log_error(Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area"))
+	Log.log_error(Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area"), "GUI")
 
 	# ----- Temp Debug system -----
 	# TODO: Make proper debug system

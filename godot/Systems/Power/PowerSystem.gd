@@ -17,10 +17,9 @@ var receivers_already_provided := {}
 
 
 func _init() -> void:
-	Log.header = "Power System"
-	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"))
-	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"))
-	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"))
+	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"), "Power System")
+	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"), "Power System")
+	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"), "Power System")
 
 
 func _retrace_paths() -> void:

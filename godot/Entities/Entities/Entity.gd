@@ -33,5 +33,6 @@ func _find_sprite_children_of(parent: Node) -> void:
 	for child in parent.get_children():
 		if child is Sprite:
 			_sprites.push_back(child)
-			child.material = OutlineMaterial.duplicate()
+			if not child.material:
+				child.material = OutlineMaterial.duplicate()
 			_find_sprite_children_of(child)

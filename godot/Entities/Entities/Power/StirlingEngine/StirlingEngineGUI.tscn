@@ -20,17 +20,17 @@ shader = SubResource( 1 )
 shader_param/fill_amount = 0.0
 
 [node name="StirlingEngineGUI" type="MarginContainer"]
-margin_right = 185.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 185, 128 )
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control" type="Control" parent="."]
-margin_right = 185.0
-margin_bottom = 128.0
+margin_right = 64.0
+margin_bottom = 64.0
 
 [node name="FuelBar" parent="Control" instance=ExtResource( 2 )]
 margin_left = 16.0

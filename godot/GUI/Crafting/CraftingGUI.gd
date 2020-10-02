@@ -38,10 +38,7 @@ func update_recipes() -> void:
 			sprite.region_enabled,
 			sprite.region_rect
 		)
-		var error := item.connect("recipe_activated", self, "_on_recipe_activated")
-		if error != OK:
-			Log.log_error(error)
-
+		Log.log_error(item.connect("recipe_activated", self, "_on_recipe_activated"), "CraftingGUI")
 		temp.free()
 
 

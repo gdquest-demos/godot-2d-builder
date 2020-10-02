@@ -53,7 +53,6 @@ const ERROR_MESSAGES := {
 }
 
 var file: File
-var header := ""
 
 
 func _ready() -> void:
@@ -76,7 +75,7 @@ func _notification(what: int) -> void:
 		file.close()
 
 
-func log_error(error: int) -> void:
+func log_error(error: int, header := "") -> void:
 	if ENABLED:
 		if error != OK:
 			var error_notification := "*****ERROR"

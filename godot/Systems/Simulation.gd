@@ -4,29 +4,28 @@
 class_name Simulation
 extends Node
 
-# Time for systems to update at.
-export var simulation_speed := 1.0 / 30
+const BARRIER_ID := 1
+const INVISIBLE_BARRIER_ID := 2
 
-# Repository of all placed entities
+export var simulation_speed := 1.0 / 30.0
+
 var tracker := EntityTracker.new()
 
-# The tilemap used to convert positions into indexible vectors
 onready var _entity_placer := $GameWorld/YSort/EntityPlacer
-# System to update power and keep track of power-related entities
 onready var _power_system := PowerSystem.new()
 onready var _work_system := WorkSystem.new()
 onready var _gui := $CanvasLayer/GUI
-onready var player := $GameWorld/YSort/Player
-onready var ground := $GameWorld/Ground
+onready var _player := $GameWorld/YSort/Player
+onready var _ground := $GameWorld/Ground
 
 
 func _ready() -> void:
 	$Timer.start(simulation_speed)
-	_entity_placer.setup(self, $GameWorld/FlatEntities, _gui, ground)
+	_entity_placer.setup(self, $GameWorld/FlatEntities, _gui, _ground, _player)
 
-	var barriers: Array = ground.get_used_cells_by_id(1)
+	var barriers: Array = _ground.get_used_cells_by_id(BARRIER_ID)
 	for cellv in barriers:
-		ground.set_cellv(cellv, 2)
+		_ground.set_cellv(cellv, INVISIBLE_BARRIER_ID)
 
 
 func place_entity(entity, cellv: Vector2) -> void:
@@ -41,16 +40,12 @@ func is_cell_occupied(cellv: Vector2) -> bool:
 	return tracker.is_cell_occupied(cellv)
 
 
-func convert_to_cell(world_position: Vector2) -> Vector2:
-	return _entity_placer.world_to_map(world_position)
-
-
-func _on_Timer_timeout() -> void:
-	Events.emit_signal("systems_ticked", simulation_speed)
-
-
 func get_entity_at(cellv: Vector2) -> Node2D:
 	if tracker.is_cell_occupied(cellv):
 		return tracker.entities[cellv].entity
 	else:
 		return null
+
+
+func _on_Timer_timeout() -> void:
+	Events.emit_signal("systems_ticked", simulation_speed)

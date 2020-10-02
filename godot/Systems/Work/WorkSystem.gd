@@ -5,10 +5,9 @@ var workers := {}
 
 
 func _init() -> void:
-	Log.header = "Work System"
-	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"))
-	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"))
-	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"))
+	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"), "Work System")
+	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"), "Work System")
+	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"), "Work System")
 
 
 func _on_systems_ticked(delta: float) -> void:
