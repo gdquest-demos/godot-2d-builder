@@ -72,4 +72,3 @@ func _on_Output_inventory_changed(_panel, _held_item) -> void:
 func update_labels() -> void:
 	ore_container.update_labels()
 	output_container.update_labels()
-

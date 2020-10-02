@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://Shared/Theme/VScrollBar/grabber_pressed_style.tres" type="StyleBox" id=1]
+[ext_resource path="res://Shared/Theme/VScrollBar/grabber_highlight_style.tres" type="StyleBox" id=2]
+[ext_resource path="res://Shared/Theme/VScrollBar/scroll_style.tres" type="StyleBox" id=3]
+[ext_resource path="res://Shared/Theme/Panel/inventory_panel_style.tres" type="StyleBox" id=4]
+[ext_resource path="res://Shared/Theme/PanelContainer/window_style.tres" type="StyleBox" id=5]
+[ext_resource path="res://Shared/Theme/VScrollBar/grabber_style.tres" type="StyleBox" id=6]
+[ext_resource path="res://Shared/Theme/Font/BagnardSans_font.tres" type="DynamicFont" id=7]
+
+[resource]
+default_font = ExtResource( 7 )
+Panel/styles/panel = ExtResource( 4 )
+PanelContainer/styles/panel = ExtResource( 5 )
+VScrollBar/styles/grabber = ExtResource( 6 )
+VScrollBar/styles/grabber_highlight = ExtResource( 2 )
+VScrollBar/styles/grabber_pressed = ExtResource( 1 )
+VScrollBar/styles/scroll = ExtResource( 3 )
+VScrollBar/styles/scroll_focus = null

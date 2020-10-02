@@ -20,9 +20,16 @@ func _ready() -> void:
 	var base := BaseWindow.instance()
 	window = GuiWindow.instance()
 
-	Log.log_error(window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"]), "GUI Component")
-	Log.log_error(window.connect("gui_opened", self, "emit_signal", ["gui_opened"]), "GUI Component")
-	Log.log_error(window.connect("gui_closed", self, "emit_signal", ["gui_closed"]), "GUI Component")
+	Log.log_error(
+		window.connect("gui_status_changed", self, "emit_signal", ["gui_status_changed"]),
+		"GUI Component"
+	)
+	Log.log_error(
+		window.connect("gui_opened", self, "emit_signal", ["gui_opened"]), "GUI Component"
+	)
+	Log.log_error(
+		window.connect("gui_closed", self, "emit_signal", ["gui_closed"]), "GUI Component"
+	)
 
 	base.gui_window = window
 	gui = base

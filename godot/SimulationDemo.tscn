@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Shared/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Entities/GroundItem.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
 [ext_resource path="res://Entities/Entities/Natural/Tree/TreeEntity.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/Entities/Natural/Boulder/BoulderEntity.tscn" type="PackedScene" id=6]
@@ -59,7 +58,6 @@ cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 cell_y_sort = true
 format = 1
 script = ExtResource( 7 )
-GroundEntityScene = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
 wait_time = 0.2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Shared/Theme/BuilderTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/Inventory/InventoryWindow.gd" type="Script" id=2]
 [ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=4]
 
@@ -23,12 +23,12 @@ __meta__ = {
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 690.0
-margin_bottom = 153.0
+margin_bottom = 85.0
 mouse_filter = 1
 
 [node name="Window" type="MarginContainer" parent="WindowBack"]
 margin_right = 665.0
-margin_bottom = 128.0
+margin_bottom = 60.0
 mouse_filter = 1
 custom_constants/margin_top = 20
 custom_constants/margin_bottom = 20
@@ -36,21 +36,20 @@ custom_constants/margin_bottom = 20
 [node name="Inventories" type="VBoxContainer" parent="WindowBack/Window"]
 margin_top = 20.0
 margin_right = 665.0
-margin_bottom = 108.0
+margin_bottom = 40.0
 custom_constants/separation = 10
 alignment = 1
 
 [node name="Inventory1" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
-margin_top = 34.0
-margin_bottom = 34.0
+margin_bottom = 0.0
 
 [node name="Inventory2" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
-margin_top = 44.0
-margin_bottom = 44.0
+margin_top = 10.0
+margin_bottom = 10.0
 
 [node name="Inventory3" parent="WindowBack/Window/Inventories" instance=ExtResource( 4 )]
-margin_top = 54.0
-margin_bottom = 54.0
+margin_top = 20.0
+margin_bottom = 20.0
 [connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory1" to="." method="_on_Inventory_inventory_changed"]
 [connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory2" to="." method="_on_Inventory_inventory_changed"]
 [connection signal="inventory_changed" from="WindowBack/Window/Inventories/Inventory3" to="." method="_on_Inventory_inventory_changed"]

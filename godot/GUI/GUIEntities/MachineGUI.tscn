@@ -1,8 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Shared/Theme/WindowStyle.tres" type="StyleBox" id=1]
+[ext_resource path="res://Shared/Theme/PanelContainer/window_style.tres" type="StyleBox" id=1]
 [ext_resource path="res://GUI/GUIEntities/MachineGUI.gd" type="Script" id=2]
-[ext_resource path="res://Shared/Theme/BuilderTheme.tres" type="Theme" id=3]
+[ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=3]
+
+
+
 
 [node name="MachineGUIWindow" type="CenterContainer"]
 theme = ExtResource( 3 )

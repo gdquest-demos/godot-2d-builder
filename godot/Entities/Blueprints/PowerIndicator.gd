@@ -12,6 +12,7 @@ onready var north := $N
 onready var east := $E
 onready var south := $S
 
+
 func set_indicators() -> void:
 	if output_directions & Types.Direction.LEFT != 0:
 		west.region_rect = REGIONS[0][0]

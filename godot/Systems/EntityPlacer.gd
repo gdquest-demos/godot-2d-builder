@@ -1,19 +1,27 @@
-# TileMap that handles placing, hovering over, and activating entities in the world.
+# TileMap that handles placing, hovering over, and interacting with entities and
+# blueprints in the world based on user input.
 class_name EntityPlacer
 extends TileMap
 
+# Distance from the player when the mouse stops being able to place/interact
 const MAXIMUM_WORK_DISTANCE := 275.0
+# Offset in pixels. Used for blueprints to be properly positioned in world space
+# VS their usual position in inventory space.
 const POSITION_OFFSET := Vector2(0, 25)
+# Base time in seconds it takes to deconstruct an item.
 const DECONSTRUCT_TIME := 0.3
-
-export var GroundEntityScene: PackedScene
+# The type of entity that is dropped when an item is deconstructed.
+const GroundEntityScene := preload("res://Entities/GroundItem.tscn")
 
 var _gui: Control
+# The last entity that was hovered over. Used to clear its outline when highlighting another.
 var _last_hovered: Node2D = null
 var _simulation: Simulation
 var _player: KinematicBody2D
+# Tilemap that lives in a layer below the player so it can walk over them.
 var _flat_entities: Node2D
 var _current_deconstruct_location := Vector2.ZERO
+# Tilemap for the ground. Ensures things cannot be placed on anything but the ground map.
 var _ground: TileMap
 
 onready var _deconstruct_timer := $Timer
@@ -25,12 +33,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_abort_deconstruct()
 
 	var global_mouse_position := get_global_mouse_position()
-	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
-	
+	var blueprint: BlueprintEntity = _gui.blueprint
+	var has_placeable_blueprint: bool = blueprint and blueprint.placeable
+
 	var is_close_to_player := (
-		global_mouse_position.distance_to(_player.global_position) < MAXIMUM_WORK_DISTANCE
+		global_mouse_position.distance_to(_player.global_position)
+		< MAXIMUM_WORK_DISTANCE
 	)
-	
+
 	var cellv := world_to_map(global_mouse_position)
 	var cell_is_occupied := _simulation.is_cell_occupied(cellv)
 	var is_on_ground := _ground.get_cellv(cellv) == 0
@@ -61,14 +71,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_hover(cellv)
 
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
-		_gui.blueprint.rotate_blueprint()
+		blueprint.rotate_blueprint()
 
-	elif event.is_action_pressed("drop") and _gui.blueprint and is_close_to_player:
+	elif event.is_action_pressed("drop") and blueprint and is_close_to_player:
 		if is_on_ground:
-			_drop_entity(_gui.blueprint, global_mouse_position)
-			_gui.blueprint = null
+			_drop_entity(blueprint, global_mouse_position)
+			blueprint = null
 
-	elif event.is_action_pressed("sample") and not _gui.blueprint:
+	elif event.is_action_pressed("sample") and not blueprint:
 		_sample_entity_at(world_to_map(global_mouse_position))
 
 
@@ -86,7 +96,15 @@ func _process(_delta: float) -> void:
 		_move_blueprint_in_world(world_to_map(get_global_mouse_position()))
 
 
-func setup(simulation: Simulation, flat_entities: Node2D, gui: Control, ground: TileMap, player: KinematicBody2D) -> void:
+# First call to set various higher level variables from simulation and add
+# pre-placed entities into the world to be registered.
+func setup(
+	simulation: Simulation,
+	flat_entities: Node2D,
+	gui: Control,
+	ground: TileMap,
+	player: KinematicBody2D
+) -> void:
 	_gui = gui
 	_simulation = simulation
 	_flat_entities = flat_entities
@@ -95,14 +113,13 @@ func setup(simulation: Simulation, flat_entities: Node2D, gui: Control, ground: 
 
 	var existing_entities := flat_entities.get_children()
 	for child in get_children():
-		if child is Entity:
+		if not child == _deconstruct_timer and not child == _deconstruct_tween:
 			existing_entities.push_back(child)
 
 	for entity in existing_entities:
 		_simulation.place_entity(entity, world_to_map(entity.global_position))
 
 
-# Sets the sprite for a given wire
 func _replace_wire(wire: Node2D, directions: int) -> void:
 	wire.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 
@@ -112,11 +129,12 @@ func _move_blueprint_in_world(cellv: Vector2) -> void:
 	_gui.blueprint.global_position = get_viewport_transform().xform(
 		map_to_world(cellv) + POSITION_OFFSET
 	)
-	
+
 	var is_close_to_player := (
-		get_global_mouse_position().distance_to(_player.global_position) < MAXIMUM_WORK_DISTANCE
+		get_global_mouse_position().distance_to(_player.global_position)
+		< MAXIMUM_WORK_DISTANCE
 	)
-	
+
 	var is_on_ground: bool = _ground.get_cellv(cellv) == 0
 
 	if not _simulation.is_cell_occupied(cellv) and is_close_to_player and is_on_ground:
@@ -128,7 +146,6 @@ func _move_blueprint_in_world(cellv: Vector2) -> void:
 		_gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
-# Gets neighbors that are in the power groups around the given cell
 func _get_powered_neighbors(cellv: Vector2) -> int:
 	var direction := 0
 
@@ -148,7 +165,6 @@ func _get_powered_neighbors(cellv: Vector2) -> int:
 	return direction
 
 
-# Finds all wires and replaces them so they point towards powered entities
 func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 	for neighbor in Types.NEIGHBORS.keys():
 		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
@@ -159,13 +175,13 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 			_replace_wire(object, tile_directions)
 
 
-# Places an entity or wire and informs the simulation
 func _place_entity(cellv: Vector2) -> void:
 	var blueprint: BlueprintEntity = _gui.blueprint
-	
-	var new_entity: Node2D = Library.entities[Library.get_filename_from(blueprint)].instance()
+	var blueprint_name: String = Library.get_filename_from(blueprint)
 
-	if Library.get_filename_from(blueprint) == "Wire":
+	var new_entity: Node2D = Library.entities[blueprint_name].instance()
+
+	if blueprint_name == "Wire":
 		var directions := _get_powered_neighbors(cellv)
 		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
@@ -185,6 +201,8 @@ func _place_entity(cellv: Vector2) -> void:
 
 
 func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
+	assert(GroundEntityScene, "Must define a ground entity scene to drop items.")
+	
 	if entity.get_parent():
 		entity.get_parent().remove_child(entity)
 
@@ -196,29 +214,37 @@ func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	var entity := _simulation.get_entity_at(cellv)
 	var blueprint: BlueprintEntity = _gui.blueprint
+	var blueprint_name := Library.get_filename_from(blueprint) if blueprint else ""
 
 	if (
 		not entity.deconstruct_filter.empty()
-		and (
-			not blueprint
-			or not Library.get_filename_from(blueprint) in entity.deconstruct_filter
-		)
+		and (not blueprint or not blueprint_name in entity.deconstruct_filter)
 	):
 		return
 
 	var deconstruct_bar: TextureProgress = _gui.deconstruct_bar
 
-	deconstruct_bar.rect_global_position = get_viewport_transform().xform(event_position) + POSITION_OFFSET
+	deconstruct_bar.rect_global_position = (
+		get_viewport_transform().xform(event_position)
+		+ POSITION_OFFSET
+	)
 	deconstruct_bar.show()
 
 	var modifier := 1.0
-	if Library.get_filename_from(blueprint).find("Crude") != -1:
+	if blueprint_name.find("Crude") != -1:
 		modifier = 10.0
 
-	_deconstruct_tween.interpolate_property(deconstruct_bar, "value", 0, 100, DECONSTRUCT_TIME * modifier)
+	_deconstruct_tween.interpolate_property(
+		deconstruct_bar, "value", 0, 100, DECONSTRUCT_TIME * modifier
+	)
 	_deconstruct_tween.start()
 
-	Log.log_error(_deconstruct_timer.connect("timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT), "Entity Placer")
+	Log.log_error(
+		_deconstruct_timer.connect(
+			"timeout", self, "_finish_deconstruct", [cellv], CONNECT_ONESHOT
+		),
+		"Entity Placer"
+	)
 	_deconstruct_timer.start(DECONSTRUCT_TIME * modifier)
 	_current_deconstruct_location = cellv
 
@@ -259,7 +285,7 @@ func _abort_deconstruct() -> void:
 
 func _update_hover(cellv: Vector2) -> void:
 	var is_close_to_player := (
-		get_global_mouse_position().distance_to(_simulation.player.global_position)
+		get_global_mouse_position().distance_to(_player.global_position)
 		< MAXIMUM_WORK_DISTANCE
 	)
 

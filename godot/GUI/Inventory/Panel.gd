@@ -88,7 +88,12 @@ func _update_label() -> void:
 
 
 func _stack_items(split := false) -> void:
-	var count: int = int(min(gui.blueprint.stack_count / (2 if split else 1), (held_item.stack_size - held_item.stack_count)))
+	var count: int = int(
+		min(
+			gui.blueprint.stack_count / (2 if split else 1),
+			held_item.stack_size - held_item.stack_count
+		)
+	)
 
 	if split:
 		gui.blueprint.stack_count -= count

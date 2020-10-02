@@ -28,10 +28,8 @@ func _setup_work() -> void:
 	if work.available_work > 0.0 and gui.window.ore:
 		if gui.window.output.held_item:
 			var held_item_id := Library.get_filename_from(gui.window.output.held_item)
-			var output_id: String = (
-				Recipes.get_outputs_with_ingredient(Library.get_filename_from(gui.window.ore), Recipes.Smelting).front()
-			)
-			
+			var output_id: String = Recipes.get_outputs_with_ingredient(Library.get_filename_from(gui.window.ore), Recipes.Smelting).front()
+
 			if held_item_id == output_id:
 				return
 			else:
@@ -48,12 +46,10 @@ func _setup_work() -> void:
 
 		if work.setup_work({ore_id: gui.window.ore.stack_count}, Recipes.Smelting):
 			work.is_enabled = (
-				(
-					not gui.window.output.held_item
-					or (
-						Library.get_filename_from(work.current_output)
-						== Library.get_filename_from(gui.window.output.held_item)
-					)
+				not gui.window.output.held_item
+				or (
+					Library.get_filename_from(work.current_output)
+					== Library.get_filename_from(gui.window.output.held_item)
 				)
 			)
 			if work.is_enabled:

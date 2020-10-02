@@ -9,11 +9,17 @@ const Smelting := {
 }
 
 const Crafting := {
-	Pickaxe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1, time = 1.0},
-	CrudePickaxe = {inputs = {"Branches": 2, "Stone": 8}, amount = 1, time = 1.0},
-	Axe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1, time = 1.0},
-	Branches = {inputs = {"Lumber": 1, "Axe": 0}, amount = 5, time = 1.0},
-	Chest = {inputs = {"Lumber": 2, "Branches": 3, "Ingot": 1}, amount = 1, time = 1.0}
+	Pickaxe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1},
+	CrudePickaxe = {inputs = {"Branches": 2, "Stone": 5}, amount = 1},
+	Axe = {inputs = {"Branches": 2, "Ingot": 3}, amount = 1},
+	CrudeAxe = {inputs = {"Branches": 2, "Stone": 5}, amount = 1},
+	Branches = {inputs = {"Lumber": 1, "Axe": 0}, amount = 5},
+	Chest = {inputs = {"Lumber": 2, "Branches": 3, "Ingot": 1}, amount = 1},
+	Furnace = {inputs = {"Stone": 12}, amount = 1},
+	ElectricFurnace = {inputs = {"Stone": 8, "Ingot": 4, "Wire": 5}, amount = 1},
+	StirlingEngine = {inputs = {"Ingot": 8, "Wire": 3}, amount = 1},
+	Wire = {inputs = {"Ingot": 2}, amount = 5},
+	Battery = {inputs = {"Ingot": 12, "Wire": 5}, amount = 1}
 }
 
 static func get_recipes_with_ingredient(ingredient: String, recipe: Dictionary) -> Array:
@@ -21,9 +27,8 @@ static func get_recipes_with_ingredient(ingredient: String, recipe: Dictionary) 
 	for output in recipe:
 		if recipe[output].inputs.has(ingredient):
 			recipe_list.push_back(recipe[output])
-	
-	return recipe_list
 
+	return recipe_list
 
 static func get_outputs_with_ingredient(ingredient: String, recipe: Dictionary) -> Array:
 	var output_list := []
