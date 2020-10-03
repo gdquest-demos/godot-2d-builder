@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Shared/tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Shared/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/Simulation.gd" type="Script" id=4]
 [ext_resource path="res://Entities/Entities/Natural/Tree/TreeEntity.tscn" type="PackedScene" id=5]
