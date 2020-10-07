@@ -1,0 +1,83 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Blueprints/OreBlueprint.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Shared/pipes.svg" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+onready var tween := $Tween
+onready var ore := $OreBlueprint
+
+func _ready() -> void:
+	tween.interpolate_property(ore, \"position\", Vector2(0, -25), Vector2(0, 25), 2)
+	tween.interpolate_property(ore, \"z_index\", 4, 1, 0.1, 0, 2, 1)
+	tween.start()
+"
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 50.3464, 62.3627 )
+script = SubResource( 1 )
+
+[node name="Back" type="Sprite" parent="."]
+position = Vector2( 0, -8.12159 )
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 379, 131, 63, 52 )
+
+[node name="Back2" type="Sprite" parent="."]
+position = Vector2( 0, -38.1555 )
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 493, 47, 61, 97 )
+
+[node name="Sides" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 379, 353, 63, 54 )
+
+[node name="Fronttop" type="Sprite" parent="."]
+position = Vector2( 0, -9.11854 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 380, 275, 61, 18 )
+
+[node name="Backtop" type="Sprite" parent="."]
+position = Vector2( 0, -17.2732 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 380, 208, 61, 18 )
+
+[node name="Front" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+z_index = 4
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 379, 61, 65, 52 )
+
+[node name="Front2" type="Sprite" parent="."]
+position = Vector2( 0, -30.3676 )
+scale = Vector2( 0.5, 0.5 )
+z_index = 4
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 493, 146, 61, 97 )
+
+[node name="OreBlueprint" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1.66028, 2.04272 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 2.24487, -4.48987 )
+current = true
+zoom = Vector2( 0.2, 0.2 )
