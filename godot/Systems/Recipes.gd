@@ -19,8 +19,11 @@ const Crafting := {
 	ElectricFurnace = {inputs = {"Stone": 8, "Ingot": 4, "Wire": 5}, amount = 1},
 	StirlingEngine = {inputs = {"Ingot": 8, "Wire": 3}, amount = 1},
 	Wire = {inputs = {"Ingot": 2}, amount = 5},
-	Battery = {inputs = {"Ingot": 12, "Wire": 5}, amount = 1}
+	Battery = {inputs = {"Ingot": 12, "Wire": 5}, amount = 1},
+	Pipe = {inputs = {"Ingot": 2, "Stone": 2, "Wire": 1}, amount = 4},
+	Wrench = {inputs = {"Ingot": 4 }, amount = 1}
 }
+
 
 static func get_recipes_with_ingredient(ingredient: String, recipe: Dictionary) -> Array:
 	var recipe_list := []
@@ -29,6 +32,7 @@ static func get_recipes_with_ingredient(ingredient: String, recipe: Dictionary) 
 			recipe_list.push_back(recipe[output])
 
 	return recipe_list
+
 
 static func get_outputs_with_ingredient(ingredient: String, recipe: Dictionary) -> Array:
 	var output_list := []

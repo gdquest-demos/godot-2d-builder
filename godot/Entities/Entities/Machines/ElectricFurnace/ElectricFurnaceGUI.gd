@@ -56,7 +56,8 @@ func grab_output(item: BlueprintEntity) -> void:
 		var item_id := Library.get_filename_from(item)
 		if held_item_id == item_id:
 			output.held_item.stack_count += item.stack_count
-			item.queue_free()
+
+		item.queue_free()
 	output_container.update_labels()
 
 

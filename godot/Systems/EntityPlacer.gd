@@ -3,6 +3,8 @@
 class_name EntityPlacer
 extends TileMap
 
+const WRENCH := "Wrench"
+
 # Distance from the player when the mouse stops being able to place/interact
 const MAXIMUM_WORK_DISTANCE := 275.0
 # Offset in pixels. Used for blueprints to be properly positioned in world space

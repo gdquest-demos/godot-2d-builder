@@ -54,7 +54,7 @@ margin_left = 16.0
 margin_right = 16.0
 margin_bottom = 0.0
 slot_count = 1
-item_filters = "Ore, Lumber"
+item_filters = "Ore Lumber"
 
 [node name="FuelBar" parent="Control" instance=ExtResource( 1 )]
 margin_left = 16.0
@@ -98,7 +98,7 @@ margin_top = 32.0
 margin_right = 178.0
 margin_bottom = 32.0
 slot_count = 1
-item_filters = "Ingot"
+item_filters = "NIL"
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="Control/OreBar" to="." method="_on_OreBar_inventory_changed"]

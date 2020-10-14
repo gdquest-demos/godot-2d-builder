@@ -120,6 +120,9 @@ func update_label() -> void:
 
 
 func open_entity_gui(entity: Entity) -> void:
+	if _is_open:
+		_close_inventories()
+
 	var component := get_gui_component_from(entity)
 	if not component:
 		return

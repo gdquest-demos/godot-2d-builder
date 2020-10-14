@@ -8,7 +8,7 @@ signal held_item_changed(panel, item)
 var held_item: BlueprintEntity setget _set_held_item
 var silent := false
 var gui: Control
-var _filter := ""
+var _filters := []
 
 onready var count_label := $Label
 
@@ -60,7 +60,7 @@ func _gui_input(event: InputEvent) -> void:
 func setup(_gui: Control, filter := "") -> void:
 	gui = _gui
 	if not filter.empty():
-		_filter = filter
+		_filters = filter.split(" ")
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
@@ -152,10 +152,10 @@ func _grab_split_items() -> void:
 
 
 func _is_valid_filter(types: String) -> bool:
-	if _filter.empty() or _filter.find(types) != -1:
+	if _filters.empty() or types in _filters:
 		return true
 
-	if _filter.find("Fuels") != -1 and Recipes.Fuels.has(types):
+	if _filters.find("Fuels") != -1 and Recipes.Fuels.has(types):
 		return true
 
 	return false
