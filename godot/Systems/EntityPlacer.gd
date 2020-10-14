@@ -10,6 +10,7 @@ const MAXIMUM_WORK_DISTANCE := 275.0
 # Offset in pixels. Used for blueprints to be properly positioned in world space
 # VS their usual position in inventory space.
 const POSITION_OFFSET := Vector2(0, 25)
+const PIPE_OFFSET := Vector2(0, -65)
 # Base time in seconds it takes to deconstruct an item.
 const DECONSTRUCT_TIME := 0.3
 # The type of entity that is dropped when an item is deconstructed.
@@ -25,6 +26,7 @@ var _flat_entities: Node2D
 var _current_deconstruct_location := Vector2.ZERO
 # Tilemap for the ground. Ensures things cannot be placed on anything but the ground map.
 var _ground: TileMap
+var _pipe_entities: Node2D
 
 onready var _deconstruct_timer := $Timer
 onready var _deconstruct_tween := $Tween
@@ -44,7 +46,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	)
 
 	var cellv := world_to_map(global_mouse_position)
-	var cell_is_occupied := _simulation.is_cell_occupied(cellv)
+	var cell_is_occupied := (
+		_simulation.is_cell_occupied(cellv)
+		if (
+			not Library.get_filename_from(blueprint) == "Pipe"
+			and not Library.get_filename_from(blueprint) == "Wrench"
+		)
+		else _simulation.is_pipe_in(cellv)
+	)
 	var is_on_ground := _ground.get_cellv(cellv) == 0
 
 	if event.is_action_pressed("left_click"):
@@ -52,6 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if not cell_is_occupied and is_close_to_player and is_on_ground:
 				_place_entity(cellv)
 				_update_neighboring_flat_entities(cellv)
+				_update_neighboring_pipes(cellv)
 
 		elif cell_is_occupied and is_close_to_player:
 			var entity := _simulation.get_entity_at(cellv)
@@ -105,13 +115,15 @@ func setup(
 	flat_entities: Node2D,
 	gui: Control,
 	ground: TileMap,
-	player: KinematicBody2D
+	player: KinematicBody2D,
+	pipe_entities: Node2D
 ) -> void:
 	_gui = gui
 	_simulation = simulation
 	_flat_entities = flat_entities
 	_ground = ground
 	_player = player
+	_pipe_entities = pipe_entities
 
 	var existing_entities := flat_entities.get_children()
 	for child in get_children():
@@ -126,10 +138,20 @@ func _replace_wire(wire: Node2D, directions: int) -> void:
 	wire.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
 
 
+func _replace_pipe(pipe: Node2D, directions: int) -> void:
+	pipe.set_sprite_for_direction(directions)
+
+
 func _move_blueprint_in_world(cellv: Vector2) -> void:
 	_gui.blueprint.make_world()
+	var blueprint_name := Library.get_filename_from(_gui.blueprint)
+	
 	_gui.blueprint.global_position = get_viewport_transform().xform(
-		map_to_world(cellv) + POSITION_OFFSET
+		map_to_world(cellv) + POSITION_OFFSET + (
+			PIPE_OFFSET
+			if blueprint_name == "Pipe"
+			else Vector2.ZERO
+		)
 	)
 
 	var is_close_to_player := (
@@ -138,13 +160,19 @@ func _move_blueprint_in_world(cellv: Vector2) -> void:
 	)
 
 	var is_on_ground: bool = _ground.get_cellv(cellv) == 0
-
-	if not _simulation.is_cell_occupied(cellv) and is_close_to_player and is_on_ground:
+	
+	var cell_is_occupied := (
+		_simulation.is_cell_occupied(cellv)
+		if not blueprint_name == "Pipe"
+		else _simulation.is_pipe_in(cellv)
+	)
+	
+	if not cell_is_occupied and is_close_to_player and is_on_ground:
 		_gui.blueprint.modulate = Color.white
 	else:
 		_gui.blueprint.modulate = Color.red
 
-	if Library.get_filename_from(_gui.blueprint) == "Wire":
+	if blueprint_name == "Wire":
 		_gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
@@ -167,6 +195,18 @@ func _get_powered_neighbors(cellv: Vector2) -> int:
 	return direction
 
 
+func _get_pipe_neighbors(cellv: Vector2) -> int:
+	var direction := 0
+	
+	for neighbor in Types.NEIGHBORS.keys():
+		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
+		
+		if _simulation.is_pipe_in(key):
+			direction |= neighbor
+	
+	return direction
+
+
 func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 	for neighbor in Types.NEIGHBORS.keys():
 		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
@@ -175,6 +215,23 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 		if object and object is WireEntity:
 			var tile_directions := _get_powered_neighbors(key)
 			_replace_wire(object, tile_directions)
+
+
+func _update_neighboring_pipes(cellv: Vector2) -> void:
+	for neighbor in Types.NEIGHBORS.keys():
+		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
+
+		if _simulation.is_pipe_in(key):
+			var pipe = _simulation.get_pipe_at(key)
+			var tile_directions := _get_pipe_neighbors(key)
+			_replace_pipe(pipe, tile_directions)
+			
+			if _simulation.is_cell_occupied(key):
+				var entity = _simulation.get_entity_at(key)
+				if entity.is_in_group(Types.GUI_ENTITIES):
+					pipe.add_insert()
+				else:
+					pipe.remove_insert()
 
 
 func _place_entity(cellv: Vector2) -> void:
@@ -187,12 +244,25 @@ func _place_entity(cellv: Vector2) -> void:
 		var directions := _get_powered_neighbors(cellv)
 		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
+	elif blueprint_name == "Pipe":
+		_pipe_entities.add_child(new_entity)
+		var directions := _get_pipe_neighbors(cellv)
+		new_entity.set_sprite_for_direction(directions)
+		if _simulation.is_cell_occupied(cellv) and _simulation.get_entity_at(cellv).is_in_group(Types.GUI_ENTITIES):
+			new_entity.add_insert()
+		else:
+			new_entity.remove_insert()
 	else:
 		add_child(new_entity)
 
 	new_entity.global_position = map_to_world(cellv) + POSITION_OFFSET
+	
+	if blueprint_name == "Pipe":
+		new_entity.global_position.y -= 65.0
+		_simulation.place_pipe(new_entity, cellv)
+	else:
+		_simulation.place_entity(new_entity, cellv)
 
-	_simulation.place_entity(new_entity, cellv)
 	new_entity._setup(blueprint)
 
 	if blueprint.stack_count == 1:
@@ -214,9 +284,15 @@ func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
 
 
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
-	var entity := _simulation.get_entity_at(cellv)
 	var blueprint: BlueprintEntity = _gui.blueprint
 	var blueprint_name := Library.get_filename_from(blueprint) if blueprint else ""
+	var tool_is_wrench: bool = blueprint and blueprint_name == "Wrench"
+
+	var entity := (
+		_simulation.get_entity_at(cellv)
+		if not tool_is_wrench
+		else _simulation.get_pipe_at(cellv)
+	)
 
 	if (
 		not entity.deconstruct_filter.empty()
@@ -252,7 +328,12 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 
 
 func _finish_deconstruct(cellv: Vector2) -> void:
-	var entity := _simulation.get_entity_at(cellv)
+	var tool_is_wrench: bool = _gui.blueprint and Library.get_filename_from(_gui.blueprint) == "Wrench"
+	var entity := (
+		_simulation.get_entity_at(cellv)
+		if not tool_is_wrench
+		else _simulation.get_pipe_at(cellv)
+	)
 	var entity_name := Library.get_filename_from(entity)
 	var location := map_to_world(cellv)
 
@@ -272,8 +353,12 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		for item in inventory_items:
 			_drop_entity(item, location)
 
-	_simulation.remove_entity(cellv)
+	if tool_is_wrench:
+		_simulation.remove_pipe(cellv)
+	else:
+		_simulation.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
+	_update_neighboring_pipes(cellv)
 	_gui.deconstruct_bar.hide()
 	Events.emit_signal("hovered_over_entity", null)
 
@@ -291,7 +376,7 @@ func _update_hover(cellv: Vector2) -> void:
 		< MAXIMUM_WORK_DISTANCE
 	)
 
-	if _simulation.is_cell_occupied(cellv) and is_close_to_player:
+	if (_simulation.is_cell_occupied(cellv) or _simulation.is_pipe_in(cellv)) and is_close_to_player:
 		_hover_entity(cellv)
 	else:
 		_clear_hover_entity()
@@ -299,8 +384,13 @@ func _update_hover(cellv: Vector2) -> void:
 
 func _hover_entity(cellv: Vector2) -> void:
 	_clear_hover_entity()
-	var entity: Node2D = _simulation.get_entity_at(cellv)
-	entity.toggle_outline(true)
+	var entity: Node2D = (
+		_simulation.get_entity_at(cellv)
+		if not _gui.blueprint or not Library.get_filename_from(_gui.blueprint) == "Wrench"
+		else _simulation.get_pipe_at(cellv)
+	)
+	if entity:
+		entity.toggle_outline(true)
 	_last_hovered = entity
 	Events.emit_signal("hovered_over_entity", entity)
 

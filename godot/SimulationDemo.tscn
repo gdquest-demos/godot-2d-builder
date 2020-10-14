@@ -170,7 +170,7 @@ debug_items = {
 "Chest": 1,
 "ElectricFurnace": 1,
 "Furnace": 1,
-"Ingot": 3,
+"Ingot": 8,
 "Lumber": 1,
 "Ore": 20,
 "StirlingEngine": 1,

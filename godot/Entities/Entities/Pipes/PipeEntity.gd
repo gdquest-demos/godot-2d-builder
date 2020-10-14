@@ -76,14 +76,14 @@ func remove_insert() -> void:
 func set_sprite_for_direction(directions: int) -> void:
 	pipe_front.region_rect = get_region_for_direction(directions)
 	pipe_back.region_rect = get_region_for_direction(directions)
-	pipe_back.region_rect.y += BACK_REGION_Y_OFFSET
+	pipe_back.region_rect.position.y += BACK_REGION_Y_OFFSET
 
 
 static func get_region_for_direction(directions: int) -> Rect2:
 	if not DIRECTIONS_DATA.has(directions):
 		directions = 10
 
-	return DIRECTIONS_DATA[directions].region
+	return DIRECTIONS_DATA[directions]
 
 
 func _set_item(value: BlueprintEntity) -> void:
