@@ -21,15 +21,18 @@ custom_constants/separation = 10
 margin_right = 185.0
 margin_bottom = 0.0
 slot_count = 5
+transport_direction = 2
 
 [node name="InventoryBar2" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 10.0
 margin_right = 185.0
 margin_bottom = 10.0
 slot_count = 5
+transport_direction = 2
 
 [node name="InventoryBar3" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 20.0
 margin_right = 185.0
 margin_bottom = 20.0
 slot_count = 5
+transport_direction = 2

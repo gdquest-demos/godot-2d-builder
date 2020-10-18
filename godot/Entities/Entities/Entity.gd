@@ -30,9 +30,9 @@ func _get_pickup_count() -> int:
 
 
 func _find_sprite_children_of(parent: Node) -> void:
+	var outline_material := OutlineMaterial.duplicate()
 	for child in parent.get_children():
 		if child is Sprite:
 			_sprites.push_back(child)
-			if not child.material:
-				child.material = OutlineMaterial.duplicate()
+			child.material = outline_material
 		_find_sprite_children_of(child)

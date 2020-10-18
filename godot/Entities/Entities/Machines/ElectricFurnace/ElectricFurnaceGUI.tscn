@@ -62,6 +62,7 @@ margin_right = 128.0
 margin_bottom = 0.0
 slot_count = 1
 item_filters = "NIL"
+transport_direction = 1
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="Control/OreBar" to="." method="_on_OreBar_inventory_changed"]

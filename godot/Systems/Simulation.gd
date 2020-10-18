@@ -21,7 +21,7 @@ onready var _ground := $GameWorld/Ground
 
 func _ready() -> void:
 	$Timer.start(simulation_speed)
-	_entity_placer.setup(self, $GameWorld/FlatEntities, _gui, _ground, _player, $GameWorld/Pipes)
+	_entity_placer.setup(self, $GameWorld/FlatEntities, _gui, _ground, _player)
 
 	var barriers: Array = _ground.get_used_cells_by_id(BARRIER_ID)
 	for cellv in barriers:
@@ -32,36 +32,17 @@ func place_entity(entity, cellv: Vector2) -> void:
 	tracker.place_entity(entity, cellv)
 
 
-func place_pipe(entity, cellv: Vector2) -> void:
-	tracker.place_pipe(entity, cellv)
-
-
 func remove_entity(cellv: Vector2) -> void:
 	tracker.remove_entity(cellv)
-
-
-func remove_pipe(cellv: Vector2) -> void:
-	tracker.remove_pipe(cellv)
 
 
 func is_cell_occupied(cellv: Vector2) -> bool:
 	return tracker.is_cell_occupied(cellv)
 
 
-func is_pipe_in(cellv: Vector2) -> bool:
-	return tracker.is_pipe_in(cellv)
-
-
 func get_entity_at(cellv: Vector2) -> Node2D:
 	if tracker.is_cell_occupied(cellv):
 		return tracker.entities[cellv].entity
-	else:
-		return null
-
-
-func get_pipe_at(cellv: Vector2) -> Node2D:
-	if tracker.is_pipe_in(cellv):
-		return tracker.pipes[cellv].entity
 	else:
 		return null
 

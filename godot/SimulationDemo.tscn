@@ -156,8 +156,6 @@ position = Vector2( 1101.21, 726.605 )
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
 position = Vector2( 749.959, 604.31 )
 
-[node name="Pipes" type="YSort" parent="GameWorld"]
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.033
 

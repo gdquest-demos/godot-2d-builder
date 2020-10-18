@@ -54,11 +54,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GUI/Inventory/Panel.gd"
 }, {
-"base": "Entity",
-"class": "PipeEntity",
-"language": "GDScript",
-"path": "res://Entities/Entities/Pipes/PipeEntity.gd"
-}, {
 "base": "Node",
 "class": "PowerReceiver",
 "language": "GDScript",
@@ -124,7 +119,6 @@ _global_script_class_icons={
 "GroundEntity": "",
 "InventoryBar": "",
 "InventoryPanel": "",
-"PipeEntity": "",
 "PowerReceiver": "",
 "PowerSource": "",
 "PowerSystem": "",
