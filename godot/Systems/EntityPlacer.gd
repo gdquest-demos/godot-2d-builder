@@ -224,7 +224,11 @@ func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
 
 func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	var blueprint: BlueprintEntity = _gui.blueprint
-	var blueprint_name := Library.get_filename_from(blueprint) if blueprint else ""
+	var blueprint_name := ""
+	if blueprint and blueprint is ToolEntity:
+		blueprint_name = blueprint.tool_name
+	elif blueprint:
+		blueprint_name = Library.get_filename_from(blueprint)
 
 	var entity := _simulation.get_entity_at(cellv)
 
@@ -242,9 +246,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	)
 	deconstruct_bar.show()
 
-	var modifier := 1.0
-	if blueprint_name.find("Crude") != -1:
-		modifier = 10.0
+	var modifier := 1.0 if not blueprint is ToolEntity else 1.0 / blueprint.tool_speed
 
 	_deconstruct_tween.interpolate_property(
 		deconstruct_bar, "value", 0, 100, DECONSTRUCT_TIME * modifier

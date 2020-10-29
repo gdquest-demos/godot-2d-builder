@@ -9,11 +9,6 @@ signal entity_placed(entity, cellv)
 signal entity_removed(entity, cellv)
 
 #warning-ignore: unused_signal
-signal pipe_placed(cellv)
-#warning-ignore: unused_signal
-signal pipe_removed(cellv)
-
-#warning-ignore: unused_signal
 signal entered_pickup_area(entity, player)
 
 #warning-ignore: unused_signal
