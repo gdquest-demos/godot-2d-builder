@@ -10,7 +10,6 @@ export var description := ""
 var stack_count := 1
 
 onready var _power_indicator := find_node("PowerDirection")
-onready var sprite: Sprite = find_node("Sprite")
 
 
 func make_inventory() -> void:

@@ -18,7 +18,7 @@ const GroundEntityScene := preload("res://Entities/GroundItem.tscn")
 var _gui: Control
 # The last entity that was hovered over. Used to clear its outline when highlighting another.
 var _last_hovered: Node2D = null
-var _simulation: Simulation
+var _tracker: EntityTracker
 var _player: KinematicBody2D
 # Tilemap that lives in a layer below the player so it can walk over them.
 var _flat_entities: Node2D
@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	)
 
 	var cellv := world_to_map(global_mouse_position)
-	var cell_is_occupied := _simulation.is_cell_occupied(cellv)
+	var cell_is_occupied := _tracker.is_cell_occupied(cellv)
 	var is_on_ground := _ground.get_cellv(cellv) == 0
 
 	if event.is_action_pressed("left_click"):
@@ -54,7 +54,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_update_neighboring_flat_entities(cellv)
 
 		elif cell_is_occupied and is_close_to_player:
-			var entity := _simulation.get_entity_at(cellv)
+			var entity := _tracker.get_entity_at(cellv)
 			if entity and entity.is_in_group(Types.GUI_ENTITIES):
 				_gui.open_entity_gui(entity)
 				_clear_hover_entity()
@@ -101,14 +101,14 @@ func _process(_delta: float) -> void:
 # First call to set various higher level variables from simulation and add
 # pre-placed entities into the world to be registered.
 func setup(
-	simulation: Simulation,
+	tracker: EntityTracker,
 	flat_entities: Node2D,
 	gui: Control,
 	ground: TileMap,
 	player: KinematicBody2D
 ) -> void:
 	_gui = gui
-	_simulation = simulation
+	_tracker = tracker
 	_flat_entities = flat_entities
 	_ground = ground
 	_player = player
@@ -119,7 +119,7 @@ func setup(
 			existing_entities.push_back(child)
 
 	for entity in existing_entities:
-		_simulation.place_entity(entity, world_to_map(entity.global_position))
+		_tracker.place_entity(entity, world_to_map(entity.global_position))
 
 
 func _replace_wire(wire: Node2D, directions: int) -> void:
@@ -145,7 +145,7 @@ func _move_blueprint_in_world(cellv: Vector2) -> void:
 
 	var is_on_ground: bool = _ground.get_cellv(cellv) == 0
 
-	var cell_is_occupied := _simulation.is_cell_occupied(cellv)
+	var cell_is_occupied := _tracker.is_cell_occupied(cellv)
 
 	if not cell_is_occupied and is_close_to_player and is_on_ground:
 		_gui.blueprint.modulate = Color.white
@@ -162,8 +162,8 @@ func _get_powered_neighbors(cellv: Vector2) -> int:
 	for neighbor in Types.NEIGHBORS.keys():
 		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
 
-		if _simulation.is_cell_occupied(key):
-			var entity: Node = _simulation.get_entity_at(key)
+		if _tracker.is_cell_occupied(key):
+			var entity: Node = _tracker.get_entity_at(key)
 
 			if (
 				entity.is_in_group(Types.POWER_MOVERS)
@@ -178,7 +178,7 @@ func _get_powered_neighbors(cellv: Vector2) -> int:
 func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 	for neighbor in Types.NEIGHBORS.keys():
 		var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
-		var object = _simulation.get_entity_at(key)
+		var object = _tracker.get_entity_at(key)
 
 		if object and object is WireEntity:
 			var tile_directions := _get_powered_neighbors(key)
@@ -200,7 +200,7 @@ func _place_entity(cellv: Vector2) -> void:
 
 	new_entity.global_position = map_to_world(cellv) + POSITION_OFFSET
 
-	_simulation.place_entity(new_entity, cellv)
+	_tracker.place_entity(new_entity, cellv)
 
 	new_entity._setup(blueprint)
 
@@ -230,7 +230,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	elif blueprint:
 		blueprint_name = Library.get_filename_from(blueprint)
 
-	var entity := _simulation.get_entity_at(cellv)
+	var entity := _tracker.get_entity_at(cellv)
 
 	if (
 		not entity.deconstruct_filter.empty()
@@ -264,7 +264,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 
 
 func _finish_deconstruct(cellv: Vector2) -> void:
-	var entity := _simulation.get_entity_at(cellv)
+	var entity := _tracker.get_entity_at(cellv)
 	var entity_name := Library.get_filename_from(entity)
 	var location := map_to_world(cellv)
 
@@ -284,7 +284,7 @@ func _finish_deconstruct(cellv: Vector2) -> void:
 		for item in inventory_items:
 			_drop_entity(item, location)
 
-	_simulation.remove_entity(cellv)
+	_tracker.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
 	_gui.deconstruct_bar.hide()
 	Events.emit_signal("hovered_over_entity", null)
@@ -303,7 +303,7 @@ func _update_hover(cellv: Vector2) -> void:
 		< MAXIMUM_WORK_DISTANCE
 	)
 
-	if _simulation.is_cell_occupied(cellv) and is_close_to_player:
+	if _tracker.is_cell_occupied(cellv) and is_close_to_player:
 		_hover_entity(cellv)
 	else:
 		_clear_hover_entity()
@@ -311,7 +311,7 @@ func _update_hover(cellv: Vector2) -> void:
 
 func _hover_entity(cellv: Vector2) -> void:
 	_clear_hover_entity()
-	var entity: Node2D = _simulation.get_entity_at(cellv)
+	var entity: Node2D = _tracker.get_entity_at(cellv)
 	if entity:
 		entity.toggle_outline(true)
 	_last_hovered = entity
@@ -326,7 +326,7 @@ func _clear_hover_entity() -> void:
 
 
 func _sample_entity_at(cellv: Vector2) -> void:
-	var entity: Node = _simulation.get_entity_at(cellv)
+	var entity: Node = _tracker.get_entity_at(cellv)
 	if not entity:
 		return
 
