@@ -13,6 +13,8 @@ onready var fuel_bar := $Control/ColorRect
 
 
 func work(time: float) -> void:
+	if not is_inside_tree():
+		return
 	tween.interpolate_method(self, "_advance_work_time", 0, 1, time)
 	tween.start()
 

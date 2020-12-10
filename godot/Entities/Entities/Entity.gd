@@ -5,8 +5,7 @@ const OUTLINE_SIZE := 3.0
 const OutlineMaterial := preload("res://Shared/outline_material.tres")
 
 export var deconstruct_filter: String
-
-var pickup_count := 1 setget , _get_pickup_count
+export var pickup_count := 1
 
 var _sprites := []
 
@@ -25,14 +24,10 @@ func _setup(_blueprint: BlueprintEntity) -> void:
 	pass
 
 
-func _get_pickup_count() -> int:
-	return 1
-
-
 func _find_sprite_children_of(parent: Node) -> void:
 	var outline_material := OutlineMaterial.duplicate()
 	for child in parent.get_children():
-		if child is Sprite:
+		if child is Sprite and not child.material:
 			_sprites.push_back(child)
 			child.material = outline_material
 		_find_sprite_children_of(child)

@@ -1,5 +1,4 @@
 # Power source. Consumes fuel and acts as a power source.
-# TODO: Give inventory, require fuel
 extends Entity
 
 const BOOTUP_TIME := 6

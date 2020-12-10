@@ -6,6 +6,7 @@
 [node name="OreBoulderEntity" type="StaticBody2D"]
 script = ExtResource( 2 )
 deconstruct_filter = "Pickaxe, CrudePickaxe"
+pickup_count = 10
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -26.1626 )

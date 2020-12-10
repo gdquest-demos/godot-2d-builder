@@ -4,8 +4,6 @@
 [ext_resource path="res://Entities/Blueprints/BlueprintEntity.gd" type="Script" id=2]
 [ext_resource path="res://Entities/Blueprints/PowerDirection.tscn" type="PackedScene" id=4]
 
-
-
 [node name="StirlingEngineBlueprint" type="Node2D"]
 script = ExtResource( 2 )
 stack_size = 4

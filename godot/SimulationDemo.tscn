@@ -54,7 +54,6 @@ position = Vector2( 1357.61, 899.984 )
 
 [node name="EntityPlacer" type="TileMap" parent="GameWorld/YSort"]
 mode = 1
-tile_set = ExtResource( 1 )
 cell_size = Vector2( 100, 50 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 cell_y_sort = true
@@ -154,7 +153,7 @@ position = Vector2( 950.176, 652.875 )
 position = Vector2( 1101.21, 726.605 )
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource( 2 )]
-position = Vector2( 749.959, 604.31 )
+position = Vector2( 750.977, 600.469 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.033

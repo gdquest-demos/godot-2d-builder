@@ -15,7 +15,3 @@ func _ready() -> void:
 
 func get_entity_filename() -> String:
 	return "Lumber"
-
-
-func _get_pickup_count() -> int:
-	return 5

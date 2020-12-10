@@ -14,7 +14,3 @@ func _ready() -> void:
 
 func get_entity_filename() -> String:
 	return "Stone"
-
-
-func _get_pickup_count() -> int:
-	return 10

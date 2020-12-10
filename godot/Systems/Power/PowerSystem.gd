@@ -186,8 +186,8 @@ func _on_entity_placed(entity, cellv: Vector2) -> void:
 
 func _on_entity_removed(_entity, cellv: Vector2) -> void:
 	var retrace := power_sources.erase(cellv)
-	retrace = retrace or power_receivers.erase(cellv)
-	retrace = retrace or power_movers.erase(cellv)
+	retrace = power_receivers.erase(cellv) or retrace
+	retrace = power_movers.erase(cellv) or retrace
 
 	if retrace:
 		_retrace_paths()
