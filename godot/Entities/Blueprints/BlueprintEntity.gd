@@ -22,7 +22,7 @@ func make_inventory() -> void:
 
 func make_world() -> void:
 	scale = Vector2.ONE
-	position = Vector2.ONE
+	position = Vector2.ZERO
 	if _power_indicator:
 		_power_indicator.show()
 

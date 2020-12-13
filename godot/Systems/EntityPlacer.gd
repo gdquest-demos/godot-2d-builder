@@ -86,15 +86,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
-	if (
-		has_placeable_blueprint
-		and (
-			Input.is_action_pressed("left")
-			or Input.is_action_pressed("right")
-			or Input.is_action_pressed("down")
-			or Input.is_action_pressed("up")
-		)
-	):
+
+	if has_placeable_blueprint:
 		_move_blueprint_in_world(world_to_map(get_global_mouse_position()))
 
 
@@ -115,7 +108,7 @@ func setup(
 
 	var existing_entities := flat_entities.get_children()
 	for child in get_children():
-		if not child == _deconstruct_timer and not child == _deconstruct_tween:
+		if child is Entity:
 			existing_entities.push_back(child)
 
 	for entity in existing_entities:
