@@ -3,8 +3,6 @@
 class_name EntityPlacer
 extends TileMap
 
-const WRENCH := "Wrench"
-
 # Distance from the player when the mouse stops being able to place/interact
 const MAXIMUM_WORK_DISTANCE := 275.0
 # Offset in pixels. Used for blueprints to be properly positioned in world space
@@ -145,7 +143,7 @@ func _move_blueprint_in_world(cellv: Vector2) -> void:
 	else:
 		_gui.blueprint.modulate = Color.red
 
-	if blueprint_name == "Wire":
+	if _gui.blueprint is WireEntity:
 		_gui.blueprint.set_sprite_for_direction(_get_powered_neighbors(cellv))
 
 
@@ -184,7 +182,7 @@ func _place_entity(cellv: Vector2) -> void:
 
 	var new_entity: Node2D = Library.entities[blueprint_name].instance()
 
-	if blueprint_name == "Wire":
+	if blueprint is WireBlueprint:
 		var directions := _get_powered_neighbors(cellv)
 		_flat_entities.add_child(new_entity)
 		new_entity.sprite.region_rect = WireBlueprint.get_region_for_direction(directions)
