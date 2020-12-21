@@ -3,7 +3,7 @@ extends Node2D
 
 var blueprint: BlueprintEntity
 
-onready var area := $Area2D
+onready var collision_shape := $Area2D/CollisionShape2D
 onready var animation := $AnimationPlayer
 onready var sprite := $Sprite
 onready var tween := $Tween
@@ -22,16 +22,18 @@ func setup(_blueprint: BlueprintEntity, location: Vector2) -> void:
 
 func do_pickup(target: KinematicBody2D) -> void:
 	var elapsed_time := 0.1
-	area.hide()
+	collision_shape.set_deferred("disabled", true)
+
 	while true:
 		var distance_to_target := global_position.distance_to(target.global_position)
 		if distance_to_target < 5.0:
-			queue_free()
-			return
+			break
 
 		global_position = global_position.move_toward(target.global_position, elapsed_time)
 		elapsed_time += 0.1
 		yield(get_tree(), "idle_frame")
+
+	queue_free()
 
 
 func _pop() -> void:

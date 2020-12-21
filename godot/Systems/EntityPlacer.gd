@@ -73,12 +73,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("rotate_blueprint") and has_placeable_blueprint:
 		blueprint.rotate_blueprint()
 
-	elif event.is_action_pressed("drop") and blueprint and is_close_to_player:
+	elif event.is_action_pressed("drop") and blueprint and is_close_to_player and not _gui.is_open:
 		if is_on_ground:
 			_drop_entity(blueprint, global_mouse_position)
-			blueprint = null
+			_gui.blueprint = null
 
-	elif event.is_action_pressed("sample") and not blueprint:
+	elif event.is_action_pressed("sample") and not blueprint and not _gui.is_open:
 		_sample_entity_at(world_to_map(global_mouse_position))
 
 
@@ -123,7 +123,6 @@ func _replace_pipe(pipe: Node2D, directions: int) -> void:
 
 func _move_blueprint_in_world(cellv: Vector2) -> void:
 	_gui.blueprint.make_world()
-	var blueprint_name := Library.get_filename_from(_gui.blueprint)
 
 	_gui.blueprint.global_position = get_viewport_transform().xform(
 		map_to_world(cellv) + POSITION_OFFSET

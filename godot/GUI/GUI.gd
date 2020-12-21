@@ -16,8 +16,8 @@ const QUICKBAR_ACTIONS := [
 export var debug_items := {}
 
 var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
+var is_open := false
 var _open_gui: Control
-var _is_open := false
 
 onready var player_inventory := $HBoxContainer/InventoryWindow
 onready var crafting_window := $HBoxContainer/CraftingGUI
@@ -51,7 +51,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
-		if _is_open:
+		if is_open:
 			_close_inventories()
 			info_gui.hide()
 		else:
@@ -120,7 +120,7 @@ func update_label() -> void:
 
 
 func open_entity_gui(entity: Entity) -> void:
-	if _is_open:
+	if is_open:
 		_close_inventories()
 
 	var component := get_gui_component_from(entity)
@@ -159,7 +159,7 @@ func find_inventory_bars_in(component: GUIComponent) -> Array:
 
 
 func _open_inventories(open_crafting: bool) -> void:
-	_is_open = true
+	is_open = true
 	player_inventory.visible = true
 	player_inventory.claim_quickbar(quickbar)
 	if open_crafting:
@@ -168,7 +168,7 @@ func _open_inventories(open_crafting: bool) -> void:
 
 
 func _close_inventories() -> void:
-	_is_open = false
+	is_open = false
 	player_inventory.visible = false
 	crafting_window.visible = false
 	_claim_quickbar()
