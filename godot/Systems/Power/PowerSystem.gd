@@ -80,18 +80,16 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 
 
 func _combine_directions(receiver: Vector2, cellv: Vector2) -> int:
-	var direction := 0
-
 	if receiver.x < cellv.x:
-		direction |= Types.Direction.LEFT
+		return Types.Direction.LEFT
 	elif receiver.x > cellv.x:
-		direction |= Types.Direction.RIGHT
+		return Types.Direction.RIGHT
 	elif receiver.y < cellv.y:
-		direction |= Types.Direction.UP
+		return Types.Direction.UP
 	elif receiver.y > cellv.y:
-		direction |= Types.Direction.DOWN
+		return Types.Direction.DOWN
 
-	return direction
+	return 0
 
 
 func _find_neighbors_in(cellv: Vector2, collection: Dictionary, output_directions: int = 15) -> Array:
@@ -114,7 +112,7 @@ func _on_systems_ticked(delta: float) -> void:
 		var available_power := power_source.get_effective_power()
 		var power_draw := 0.0
 
-		for cell in path:
+		for cell in path.slice(1, path.size()-1):
 			if cell == path[0]:
 				continue
 
