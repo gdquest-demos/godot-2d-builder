@@ -9,40 +9,42 @@ export var description := ""
 
 var stack_count := 1
 
-onready var _power_indicator := find_node("PowerDirection")
+onready var _power_direction := find_node("PowerDirection")
 
 
 func make_inventory() -> void:
 	position = Vector2(25, 37.5)
 	scale = Vector2(0.5, 0.5)
 	modulate = Color.white
-	if _power_indicator:
-		_power_indicator.hide()
+	if _power_direction:
+		_power_direction.hide()
 
 
 func make_world() -> void:
 	scale = Vector2.ONE
 	position = Vector2.ZERO
-	if _power_indicator:
-		_power_indicator.show()
+	if _power_direction:
+		_power_direction.show()
 
 
 func rotate_blueprint() -> void:
-	if _power_indicator:
-		var directions: int = _power_indicator.output_directions
+	if not _power_direction:
+		return
 
-		var new_directions := 0
+	var directions: int = _power_direction.output_directions
 
-		if directions & Types.Direction.LEFT != 0:
-			new_directions |= Types.Direction.UP
+	var new_directions := 0
 
-		if directions & Types.Direction.UP != 0:
-			new_directions |= Types.Direction.RIGHT
+	if directions & Types.Direction.LEFT != 0:
+		new_directions |= Types.Direction.UP
 
-		if directions & Types.Direction.RIGHT != 0:
-			new_directions |= Types.Direction.DOWN
+	if directions & Types.Direction.UP != 0:
+		new_directions |= Types.Direction.RIGHT
 
-		if directions & Types.Direction.DOWN != 0:
-			new_directions |= Types.Direction.LEFT
+	if directions & Types.Direction.RIGHT != 0:
+		new_directions |= Types.Direction.DOWN
 
-		_power_indicator.output_directions = new_directions
+	if directions & Types.Direction.DOWN != 0:
+		new_directions |= Types.Direction.LEFT
+
+	_power_direction.output_directions = new_directions
