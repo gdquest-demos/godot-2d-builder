@@ -10,7 +10,6 @@ var power_movers := {}
 
 var paths := []
 
-var power_left := 0.0
 var cells_travelled := []
 
 var receivers_already_provided := {}
