@@ -11,8 +11,8 @@ func get_info() -> String:
 		return (
 			"Smelting: %s into %s\nTime left: %ss"
 			% [
-				Library.get_filename_from(gui.window.ore),
-				Library.get_filename_from(work.current_output),
+				Library.get_entity_name_from(gui.window.ore),
+				Library.get_entity_name_from(work.current_output),
 				(
 					"%.1f" % [work.available_work / work.work_speed]
 					if work.work_speed != 0.0
@@ -27,8 +27,8 @@ func get_info() -> String:
 func _setup_work() -> void:
 	if work.available_work > 0.0 and gui.window.ore:
 		if gui.window.output.held_item:
-			var held_item_id := Library.get_filename_from(gui.window.output.held_item)
-			var output_id: String = Recipes.get_outputs_with_ingredient(Library.get_filename_from(gui.window.ore), Recipes.Smelting).front()
+			var held_item_id := Library.get_entity_name_from(gui.window.output.held_item)
+			var output_id: String = Recipes.get_outputs_with_ingredient(Library.get_entity_name_from(gui.window.ore), Recipes.Smelting).front()
 
 			if held_item_id == output_id:
 				return
@@ -42,14 +42,14 @@ func _setup_work() -> void:
 			return
 
 	if gui.window.ore and work.available_work <= 0.0:
-		var ore_id: String = Library.get_filename_from(gui.window.ore)
+		var ore_id: String = Library.get_entity_name_from(gui.window.ore)
 
 		if work.setup_work({ore_id: gui.window.ore.stack_count}, Recipes.Smelting):
 			work.is_enabled = (
 				not gui.window.output.held_item
 				or (
-					Library.get_filename_from(work.current_output)
-					== Library.get_filename_from(gui.window.output.held_item)
+					Library.get_entity_name_from(work.current_output)
+					== Library.get_entity_name_from(gui.window.output.held_item)
 				)
 			)
 			if work.is_enabled:
@@ -63,7 +63,7 @@ func _setup_work() -> void:
 
 func _consume_ore() -> bool:
 	if gui.window.ore:
-		var ore_filename := Library.get_filename_from(gui.window.ore)
+		var ore_filename := Library.get_entity_name_from(gui.window.ore)
 		if work.current_recipe.inputs.has(ore_filename):
 			var consumption_count: int = work.current_recipe.inputs[ore_filename]
 			if gui.window.ore.stack_count >= consumption_count:

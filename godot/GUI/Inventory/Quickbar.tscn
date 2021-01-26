@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://GUI/Inventory/InventoryBar.gd" type="Script" id=3]
+[ext_resource path="res://GUI/Inventory/Quickbar.gd" type="Script" id=1]
 [ext_resource path="res://GUI/Inventory/QuickbarInventoryPanel.tscn" type="PackedScene" id=4]
 
 [node name="Quickbar" type="HBoxContainer"]
@@ -9,7 +9,7 @@ margin_bottom = 77.0
 mouse_filter = 2
 custom_constants/separation = 10
 alignment = 1
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

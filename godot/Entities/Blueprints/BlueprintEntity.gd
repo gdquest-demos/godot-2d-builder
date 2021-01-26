@@ -3,6 +3,8 @@
 class_name BlueprintEntity
 extends Node2D
 
+const DEFAULT_SIZE := 100.0
+
 export var stack_size := 1
 export var placeable := true
 export var description := ""
@@ -13,8 +15,9 @@ onready var _power_direction := find_node("PowerDirection")
 
 
 func make_inventory() -> void:
-	position = Vector2(25, 37.5)
-	scale = Vector2(0.5, 0.5)
+	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
+	position = Vector2(DEFAULT_SIZE * gui_scale * 0.5, DEFAULT_SIZE * gui_scale * 0.75)
+	scale = Vector2(gui_scale, gui_scale)
 	modulate = Color.white
 	if _power_direction:
 		_power_direction.hide()

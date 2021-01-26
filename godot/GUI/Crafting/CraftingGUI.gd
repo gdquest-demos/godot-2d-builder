@@ -33,7 +33,7 @@ func update_recipes() -> void:
 		items.add_child(item)
 		var sprite: Sprite = temp.get_node("Sprite")
 		item.setup(
-			Library.get_filename_from(temp).capitalize(),
+			Library.get_entity_name_from(temp).capitalize(),
 			sprite.texture,
 			sprite.region_enabled,
 			sprite.region_rect

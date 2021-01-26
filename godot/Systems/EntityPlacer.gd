@@ -84,8 +84,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
+	var player_is_moving: bool = (
+		Input.is_action_pressed("down")
+		or Input.is_action_pressed("right")
+		or Input.is_action_pressed("left")
+		or Input.is_action_pressed("up")
+	)
 
-	if has_placeable_blueprint:
+	if has_placeable_blueprint and player_is_moving:
 		_move_blueprint_in_world(world_to_map(get_global_mouse_position()))
 
 
@@ -177,7 +183,7 @@ func _update_neighboring_flat_entities(cellv: Vector2) -> void:
 
 func _place_entity(cellv: Vector2) -> void:
 	var blueprint: BlueprintEntity = _gui.blueprint
-	var blueprint_name: String = Library.get_filename_from(blueprint)
+	var blueprint_name: String = Library.get_entity_name_from(blueprint)
 
 	var new_entity: Node2D = Library.entities[blueprint_name].instance()
 
@@ -218,7 +224,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 	if blueprint and blueprint is ToolEntity:
 		blueprint_name = blueprint.tool_name
 	elif blueprint:
-		blueprint_name = Library.get_filename_from(blueprint)
+		blueprint_name = Library.get_entity_name_from(blueprint)
 
 	var entity := _tracker.get_entity_at(cellv)
 
@@ -255,7 +261,7 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 
 func _finish_deconstruct(cellv: Vector2) -> void:
 	var entity := _tracker.get_entity_at(cellv)
-	var entity_name := Library.get_filename_from(entity)
+	var entity_name := Library.get_entity_name_from(entity)
 	var location := map_to_world(cellv)
 
 	if Library.blueprints.has(entity_name):
@@ -320,7 +326,7 @@ func _sample_entity_at(cellv: Vector2) -> void:
 	if not entity:
 		return
 
-	var inventories_with: Array = _gui.find_panels_with(Library.get_filename_from(entity))
+	var inventories_with: Array = _gui.find_panels_with(Library.get_entity_name_from(entity))
 	if inventories_with.empty():
 		return
 

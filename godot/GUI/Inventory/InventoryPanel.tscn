@@ -3,12 +3,10 @@
 [ext_resource path="res://GUI/Inventory/Panel.gd" type="Script" id=1]
 [ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=2]
 
-
-
 [node name="InventoryPanel" type="Panel"]
 margin_right = 50.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 100, 100 )
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -19,6 +17,9 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -44.0
+margin_bottom = -29.0
+rect_min_size = Vector2( 100, 100 )
 text = "1"
 align = 2
 __meta__ = {

@@ -29,7 +29,7 @@ func setup(gui: Control) -> void:
 func find_panels_with(item_id: String) -> Array:
 	var output := []
 	for panel in panels:
-		if panel.held_item and Library.get_filename_from(panel.held_item) == item_id:
+		if panel.held_item and Library.get_entity_name_from(panel.held_item) == item_id:
 			output.push_back(panel)
 
 	return output
@@ -50,14 +50,14 @@ func update_labels() -> void:
 
 
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
-	var item_name := Library.get_filename_from(item)
+	var item_name := Library.get_entity_name_from(item)
 	if not item_filters.empty() and item_filters.find(item_name) == -1:
 		return false
 
 	for panel in panels:
 		if (
 			panel.held_item
-			and Library.get_filename_from(panel.held_item) == item_name
+			and Library.get_entity_name_from(panel.held_item) == item_name
 			and panel.held_item.stack_count < panel.held_item.stack_size
 		):
 			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count

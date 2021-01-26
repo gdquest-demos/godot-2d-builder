@@ -17,8 +17,8 @@ func get_info() -> String:
 		return (
 			"Smelting: %s into %s\nTime left: %ss"
 			% [
-				Library.get_filename_from(gui.window.ore),
-				Library.get_filename_from(work.current_output),
+				Library.get_entity_name_from(gui.window.ore),
+				Library.get_entity_name_from(work.current_output),
 				stepify(work.available_work, 0.1)
 			]
 		)
@@ -28,14 +28,14 @@ func get_info() -> String:
 
 func _setup_work() -> void:
 	if (gui.window.fuel or available_fuel > 0.0) and gui.window.ore and work.available_work <= 0.0:
-		var ore_id: String = Library.get_filename_from(gui.window.ore)
+		var ore_id: String = Library.get_entity_name_from(gui.window.ore)
 
 		if work.setup_work({ore_id: gui.window.ore.stack_count}, Recipes.Smelting):
 			work.is_enabled = (
 				not gui.window.output.held_item
 				or (
-					Library.get_filename_from(work.current_output)
-					== Library.get_filename_from(gui.window.output.held_item)
+					Library.get_entity_name_from(work.current_output)
+					== Library.get_entity_name_from(gui.window.output.held_item)
 				)
 			)
 			gui.window.work(work.current_recipe.time)
@@ -52,7 +52,7 @@ func _setup_work() -> void:
 func _consume_fuel(amount: float) -> void:
 	available_fuel -= amount
 	if available_fuel <= 0.0 and gui.window.fuel:
-		last_max_fuel = Recipes.Fuels[Library.get_filename_from(gui.window.fuel)]
+		last_max_fuel = Recipes.Fuels[Library.get_entity_name_from(gui.window.fuel)]
 		available_fuel += last_max_fuel
 
 		gui.window.fuel.stack_count -= 1
@@ -67,7 +67,7 @@ func _consume_fuel(amount: float) -> void:
 
 func _consume_ore() -> bool:
 	if gui.window.ore:
-		var consumption_count: int = work.current_recipe.inputs[Library.get_filename_from(
+		var consumption_count: int = work.current_recipe.inputs[Library.get_entity_name_from(
 			gui.window.ore
 		)]
 		if gui.window.ore.stack_count >= consumption_count:

@@ -3,6 +3,7 @@
 [ext_resource path="res://GUI/DragPreview.gd" type="Script" id=1]
 
 [node name="DragPreview" type="Control"]
+rect_min_size = Vector2( 100, 100 )
 mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -13,6 +14,6 @@ __meta__ = {
 visible = false
 margin_right = 40.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 100, 100 )
 text = "1"
 align = 2

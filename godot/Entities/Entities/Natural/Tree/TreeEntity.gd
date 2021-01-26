@@ -13,5 +13,5 @@ func _ready() -> void:
 	$Foliage.flip_h = rand_range(0, 10) < 5.5
 
 
-func get_entity_filename() -> String:
+func get_entity_name() -> String:
 	return "Lumber"

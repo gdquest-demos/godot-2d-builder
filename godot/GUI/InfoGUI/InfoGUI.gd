@@ -33,7 +33,7 @@ func _get_components_from(entity: Node) -> Array:
 
 
 func _set_info(entity: Node) -> void:
-	var entity_filename: String = Library.get_filename_from(entity).capitalize()
+	var entity_filename: String = Library.get_entity_name_from(entity).capitalize()
 	var output := entity_filename
 
 	if entity is BlueprintEntity:

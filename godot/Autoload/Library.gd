@@ -13,10 +13,10 @@ func _ready() -> void:
 	_find_entities_in("res://Entities")
 
 
-func get_filename_from(node: Node) -> String:
+func get_entity_name_from(node: Node) -> String:
 	if node:
-		if node.has_method("get_entity_filename"):
-			return node.get_entity_filename()
+		if node.has_method("get_entity_name"):
+			return node.get_entity_name()
 		var filename := node.filename.substr(node.filename.rfind("/") + 1).replace(BLUEPRINT, "").replace(
 			ENTITY, ""
 		)

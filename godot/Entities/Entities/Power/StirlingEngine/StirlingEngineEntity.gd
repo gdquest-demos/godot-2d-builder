@@ -53,7 +53,7 @@ func _update_efficiency(value: float) -> void:
 func _consume_fuel(amount: float) -> void:
 	available_fuel = max(available_fuel - amount, 0.0)
 	if available_fuel <= 0.0 and gui.window.fuel:
-		last_max_fuel = Recipes.Fuels[Library.get_filename_from(gui.window.fuel)]
+		last_max_fuel = Recipes.Fuels[Library.get_entity_name_from(gui.window.fuel)]
 		available_fuel += last_max_fuel
 
 		gui.window.fuel.stack_count -= 1

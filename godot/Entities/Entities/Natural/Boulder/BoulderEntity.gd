@@ -12,5 +12,5 @@ func _ready() -> void:
 	scale.x = 1 if rand_range(0, 10) < 5.5 else -1
 
 
-func get_entity_filename() -> String:
+func get_entity_name() -> String:
 	return "Stone"

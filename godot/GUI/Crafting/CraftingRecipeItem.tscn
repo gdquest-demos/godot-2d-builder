@@ -8,11 +8,6 @@
 [ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=6]
 [ext_resource path="res://GUI/Crafting/RecipeName.gd" type="Script" id=7]
 
-
-
-
-
-
 [node name="CraftingRecipe" type="PanelContainer"]
 margin_right = 200.0
 margin_bottom = 50.0

@@ -9,6 +9,7 @@ onready var count_label := $Label
 
 func _ready() -> void:
 	set_as_toplevel(true)
+	count_label.rect_min_size = rect_min_size
 
 
 func _input(event: InputEvent) -> void:

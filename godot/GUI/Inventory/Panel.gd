@@ -3,6 +3,8 @@
 class_name InventoryPanel
 extends Panel
 
+const DEFAULT_SIZE := Vector2(100, 100)
+
 signal held_item_changed(panel, item)
 
 var held_item: BlueprintEntity setget _set_held_item
@@ -13,15 +15,23 @@ var _filters := []
 onready var count_label := $Label
 
 
+func _ready() -> void:
+	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
+	var blueprint_size := DEFAULT_SIZE * gui_scale
+	rect_min_size = blueprint_size
+	rect_size = rect_min_size
+	count_label.rect_min_size = rect_min_size
+
+
 func _gui_input(event: InputEvent) -> void:
 	var left_click := event.is_action_pressed("left_click")
 	var right_click := event.is_action_pressed("right_click")
 
 	if left_click or right_click:
 		if gui.blueprint:
-			var blueprint_name := Library.get_filename_from(gui.blueprint)
+			var blueprint_name := Library.get_entity_name_from(gui.blueprint)
 			if held_item:
-				var held_item_name := Library.get_filename_from(held_item)
+				var held_item_name := Library.get_entity_name_from(held_item)
 
 				var item_is_same_type: bool = held_item_name == blueprint_name
 				var stack_has_space: bool = held_item.stack_count < held_item.stack_size

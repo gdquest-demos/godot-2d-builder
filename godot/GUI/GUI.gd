@@ -67,7 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func add_to_inventory(item: BlueprintEntity) -> bool:
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
-	var item_name := Library.get_filename_from(item)
+	var item_name := Library.get_entity_name_from(item)
 	var existing_stacks: Array = (
 		quickbar.find_panels_with(item_name)
 		+ player_inventory.find_panels_with(item_name)
