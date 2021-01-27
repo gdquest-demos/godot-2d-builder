@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
+[ext_resource path="res://Systems/Power/PowerReceiver.gd" type="Script" id=2]
+[ext_resource path="res://Systems/Power/PowerSource.gd" type="Script" id=3]
+[ext_resource path="res://Entities/Entities/BatteryEntity.gd" type="Script" id=4]
+[ext_resource path="res://Shared/battery_indicator.png" type="Texture" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+//A percentage from 0 to 1 for how full the battery is
+uniform float amount : hint_range(0, 1) = 0.0;
+
+void fragment() {
+	//Load the texture as a mask for our flat color indicator
+	vec4 mask = texture(TEXTURE, UV);
+	//We only need the red part of it. The rest, black or transparent, is of
+	//no interest.
+	float masking_area = mask.r;
+	
+	//Set the percentage of the UV sampling along the X axis to either 0 or 1,
+	// based on how full the battery is. So if amount is 0.5, the percentage will
+	// be 0 if UV.x is greater than that.
+	float uv_percentage = step(UV.x, amount);
+	
+	//Set the sprite to the sprite's modulate color, and the alpha to the UV
+	//percentage calculated above so only the red parts show up.
+	COLOR = vec4(MODULATE.rgb, uv_percentage * masking_area);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/amount = 0.0
+
+[node name="BatteryEntity" type="StaticBody2D" groups=[
+"power_receivers",
+"power_sources",
+]]
+script = ExtResource( 4 )
+
+[node name="PowerSource" type="Node" parent="."]
+script = ExtResource( 3 )
+power_amount = 200.0
+output_direction = 4
+
+[node name="PowerReceiver" type="Node" parent="."]
+script = ExtResource( 2 )
+power_required = 200.0
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -15.3507 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 339, 119, 102, 82 )
+
+[node name="Indicator" type="Sprite" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+material = SubResource( 2 )
+position = Vector2( -23.3597, -17.8535 )
+scale = Vector2( 0.65, 0.65 )
+texture = ExtResource( 5 )
+region_rect = Rect2( 292, 299, 26, 19 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -50.2158, 0.586868, -50.2158, -10.1346, -0.182495, -35.1512, 49.8509, -10.3448, 49.8509, 0.376648, 0.0277405, 25.1831 )
+[connection signal="power_updated" from="PowerSource" to="." method="_on_PowerSource_power_updated"]
+[connection signal="received_power" from="PowerReceiver" to="." method="_on_PowerReceiver_received_power"]

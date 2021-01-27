@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/InventoryBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/InventoryWindow.gd" type="Script" id=3]
+
+[node name="InventoryWindow" type="MarginContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 65.0
+margin_bottom = 85.0
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_right = 40.0
+margin_bottom = 60.0
+mouse_filter = 1
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Inventories" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 40.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Inventory1" parent="PanelContainer/MarginContainer/Inventories" instance=ExtResource( 2 )]
+
+[node name="Inventory2" parent="PanelContainer/MarginContainer/Inventories" instance=ExtResource( 2 )]
+margin_top = 10.0
+margin_bottom = 10.0
+
+[node name="Inventory3" parent="PanelContainer/MarginContainer/Inventories" instance=ExtResource( 2 )]
+margin_top = 20.0
+margin_bottom = 20.0
+[connection signal="inventory_changed" from="PanelContainer/MarginContainer/Inventories/Inventory1" to="." method="_on_InventoryBar_inventory_changed"]
+[connection signal="inventory_changed" from="PanelContainer/MarginContainer/Inventories/Inventory2" to="." method="_on_InventoryBar_inventory_changed"]
+[connection signal="inventory_changed" from="PanelContainer/MarginContainer/Inventories/Inventory3" to="." method="_on_InventoryBar_inventory_changed"]

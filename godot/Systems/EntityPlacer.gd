@@ -84,14 +84,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
-	var player_is_moving: bool = (
-		Input.is_action_pressed("down")
-		or Input.is_action_pressed("right")
-		or Input.is_action_pressed("left")
-		or Input.is_action_pressed("up")
-	)
 
-	if has_placeable_blueprint and player_is_moving:
+	if has_placeable_blueprint and not _gui.mouse_in_gui:
 		_move_blueprint_in_world(world_to_map(get_global_mouse_position()))
 
 

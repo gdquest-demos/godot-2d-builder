@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "MarginContainer",
-"class": "BaseMachineGUI",
-"language": "GDScript",
-"path": "res://GUI/GUIEntities/BaseMachineGUI.gd"
-}, {
 "base": "Node2D",
 "class": "BlueprintEntity",
 "language": "GDScript",
@@ -22,37 +17,27 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
-"path": "res://Entities/Entities/Entity.gd"
-}, {
-"base": "TileMap",
-"class": "EntityPlacer",
-"language": "GDScript",
-"path": "res://Systems/EntityPlacer.gd"
+"path": "res://Entities/Entity.gd"
 }, {
 "base": "Reference",
 "class": "EntityTracker",
 "language": "GDScript",
 "path": "res://Systems/EntityTracker.gd"
 }, {
-"base": "Node",
-"class": "GUIComponent",
-"language": "GDScript",
-"path": "res://GUI/GUIEntities/GUIComponent.gd"
-}, {
 "base": "Node2D",
-"class": "GroundEntity",
+"class": "GroundItem",
 "language": "GDScript",
 "path": "res://Entities/GroundItem.gd"
 }, {
 "base": "HBoxContainer",
 "class": "InventoryBar",
 "language": "GDScript",
-"path": "res://GUI/Inventory/InventoryBar.gd"
+"path": "res://GUI/InventoryBar.gd"
 }, {
 "base": "Panel",
 "class": "InventoryPanel",
 "language": "GDScript",
-"path": "res://GUI/Inventory/Panel.gd"
+"path": "res://GUI/InventoryPanel.gd"
 }, {
 "base": "Node",
 "class": "PowerReceiver",
@@ -70,24 +55,9 @@ _global_script_classes=[ {
 "path": "res://Systems/Power/PowerSystem.gd"
 }, {
 "base": "InventoryBar",
-"class": "Quickbar",
+"class": "QuickBar",
 "language": "GDScript",
-"path": "res://GUI/Inventory/Quickbar.gd"
-}, {
-"base": "Reference",
-"class": "Recipes",
-"language": "GDScript",
-"path": "res://Systems/Recipes.gd"
-}, {
-"base": "Node",
-"class": "Simulation",
-"language": "GDScript",
-"path": "res://Systems/Simulation.gd"
-}, {
-"base": "BlueprintEntity",
-"class": "ToolEntity",
-"language": "GDScript",
-"path": "res://Entities/Blueprints/ToolEntity.gd"
+"path": "res://GUI/QuickBar.gd"
 }, {
 "base": "Reference",
 "class": "Types",
@@ -97,69 +67,48 @@ _global_script_classes=[ {
 "base": "BlueprintEntity",
 "class": "WireBlueprint",
 "language": "GDScript",
-"path": "res://Entities/Blueprints/Wire/WireBlueprint.gd"
+"path": "res://Entities/Blueprints/WireBlueprint.gd"
 }, {
 "base": "Entity",
 "class": "WireEntity",
 "language": "GDScript",
-"path": "res://Entities/Entities/Power/Wire/WireEntity.gd"
-}, {
-"base": "Node",
-"class": "WorkComponent",
-"language": "GDScript",
-"path": "res://Systems/Work/WorkComponent.gd"
-}, {
-"base": "Reference",
-"class": "WorkSystem",
-"language": "GDScript",
-"path": "res://Systems/Work/WorkSystem.gd"
+"path": "res://Entities/Entities/WireEntity.gd"
 } ]
 _global_script_class_icons={
-"BaseMachineGUI": "",
 "BlueprintEntity": "",
 "Entity": "",
-"EntityPlacer": "",
 "EntityTracker": "",
-"GUIComponent": "",
-"GroundEntity": "",
+"GroundItem": "",
 "InventoryBar": "",
 "InventoryPanel": "",
 "PowerReceiver": "",
 "PowerSource": "",
 "PowerSystem": "",
-"Quickbar": "",
-"Recipes": "",
-"Simulation": "",
-"ToolEntity": "",
+"QuickBar": "",
 "Types": "",
 "WireBlueprint": "",
-"WireEntity": "",
-"WorkComponent": "",
-"WorkSystem": ""
+"WireEntity": ""
 }
 
 [application]
 
-config/name="Godot 2D Builder"
-run/main_scene="res://SimulationDemo.tscn"
+config/name="Godot-2d-builder-sbs"
+run/main_scene="res://Simulation.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Events="*res://Autoload/Events.gd"
-Log="*res://Autoload/Log.gd"
 Library="*res://Autoload/Library.gd"
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
-window/stretch/mode="2d"
-window/stretch/aspect="expand"
 
 [game_gui]
 
-gui_scale=0.75
+inventory_size=75.0
 
 [input]
 
@@ -276,5 +225,4 @@ sample={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.2, 0.290196, 0.592157, 1 )
 environment/default_environment="res://default_env.tres"

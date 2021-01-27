@@ -4,9 +4,6 @@
 [ext_resource path="res://GUI/GUIEntities/MachineGUI.gd" type="Script" id=2]
 [ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=3]
 
-
-
-
 [node name="MachineGUIWindow" type="CenterContainer"]
 theme = ExtResource( 3 )
 script = ExtResource( 2 )

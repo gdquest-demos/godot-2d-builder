@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Entities/Blueprints/WireBlueprint.gd" type="Script" id=1]
+[ext_resource path="res://Shared/blueprints.svg" type="Texture" id=2]
+
+[node name="WireBlueprint" type="Node2D"]
+script = ExtResource( 1 )
+stack_size = 50
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 23 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 230, 10, 100, 100 )

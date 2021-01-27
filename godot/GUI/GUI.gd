@@ -18,6 +18,7 @@ export var debug_items := {}
 var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
 var is_open := false
 var _open_gui: Control
+var mouse_in_gui := false
 
 onready var player_inventory := $HBoxContainer/InventoryWindow
 onready var crafting_window := $HBoxContainer/CraftingGUI
@@ -26,6 +27,7 @@ onready var quickbar := $MarginContainer/MarginContainer/Quickbar
 onready var _drag_preview := $DragPreview
 onready var info_gui := $InfoGUI
 onready var deconstruct_bar := $DeconstructProgressBar
+onready var _gui_rect := $HBoxContainer
 
 
 func _ready() -> void:
@@ -64,24 +66,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				break
 
 
+func _process(delta: float) -> void:
+	var mouse_position := get_global_mouse_position()
+	mouse_in_gui = is_open and _gui_rect.get_rect().has_point(mouse_position)
+
+
 func add_to_inventory(item: BlueprintEntity) -> bool:
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
-	var item_name := Library.get_entity_name_from(item)
-	var existing_stacks: Array = (
-		quickbar.find_panels_with(item_name)
-		+ player_inventory.find_panels_with(item_name)
-	)
-	for panel in existing_stacks:
-		if panel.held_item.stack_count < panel.held_item.stack_size:
-			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
-			if item.stack_count > available_space:
-				panel.held_item.stack_count += available_space
-				item.stack_count -= available_space
-			else:
-				panel.held_item.stack_count += item.stack_count
-				item.queue_free()
-				return true
 
 	if quickbar.add_to_first_available_inventory(item):
 		return true
