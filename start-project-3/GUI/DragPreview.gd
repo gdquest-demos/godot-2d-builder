@@ -24,6 +24,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# If the mouse moved
 	if event is InputEventMouseMotion:
+		if blueprint:
+			blueprint.display_as_inventory_icon()
 		# Set the control's global position to the mouse's position on the screen
 		rect_global_position = event.global_position
 
