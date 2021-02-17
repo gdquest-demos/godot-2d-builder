@@ -7,7 +7,7 @@ const DEFAULT_SIZE := 100.0
 
 export var stack_size := 1
 export var placeable := true
-export var description := ""
+export(String, MULTILINE) var description := ""
 
 var stack_count := 1
 

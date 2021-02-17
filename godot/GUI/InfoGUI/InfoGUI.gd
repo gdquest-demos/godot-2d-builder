@@ -16,20 +16,11 @@ func _ready() -> void:
 	Log.log_error(
 		Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe"), "Info GUI"
 	)
+	hide()
 
 
 func _process(_delta: float) -> void:
 	rect_global_position = get_global_mouse_position() + OFFSET
-
-
-func _get_components_from(entity: Node) -> Array:
-	var output := []
-
-	for child in entity.get_children():
-		if child is PowerSource or child is PowerReceiver or child is WorkComponent:
-			output.push_back(child)
-
-	return output
 
 
 func _set_info(entity: Node) -> void:
