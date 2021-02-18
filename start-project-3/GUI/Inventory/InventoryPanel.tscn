@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/InventoryPanel.gd" type="Script" id=2]
+[ext_resource path="res://GUI/Inventory/InventoryPanel.gd" type="Script" id=2]
 
 [node name="InventoryPanel" type="Panel"]
 margin_right = 75.0

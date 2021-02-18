@@ -32,12 +32,12 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "InventoryBar",
 "language": "GDScript",
-"path": "res://GUI/InventoryBar.gd"
+"path": "res://GUI/Inventory/InventoryBar.gd"
 }, {
 "base": "Panel",
 "class": "InventoryPanel",
 "language": "GDScript",
-"path": "res://GUI/InventoryPanel.gd"
+"path": "res://GUI/Inventory/InventoryPanel.gd"
 }, {
 "base": "Node",
 "class": "PowerReceiver",
@@ -57,7 +57,7 @@ _global_script_classes=[ {
 "base": "InventoryBar",
 "class": "QuickBar",
 "language": "GDScript",
-"path": "res://GUI/QuickBar.gd"
+"path": "res://GUI/Inventory/QuickBar.gd"
 }, {
 "base": "Reference",
 "class": "Types",
