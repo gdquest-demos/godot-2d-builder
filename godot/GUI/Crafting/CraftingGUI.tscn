@@ -4,9 +4,8 @@
 [ext_resource path="res://GUI/Crafting/CraftingGUI.gd" type="Script" id=2]
 
 [node name="CraftingGUI" type="MarginContainer"]
-margin_right = 290.0
-margin_bottom = 290.0
-rect_min_size = Vector2( 200, 0 )
+margin_right = 90.0
+margin_bottom = 90.0
 mouse_filter = 1
 theme = ExtResource( 1 )
 custom_constants/margin_right = 25
@@ -21,33 +20,27 @@ __meta__ = {
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 25.0
 margin_top = 25.0
-margin_right = 265.0
-margin_bottom = 265.0
+margin_right = 65.0
+margin_bottom = 65.0
 mouse_filter = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
-margin_right = 240.0
-margin_bottom = 240.0
-
-[node name="CraftingLift" type="MarginContainer" parent="PanelContainer/HBoxContainer"]
-margin_right = 240.0
-margin_bottom = 240.0
+[node name="CraftingList" type="MarginContainer" parent="PanelContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
 mouse_filter = 1
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/CraftingLift"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/CraftingList"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 220.0
-margin_bottom = 220.0
-rect_min_size = Vector2( 200, 200 )
+margin_right = 20.0
+margin_bottom = 20.0
 mouse_filter = 1
 scroll_horizontal_enabled = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/CraftingLift/ScrollContainer"]
-margin_right = 200.0
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CraftingList/ScrollContainer"]
 size_flags_horizontal = 3
 custom_constants/separation = 5

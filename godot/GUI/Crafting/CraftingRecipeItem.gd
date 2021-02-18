@@ -10,17 +10,14 @@ export var regular_style: StyleBoxFlat
 export var highlight_style: StyleBoxFlat
 export var bright_style: StyleBoxFlat
 
-onready var sprite := $Control/BlueprintSprite
-onready var recipe_name := $Control/RecipeName
-onready var control := $Control
+onready var sprite := $MarginContainer/HBoxContainer/GUISprite
+onready var recipe_name := $MarginContainer/HBoxContainer/RecipeName
 
 
 func _ready() -> void:
 	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
-	control.rect_size = DEFAULT_SIZE * gui_scale
-	control.rect_min_size = DEFAULT_SIZE * gui_scale
 	sprite.scale = Vector2(gui_scale, gui_scale)
-	recipe_name.rect_position = Vector2(gui_scale * 125, control.rect_size.y/3)
+	rect_min_size = Vector2(400, 0) * gui_scale
 	
 	if regular_style:
 		set(PATH_TO_CUSTOM_PANEL, regular_style)

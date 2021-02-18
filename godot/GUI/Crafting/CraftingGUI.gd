@@ -4,7 +4,7 @@ const CraftingItem := preload("CraftingRecipeItem.tscn")
 
 var gui: Control
 
-onready var items := $PanelContainer/HBoxContainer/CraftingLift/ScrollContainer/VBoxContainer
+onready var items := $PanelContainer/CraftingList/ScrollContainer/VBoxContainer
 
 
 func setup(_gui: Control) -> void:
