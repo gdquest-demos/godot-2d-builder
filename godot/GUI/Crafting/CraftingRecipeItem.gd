@@ -18,7 +18,7 @@ func _ready() -> void:
 	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
 	sprite.scale = Vector2(gui_scale, gui_scale)
 	rect_min_size = Vector2(400, 0) * gui_scale
-	
+
 	if regular_style:
 		set(PATH_TO_CUSTOM_PANEL, regular_style)
 

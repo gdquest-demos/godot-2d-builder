@@ -24,11 +24,9 @@ const DIRECTIONS_DATA := {
 
 onready var sprite := $Sprite
 
-
 ## Helper function to set the sprite based on the provided direction.
 static func set_sprite_for_direction(sprite: Sprite, directions: int) -> void:
 	sprite.region_rect = get_region_for_direction(directions)
-
 
 ## Static function to get the correct Rect2 from the constant dictionary.
 static func get_region_for_direction(directions: int) -> Rect2:

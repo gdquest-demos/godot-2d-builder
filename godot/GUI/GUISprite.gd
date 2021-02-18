@@ -2,7 +2,6 @@ tool
 class_name GUISprite
 extends Control
 
-
 export var texture: Texture setget _set_texture
 
 export var region_enabled: bool = false setget _set_region_enabled
@@ -13,7 +12,7 @@ export var scale := Vector2.ONE setget _set_scale
 func _draw() -> void:
 	if not texture:
 		return
-	
+
 	if region_enabled:
 		draw_texture_rect_region(texture, Rect2(rect_position, rect_size), region_rect)
 	else:

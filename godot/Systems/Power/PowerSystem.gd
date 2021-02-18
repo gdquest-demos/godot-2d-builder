@@ -52,7 +52,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 			if (
 				(
 					direction & Types.Direction.RIGHT != 0
-					and power_receiver.input_direction & Types.Direction.LEFT == 0
+					and (power_receiver.input_direction & Types.Direction.LEFT == 0)
 				)
 				or (
 					direction & Types.Direction.DOWN != 0
@@ -60,11 +60,11 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 				)
 				or (
 					direction & Types.Direction.LEFT != 0
-					and power_receiver.input_direction & Types.Direction.RIGHT == 0
+					and (power_receiver.input_direction & Types.Direction.RIGHT == 0)
 				)
 				or (
 					direction & Types.Direction.UP != 0
-					and power_receiver.input_direction & Types.Direction.DOWN == 0
+					and (power_receiver.input_direction & Types.Direction.DOWN == 0)
 				)
 			):
 				continue
@@ -111,7 +111,7 @@ func _on_systems_ticked(delta: float) -> void:
 		var available_power := power_source.get_effective_power()
 		var power_draw := 0.0
 
-		for cell in path.slice(1, path.size()-1):
+		for cell in path.slice(1, path.size() - 1):
 			if cell == path[0]:
 				continue
 

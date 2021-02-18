@@ -49,5 +49,5 @@ func _on_PowerReceiver_received_power(amount: float, delta: float) -> void:
 
 
 func _on_PowerSource_power_updated(power_draw: float, delta: float) -> void:
-	self.stored_power = stored_power - min(power_draw, source.get_effective_power()) * delta
+	self.stored_power = (stored_power - min(power_draw, source.get_effective_power()) * delta)
 	Events.emit_signal("info_updated", self)

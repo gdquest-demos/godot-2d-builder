@@ -191,7 +191,7 @@ func _place_entity(cellv: Vector2) -> void:
 	new_entity.global_position = map_to_world(cellv) + POSITION_OFFSET
 
 	new_entity._setup(blueprint)
-	
+
 	_tracker.place_entity(new_entity, cellv)
 
 	if blueprint.stack_count == 1:
