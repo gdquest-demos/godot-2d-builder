@@ -29,8 +29,6 @@ func _gui_input(event: InputEvent) -> void:
 		var recipe: Dictionary = Recipes.Crafting[recipe_filename]
 		emit_signal("recipe_activated", recipe, recipe_filename)
 		set(PATH_TO_CUSTOM_PANEL, bright_style)
-	if event is InputEventMouseMotion:
-		_on_CraftingRecipe_mouse_entered()
 
 
 func setup(name: String, texture: Texture, uses_region_rect: bool, region_rect: Rect2) -> void:

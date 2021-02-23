@@ -61,7 +61,11 @@ func _on_info_updated(entity: Node) -> void:
 func _on_hovered_over_recipe(output: String, recipe: Dictionary) -> void:
 	var blueprint: BlueprintEntity = Library.blueprints[output].instance()
 	_set_info(blueprint)
+	blueprint.free()
+	
+	label.text = "%sx %s" % [recipe.amount, label.text]
+
 	var inputs: Dictionary = recipe.inputs
 	for input in inputs.keys():
-		label.text += "\n%s %s" % [inputs[input], input]
+		label.text += "\n    %sx %s" % [inputs[input], input.capitalize()]
 	set_deferred("rect_size", Vector2.ZERO)

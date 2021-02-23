@@ -165,7 +165,7 @@ window/stretch/aspect="expand"
 
 [game_gui]
 
-gui_scale=0.75
+gui_scale=1.0
 
 [input]
 

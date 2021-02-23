@@ -302,15 +302,15 @@ func _update_hover(cellv: Vector2) -> void:
 func _hover_entity(cellv: Vector2) -> void:
 	_clear_hover_entity()
 	var entity: Node2D = _tracker.get_entity_at(cellv)
-	if entity:
-		entity.toggle_outline(true)
+	#if entity:
+	#	entity.toggle_outline(true)
 	_last_hovered = entity
 	Events.emit_signal("hovered_over_entity", entity)
 
 
 func _clear_hover_entity() -> void:
 	if _last_hovered:
-		_last_hovered.toggle_outline(false)
+		#_last_hovered.toggle_outline(false)
 		_last_hovered = null
 		Events.emit_signal("hovered_over_entity", null)
 
