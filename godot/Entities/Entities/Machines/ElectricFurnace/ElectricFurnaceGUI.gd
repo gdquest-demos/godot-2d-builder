@@ -3,10 +3,15 @@ extends BaseMachineGUI
 var ore: BlueprintEntity
 var output: Panel
 
-onready var ore_container := $Control/OreBar
-onready var output_container := $Control/Output
+onready var ore_container := $HBoxContainer/OreBar
+onready var output_container := $HBoxContainer/Output
 onready var tween := $Tween
-onready var arrow := $Control/Arrow/Sprite
+onready var arrow := $HBoxContainer/GUISprite
+
+
+func _ready() -> void:
+	var scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
+	arrow.scale = Vector2(scale, scale)
 
 
 func work(time: float, speed: float) -> void:

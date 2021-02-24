@@ -28,26 +28,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="."]
+[node name="Tween" type="Tween" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 64.0
 margin_bottom = 64.0
 
-[node name="FuelBar" parent="Control" instance=ExtResource( 2 )]
-margin_left = 16.0
-margin_right = 16.0
-margin_bottom = 0.0
-slot_count = 1
-item_filters = "Fuels"
-
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
 modulate = Color( 0.188235, 0.462745, 1, 1 )
 material = SubResource( 2 )
 margin_right = 5.0
-margin_bottom = 50.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 5, 50 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="."]
-[connection signal="inventory_changed" from="Control/FuelBar" to="." method="_on_FuelBar_inventory_changed"]
+[node name="FuelBar" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 9.0
+margin_right = 9.0
+margin_bottom = 64.0
+slot_count = 1
+item_filters = "Fuels"
+[connection signal="inventory_changed" from="HBoxContainer/FuelBar" to="." method="_on_FuelBar_inventory_changed"]

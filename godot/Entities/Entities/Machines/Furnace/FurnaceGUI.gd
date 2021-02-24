@@ -4,12 +4,17 @@ var ore: BlueprintEntity
 var fuel: BlueprintEntity
 var output: Panel
 
-onready var ore_container := $Control/OreBar
-onready var fuel_container := $Control/FuelBar
-onready var output_container := $Control/Output
+onready var ore_container := $HBoxContainer/VBoxContainer/OreBar
+onready var fuel_container := $HBoxContainer/VBoxContainer/HBoxContainer/FuelBar
+onready var output_container := $HBoxContainer/Output
 onready var tween := $Tween
-onready var arrow := $Control/Arrow/Sprite
-onready var fuel_bar := $Control/ColorRect
+onready var arrow := $HBoxContainer/GUISprite
+onready var fuel_bar := $HBoxContainer/VBoxContainer/HBoxContainer/ColorRect
+
+
+func _ready() -> void:
+	var scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
+	arrow.scale = Vector2(scale, scale)
 
 
 func work(time: float) -> void:

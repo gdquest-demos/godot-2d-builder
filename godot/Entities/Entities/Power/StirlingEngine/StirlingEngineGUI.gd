@@ -3,9 +3,9 @@ extends BaseMachineGUI
 var fuel: BlueprintEntity
 var output: Panel
 
-onready var fuel_container := $Control/FuelBar
+onready var fuel_container := $HBoxContainer/FuelBar
 onready var tween := $Tween
-onready var fuel_bar := $Control/ColorRect
+onready var fuel_bar := $HBoxContainer/ColorRect
 
 
 func set_fuel(amount: float) -> void:
