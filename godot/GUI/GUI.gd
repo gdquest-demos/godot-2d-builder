@@ -112,17 +112,18 @@ func update_label() -> void:
 
 
 func open_entity_gui(entity: Entity) -> void:
-	if is_open:
-		_close_inventories()
-
 	var component := get_gui_component_from(entity)
 	if not component:
 		return
+	
+	if is_open:
+		_close_inventories()
 
 	_open_gui = component.gui
 	if not _open_gui.get_parent() == player_inventory.inventory_path:
 		player_inventory.inventory_path.add_child(_open_gui)
 		player_inventory.inventory_path.move_child(_open_gui, 0)
+	_open_gui.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_open_gui.setup(self)
 	_open_inventories(false)
 

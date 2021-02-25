@@ -13,7 +13,7 @@ func set_fuel(amount: float) -> void:
 		fuel_bar.material.set_shader_param("fill_amount", amount)
 
 
-func _setup(gui: Control) -> void:
+func setup(gui: Control) -> void:
 	fuel_container.setup(gui)
 
 

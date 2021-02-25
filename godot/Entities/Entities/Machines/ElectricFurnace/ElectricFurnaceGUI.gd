@@ -47,7 +47,7 @@ func _advance_work_time(amount: float) -> void:
 	arrow.material.set_shader_param("fill_amount", amount)
 
 
-func _setup(gui: Control) -> void:
+func setup(gui: Control) -> void:
 	ore_container.setup(gui)
 	output_container.setup(gui)
 	output = output_container.panels[0]

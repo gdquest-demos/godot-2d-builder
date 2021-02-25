@@ -22,5 +22,5 @@ func _exit_tree() -> void:
 	call_deferred("emit_signal", "gui_closed")
 
 
-func _setup(_gui: Control) -> void:
+func setup(_gui: Control) -> void:
 	pass
