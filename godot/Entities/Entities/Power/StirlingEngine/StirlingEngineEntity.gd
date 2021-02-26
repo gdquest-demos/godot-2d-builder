@@ -19,7 +19,7 @@ func get_info() -> String:
 
 
 func _setup_work() -> void:
-	if not animation_player.is_playing() and (gui.window.fuel or available_fuel > 0.0):
+	if not animation_player.is_playing() and (gui.gui.fuel or available_fuel > 0.0):
 		animation_player.play("Work")
 		tween.interpolate_property(animation_player, "playback_speed", 0, 1, BOOTUP_TIME)
 		tween.interpolate_method(self, "_update_efficiency", 0, 1, BOOTUP_TIME)
@@ -29,7 +29,7 @@ func _setup_work() -> void:
 	elif (
 		animation_player.is_playing()
 		and animation_player.current_animation == "Work"
-		and not (gui.window.fuel or available_fuel > 0.0)
+		and not (gui.gui.fuel or available_fuel > 0.0)
 	):
 		var work_animation: Animation = animation_player.get_animation(
 			animation_player.current_animation
@@ -52,19 +52,19 @@ func _update_efficiency(value: float) -> void:
 
 func _consume_fuel(amount: float) -> void:
 	available_fuel = max(available_fuel - amount, 0.0)
-	if available_fuel <= 0.0 and gui.window.fuel:
-		last_max_fuel = Recipes.Fuels[Library.get_entity_name_from(gui.window.fuel)]
+	if available_fuel <= 0.0 and gui.gui.fuel:
+		last_max_fuel = Recipes.Fuels[Library.get_entity_name_from(gui.gui.fuel)]
 		available_fuel += last_max_fuel
 
-		gui.window.fuel.stack_count -= 1
-		if gui.window.fuel.stack_count == 0:
-			gui.window.fuel.queue_free()
-			gui.window.fuel = null
+		gui.gui.fuel.stack_count -= 1
+		if gui.gui.fuel.stack_count == 0:
+			gui.gui.fuel.queue_free()
+			gui.gui.fuel = null
 		else:
-			gui.window.update_labels()
+			gui.gui.update_labels()
 	else:
 		_setup_work()
-	gui.window.set_fuel((available_fuel / last_max_fuel) if last_max_fuel > 0.0 else 0.0)
+	gui.gui.set_fuel((available_fuel / last_max_fuel) if last_max_fuel > 0.0 else 0.0)
 
 
 func _on_GUIComponent_gui_status_changed() -> void:

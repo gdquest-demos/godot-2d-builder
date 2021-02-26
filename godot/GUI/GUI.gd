@@ -138,7 +138,7 @@ func get_gui_component_from(entity: Node) -> GUIComponent:
 
 func find_inventory_bars_in(component: GUIComponent) -> Array:
 	var output := []
-	var parent_stack := [component.window]
+	var parent_stack := [component.gui]
 
 	while not parent_stack.empty():
 		var current: Node = parent_stack.pop_back()

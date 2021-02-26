@@ -81,7 +81,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 			# traveling in to compare it to the receiver's direction.
 			# I.E. if the power is traveling from left to right but the receiver
 			# does not accept power coming from _its_ left, it should not be in the list.
-			direction = _combine_directions(receiver, cellv)
+			var combined_direction := _combine_directions(receiver, cellv)
 
 			# Get the power receiver
 			var power_receiver: PowerReceiver = power_receivers[receiver]
@@ -90,19 +90,19 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 			# inside the other), skip this receiver and move on to the next one.
 			if (
 				(
-					direction & Types.Direction.RIGHT != 0
+					combined_direction & Types.Direction.RIGHT != 0
 					and power_receiver.input_direction & Types.Direction.LEFT == 0
 				)
 				or (
-					direction & Types.Direction.DOWN != 0
+					combined_direction & Types.Direction.DOWN != 0
 					and power_receiver.input_direction & Types.Direction.UP == 0
 				)
 				or (
-					direction & Types.Direction.LEFT != 0
+					combined_direction & Types.Direction.LEFT != 0
 					and power_receiver.input_direction & Types.Direction.RIGHT == 0
 				)
 				or (
-					direction & Types.Direction.UP != 0
+					combined_direction & Types.Direction.UP != 0
 					and power_receiver.input_direction & Types.Direction.DOWN == 0
 				)
 			):
@@ -113,7 +113,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 
 	# We've done the receivers, now we check for any possible wires so we can keep
 	# traveling.
-	var movers := _find_neighbors_in(cellv, power_movers)
+	var movers := _find_neighbors_in(cellv, power_movers, direction)
 
 	# Call this same function again from the new cell position for any wire that
 	# is found and travel from there, and return the result, so long as we've

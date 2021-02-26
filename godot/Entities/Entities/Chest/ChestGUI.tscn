@@ -7,6 +7,7 @@
 margin_right = 185.0
 margin_bottom = 128.0
 rect_min_size = Vector2( 185, 128 )
+size_flags_horizontal = 5
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
