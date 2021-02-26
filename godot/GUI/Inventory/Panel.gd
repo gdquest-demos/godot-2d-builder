@@ -10,7 +10,7 @@ signal held_item_changed(panel, item)
 var held_item: BlueprintEntity setget _set_held_item
 var silent := false
 var gui: Control
-var _filters := []
+var _filter_list := []
 
 onready var count_label := $Label
 
@@ -43,13 +43,13 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click and Library.is_valid_filter(_filters, held_item_name):
+					if left_click and Library.is_valid_filter(_filter_list, held_item_name):
 						_swap_items()
 			else:
-				if left_click and Library.is_valid_filter(_filters, blueprint_name):
+				if left_click and Library.is_valid_filter(_filter_list, blueprint_name):
 					_grab_item()
 
-				elif right_click and Library.is_valid_filter(_filters, blueprint_name):
+				elif right_click and Library.is_valid_filter(_filter_list, blueprint_name):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -67,9 +67,9 @@ func _gui_input(event: InputEvent) -> void:
 		Events.emit_signal("hovered_over_entity", held_item)
 
 
-func setup(_gui: Control, filters := []) -> void:
+func setup(_gui: Control, filter_list := []) -> void:
 	gui = _gui
-	_filters = filters
+	_filter_list = filter_list
 
 
 func _set_held_item(value: BlueprintEntity) -> void:

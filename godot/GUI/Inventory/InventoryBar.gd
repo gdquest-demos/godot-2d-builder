@@ -10,11 +10,10 @@ export var slot_count := 10
 export var item_filters := ""
 
 var panels := []
-var _filter_list := []
+onready var _filter_list := item_filters.split(" ", false)
 
 
 func _ready() -> void:
-	_filter_list = item_filters.split(" ", false)
 	_make_panels()
 
 

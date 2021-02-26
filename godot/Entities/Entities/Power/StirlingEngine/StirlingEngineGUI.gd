@@ -4,7 +4,6 @@ var fuel: BlueprintEntity
 var output: Panel
 
 onready var fuel_container := $HBoxContainer/FuelBar
-onready var tween := $Tween
 onready var fuel_bar := $HBoxContainer/ColorRect
 
 
