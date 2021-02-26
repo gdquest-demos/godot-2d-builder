@@ -13,14 +13,15 @@ radius = 100.0
 script = ExtResource( 2 )
 
 [node name="Pawn" type="Sprite" parent="."]
-position = Vector2( 0, -22.3586 )
+position = Vector2( 0, -0.639614 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -5.25251 )
+position = Vector2( 0, 16.4665 )
 shape = SubResource( 1 )
 
 [node name="PickupRadius" type="Area2D" parent="."]
+position = Vector2( 0, 21.719 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
 shape = SubResource( 2 )

@@ -43,13 +43,13 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click and _is_valid_filter(held_item_name):
+					if left_click and Library.is_valid_filter(_filters, held_item_name):
 						_swap_items()
 			else:
-				if left_click and _is_valid_filter(blueprint_name):
+				if left_click and Library.is_valid_filter(_filters, blueprint_name):
 					_grab_item()
 
-				elif right_click and _is_valid_filter(blueprint_name):
+				elif right_click and Library.is_valid_filter(_filters, blueprint_name):
 					if gui.blueprint.stack_count > 1:
 						_grab_split_items()
 					else:
@@ -67,10 +67,9 @@ func _gui_input(event: InputEvent) -> void:
 		Events.emit_signal("hovered_over_entity", held_item)
 
 
-func setup(_gui: Control, filter := "") -> void:
+func setup(_gui: Control, filters := []) -> void:
 	gui = _gui
-	if not filter.empty():
-		_filters = filter.split(" ")
+	_filters = filters
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
@@ -159,16 +158,6 @@ func _grab_split_items() -> void:
 	self.held_item = new_stack
 
 	_update_label()
-
-
-func _is_valid_filter(types: String) -> bool:
-	if _filters.empty() or types in _filters:
-		return true
-
-	if _filters.find("Fuels") != -1 and Recipes.Fuels.has(types):
-		return true
-
-	return false
 
 
 func _on_InventoryPanel_mouse_exited() -> void:

@@ -25,6 +25,16 @@ func get_entity_name_from(node: Node) -> String:
 	return ""
 
 
+func is_valid_filter(filters: Array, types: String) -> bool:
+	if filters.empty() or types in filters:
+		return true
+
+	if filters.has("Fuels") and Recipes.Fuels.has(types):
+		return true
+
+	return false
+
+
 func _find_entities_in(path: String) -> void:
 	var directory := Directory.new()
 	var error := directory.open(path)

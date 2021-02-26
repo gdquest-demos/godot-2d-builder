@@ -10,15 +10,17 @@ export var slot_count := 10
 export var item_filters := ""
 
 var panels := []
+var _filter_list := []
 
 
 func _ready() -> void:
+	_filter_list = item_filters.split(" ", false)
 	_make_panels()
 
 
 func setup(gui: Control) -> void:
 	for panel in panels:
-		panel.setup(gui, item_filters)
+		panel.setup(gui, _filter_list)
 		if not panel.is_connected("held_item_changed", self, "_on_Panel_held_item_changed"):
 			Log.log_error(
 				panel.connect("held_item_changed", self, "_on_Panel_held_item_changed"),
@@ -51,7 +53,8 @@ func update_labels() -> void:
 
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 	var item_name := Library.get_entity_name_from(item)
-	if not item_filters.empty() and item_filters.find(item_name) == -1:
+	
+	if not Library.is_valid_filter(_filter_list, item_name):
 		return false
 
 	for panel in panels:
