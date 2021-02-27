@@ -57,7 +57,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=5]
 resource_name = "Shutdown"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Vents:modulate")
+tracks/0/path = NodePath("Vents:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -66,7 +66,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1.35294, 0.682353, 0.235294, 1 ), Color( 1.35294, 0.682353, 0.235294, 0 ) ]
+"values": [ 1.0, 0.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Particles2D:emitting")
@@ -83,7 +83,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=6]
 tracks/0/type = "value"
-tracks/0/path = NodePath("Vents:modulate")
+tracks/0/path = NodePath("Vents:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -92,7 +92,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1.35294, 0.682353, 0.235294, 0 ), Color( 1.35294, 0.682353, 0.235294, 1 ) ]
+"values": [ 0.0, 1.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Particles2D:emitting")
@@ -132,16 +132,15 @@ polygon = PoolVector2Array( -50.25, 24.75, -50.25, 9.75, -0.25, -11.75, 50.25, 9
 
 [node name="Vents" type="Node2D" parent="."]
 modulate = Color( 1.62353, 0.784314, 0.270588, 0 )
-position = Vector2( 0, -24.6946 )
 
 [node name="Vents" type="Sprite" parent="Vents"]
-position = Vector2( -28, 13.25 )
+position = Vector2( -28, -11.4724 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 242, 282, 20, 22 )
 
 [node name="LoadingVent" type="Sprite" parent="Vents"]
-position = Vector2( 25.0363, 28.8242 )
+position = Vector2( 25.0363, 3.65632 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 292, 299, 26, 19 )
