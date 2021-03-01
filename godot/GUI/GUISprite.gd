@@ -16,7 +16,7 @@ func _draw() -> void:
 	if region_enabled:
 		draw_texture_rect_region(texture, Rect2(Vector2.ZERO, rect_size), region_rect)
 	else:
-		draw_texture_rect(texture, Rect2(rect_position, rect_size), false)
+		draw_texture_rect(texture, Rect2(Vector2.ZERO, rect_size), false)
 
 
 func _set_texture(value: Texture) -> void:

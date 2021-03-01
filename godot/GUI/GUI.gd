@@ -136,21 +136,6 @@ func get_gui_component_from(entity: Node) -> GUIComponent:
 	return null
 
 
-func find_inventory_bars_in(component: GUIComponent) -> Array:
-	var output := []
-	var parent_stack := [component.gui]
-
-	while not parent_stack.empty():
-		var current: Node = parent_stack.pop_back()
-
-		if current is InventoryBar:
-			output.push_back(current)
-
-		parent_stack += current.get_children()
-
-	return output
-
-
 func _open_inventories(open_crafting: bool) -> void:
 	is_open = true
 	player_inventory.visible = true

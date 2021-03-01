@@ -9,6 +9,8 @@
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 4 )
 shader_param/fill_amount = 0.0
+shader_param/region_position = Vector2( 10, 10 )
+shader_param/region_size = Vector2( 50, 50 )
 
 [node name="ElectricFurnaceGUI" type="MarginContainer"]
 margin_right = 176.0
@@ -51,4 +53,3 @@ item_filters = "NIL"
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="HBoxContainer/OreBar" to="." method="_on_OreBar_inventory_changed"]
-[connection signal="inventory_changed" from="HBoxContainer/Output" to="." method="_on_Output_inventory_changed"]

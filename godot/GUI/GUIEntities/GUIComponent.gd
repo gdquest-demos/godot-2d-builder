@@ -28,6 +28,21 @@ func _ready() -> void:
 	)
 
 
+func get_inventory_bars() -> Array:
+	var output := []
+	var parent_stack := [gui]
+
+	while not parent_stack.empty():
+		var current: Node = parent_stack.pop_back()
+
+		if current is InventoryBar:
+			output.push_back(current)
+
+		parent_stack += current.get_children()
+
+	return output
+
+
 func _exit_tree() -> void:
 	if gui:
 		gui.queue_free()

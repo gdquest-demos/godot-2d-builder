@@ -34,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Systems/EntityTracker.gd"
 }, {
+"base": "Entity",
+"class": "FurnaceEntity",
+"language": "GDScript",
+"path": "res://Entities/Entities/Machines/Furnace/FurnaceEntity.gd"
+}, {
+"base": "BaseMachineGUI",
+"class": "FurnaceGUI",
+"language": "GDScript",
+"path": "res://Entities/Entities/Machines/Furnace/FurnaceGUI.gd"
+}, {
 "base": "Node",
 "class": "GUIComponent",
 "language": "GDScript",
@@ -125,6 +135,8 @@ _global_script_class_icons={
 "Entity": "",
 "EntityPlacer": "",
 "EntityTracker": "",
+"FurnaceEntity": "",
+"FurnaceGUI": "",
 "GUIComponent": "",
 "GUISprite": "",
 "GroundEntity": "",

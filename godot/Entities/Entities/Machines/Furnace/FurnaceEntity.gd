@@ -1,3 +1,4 @@
+class_name FurnaceEntity
 extends Entity
 
 var available_fuel := 0.0
@@ -9,7 +10,7 @@ onready var animation := $AnimationPlayer
 
 
 func _ready() -> void:
-	work.work_speed = 1.0
+	_set_initial_speed()
 
 
 func get_info() -> String:
@@ -24,6 +25,10 @@ func get_info() -> String:
 		)
 	else:
 		return ""
+
+
+func _set_initial_speed() -> void:
+	work.work_speed = 1.0
 
 
 func _setup_work() -> void:

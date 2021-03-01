@@ -1,20 +1,24 @@
+class_name FurnaceGUI
 extends BaseMachineGUI
 
 var ore: BlueprintEntity
 var fuel: BlueprintEntity
 var output: Panel
 
-onready var ore_container := $HBoxContainer/VBoxContainer/OreBar
-onready var fuel_container := $HBoxContainer/VBoxContainer/HBoxContainer/FuelBar
+var ore_container: InventoryBar
+var fuel_container: InventoryBar
+var fuel_bar: ColorRect
+
 onready var output_container := $HBoxContainer/Output
 onready var tween := $Tween
 onready var arrow := $HBoxContainer/GUISprite
-onready var fuel_bar := $HBoxContainer/VBoxContainer/HBoxContainer/ColorRect
 
 
 func _ready() -> void:
 	var scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
 	arrow.scale = Vector2(scale, scale)
+	
+	_find_nodes()
 
 
 func work(time: float) -> void:
@@ -61,6 +65,12 @@ func grab_output(item: BlueprintEntity) -> void:
 
 		item.queue_free()
 	output_container.update_labels()
+
+
+func _find_nodes() -> void:
+	ore_container = $HBoxContainer/VBoxContainer/OreBar
+	fuel_container = $HBoxContainer/VBoxContainer/HBoxContainer/FuelBar
+	fuel_bar = $HBoxContainer/VBoxContainer/HBoxContainer/ColorRect
 
 
 func _on_OreBar_inventory_changed(_panel, held_item) -> void:
