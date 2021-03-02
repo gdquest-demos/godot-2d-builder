@@ -17,9 +17,6 @@ func _get_direction() -> Vector2:
 
 
 func _on_PickupRadius_area_entered(area: Area2D) -> void:
-	# Get the area's parent - that's the actual blueprint entity class.
 	var parent: GroundItem = area.get_parent()
 	if parent:
-		# Triggers an event on our event bus pattern about an item getting
-		# picked up. This signal can be connected to by the GUI.
 		Events.emit_signal("entered_pickup_area", parent, self)

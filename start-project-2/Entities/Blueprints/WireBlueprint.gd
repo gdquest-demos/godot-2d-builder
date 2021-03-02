@@ -1,9 +1,6 @@
-## Specialized blueprint. Holds and set tile/region information, as wires must
-## connect to neighbors.
 class_name WireBlueprint
 extends BlueprintEntity
 
-## Constant dictionary that holds the sprite region information for the wire's spritesheet.
 const DIRECTIONS_DATA := {
 	1: Rect2(120, 10, 100, 100),
 	4: Rect2(120, 10, 100, 100),
@@ -24,13 +21,10 @@ const DIRECTIONS_DATA := {
 
 onready var sprite := $Sprite
 
-## Helper function to set the sprite based on the provided direction.
 static func set_sprite_for_direction(sprite: Sprite, directions: int) -> void:
 	sprite.region_rect = get_region_for_direction(directions)
 
-## Static function to get the correct Rect2 from the constant dictionary.
 static func get_region_for_direction(directions: int) -> Rect2:
-	# If the direction is invalid, default to 10, which is UP + DOWN.
 	if not DIRECTIONS_DATA.has(directions):
 		directions = 10
 

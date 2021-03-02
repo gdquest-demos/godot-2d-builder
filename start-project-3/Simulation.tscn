@@ -73,4 +73,5 @@ debug_items = {
 "Battery": 4,
 "StirlingEngine": 4
 }
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

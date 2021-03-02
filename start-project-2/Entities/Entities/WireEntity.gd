@@ -1,4 +1,3 @@
-# Wire. Moves power through it.
 class_name WireEntity
 extends Entity
 

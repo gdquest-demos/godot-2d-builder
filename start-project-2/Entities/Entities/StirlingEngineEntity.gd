@@ -1,4 +1,3 @@
-## Power source. Consumes fuel and acts as a power source.
 extends Entity
 
 const BOOTUP_TIME := 6
