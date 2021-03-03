@@ -86,7 +86,7 @@ func _set_held_item(value: BlueprintEntity) -> void:
 
 
 func _update_label() -> void:
-	var can_be_stacked := held_item and held_item.stack_size > 1
+	var can_be_stacked := held_item and held_item.stack_count > 1
 
 	if can_be_stacked:
 		count_label.text = str(held_item.stack_count)

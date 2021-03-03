@@ -23,7 +23,7 @@ func _input(event: InputEvent) -> void:
 
 
 func update_label() -> void:
-	if blueprint and blueprint.stack_size > 1:
+	if blueprint and blueprint.stack_count > 1:
 		count_label.text = str(blueprint.stack_count)
 		count_label.show()
 	else:
