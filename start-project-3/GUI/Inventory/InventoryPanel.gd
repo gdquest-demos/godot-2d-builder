@@ -27,7 +27,7 @@ func _gui_input(event: InputEvent) -> void:
 		if gui.blueprint:
 			var blueprint_name := Library.get_entity_name_from(gui.blueprint)
 			
-			if held_item:
+			if is_instance_valid(held_item):
 				var held_item_name := Library.get_entity_name_from(held_item)
 
 				var item_is_same_type: bool = held_item_name == blueprint_name
@@ -52,7 +52,7 @@ func _gui_input(event: InputEvent) -> void:
 					else:
 						_grab_item()
 
-		elif held_item:
+		elif is_instance_valid(held_item):
 			if left_click:
 				_release_item()
 			elif right_click:
@@ -67,12 +67,12 @@ func setup(_gui: Control) -> void:
 
 
 func _set_held_item(value: BlueprintEntity) -> void:
-	if held_item and held_item.get_parent() == self:
+	if is_instance_valid(held_item) and held_item.get_parent() == self:
 		remove_child(held_item)
 
 	held_item = value
 
-	if held_item:
+	if is_instance_valid(held_item):
 		add_child(held_item)
 		move_child(held_item, 0)
 		held_item.display_as_inventory_icon()
@@ -83,7 +83,7 @@ func _set_held_item(value: BlueprintEntity) -> void:
 
 
 func _update_label() -> void:
-	var can_be_stacked := held_item and held_item.stack_count > 1
+	var can_be_stacked := is_instance_valid(held_item) and held_item.stack_count > 1
 
 	if can_be_stacked:
 		count_label.text = str(held_item.stack_count)
