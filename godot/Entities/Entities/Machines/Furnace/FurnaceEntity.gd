@@ -64,8 +64,8 @@ func _consume_fuel(amount: float) -> void:
 		if gui.gui.fuel.stack_count == 0:
 			gui.gui.fuel.queue_free()
 			gui.gui.fuel = null
-		else:
-			gui.gui.update_labels()
+
+		gui.gui.update_labels()
 	work.is_enabled = available_fuel > 0.0
 	gui.gui.set_fuel(available_fuel / last_max_fuel)
 
@@ -80,8 +80,8 @@ func _consume_ore() -> bool:
 			if gui.gui.ore.stack_count == 0:
 				gui.gui.ore.queue_free()
 				gui.gui.ore = null
-			else:
-				gui.gui.update_labels()
+
+			gui.gui.update_labels()
 			return true
 	else:
 		gui.gui.abort()
