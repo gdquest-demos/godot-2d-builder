@@ -45,7 +45,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 
 	var receivers := _find_neighbors_in(cellv, power_receivers, direction)
 	for receiver in receivers:
-		if not receiver in cells_travelled:
+		if not receiver in cells_travelled and not receiver in new_path:
 			var combined_direction = _combine_directions(receiver, cellv)
 
 			var power_receiver: PowerReceiver = power_receivers[receiver]
