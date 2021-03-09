@@ -110,7 +110,8 @@ func _on_systems_ticked(delta: float) -> void:
 	for path in paths:
 		var power_source: PowerSource = power_sources[path[0]]
 
-		var available_power := power_source.get_effective_power()
+		var source_power := power_source.get_effective_power()
+		var remaining_power := source_power
 		
 		var power_draw := 0.0
 
@@ -129,17 +130,20 @@ func _on_systems_ticked(delta: float) -> void:
 					power_required -= receiver_total
 
 			power_receiver.emit_signal(
-				"received_power", min(available_power, power_required), delta
+				"received_power", min(remaining_power, power_required), delta
 			)
 
-			power_draw += power_required
+			power_draw = min(source_power, power_draw + power_required)
 
 			if not receivers_already_provided.has(cell):
-				receivers_already_provided[cell] = min(available_power, power_required)
+				receivers_already_provided[cell] = min(remaining_power, power_required)
 			else:
-				receivers_already_provided[cell] += min(available_power, power_required)
+				receivers_already_provided[cell] += min(remaining_power, power_required)
 
-			available_power -= power_required
+			remaining_power = max(0, remaining_power - power_required)
+			
+			if remaining_power == 0:
+				break
 
 		power_source.emit_signal("power_updated", power_draw, delta)
 

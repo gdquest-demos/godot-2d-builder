@@ -90,6 +90,21 @@ func find_panels_with(item_id: String) -> Array:
 	return existing_stacks
 
 
+func find_inventory_bars_in(component: GUIComponent) -> Array:
+	var output := []
+	var parent_stack := [component.gui]
+
+	while not parent_stack.empty():
+		var current: Node = parent_stack.pop_back()
+
+		if current is InventoryBar:
+			output.push_back(current)
+
+		parent_stack += current.get_children()
+
+	return output
+
+
 func is_in_inventory(item_id: String, amount: int) -> bool:
 	var existing_stacks := find_panels_with(item_id)
 	if existing_stacks.empty():
