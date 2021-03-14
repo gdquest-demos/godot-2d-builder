@@ -50,6 +50,7 @@ func _on_recipe_activated(recipe: Dictionary, output: String) -> void:
 		for panel in panels:
 			if panel.held_item.stack_count >= count:
 				panel.held_item.stack_count -= count
+				count = 0
 			else:
 				count -= panel.held_item.stack_count
 				panel.held_item.stack_count = 0
@@ -59,6 +60,9 @@ func _on_recipe_activated(recipe: Dictionary, output: String) -> void:
 				panel.held_item = null
 
 			panel._update_label()
+			
+			if count == 0:
+				break
 
 	var item: BlueprintEntity = Library.blueprints[output].instance()
 	item.stack_count = recipe.amount
