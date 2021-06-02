@@ -9,7 +9,7 @@ const REGIONS := [
 
 func _ready() -> void:
 	# Get a random index and set the sprite and enable the correct collision
-	var index := int(rand_range(0, REGIONS.size() - 1))
+	var index := randi() % REGIONS.size()
 	$Sprite.region_rect = REGIONS[index]
 	
 	var collision: CollisionPolygon2D = get_child(index + 1)

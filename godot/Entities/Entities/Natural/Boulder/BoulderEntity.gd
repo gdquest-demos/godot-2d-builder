@@ -4,7 +4,7 @@ const REGIONS := [Rect2(10, 780, 100, 100), Rect2(120, 780, 100, 100), Rect2(230
 
 
 func _ready() -> void:
-	var index := int(rand_range(0, REGIONS.size() - 1))
+	var index := randi() % REGIONS.size()
 	$Sprite.region_rect = REGIONS[index]
 	var collision: CollisionPolygon2D = get_child(index + 1)
 	collision.disabled = false

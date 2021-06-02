@@ -9,7 +9,7 @@ const REGIONS := [
 
 
 func _ready() -> void:
-	$Foliage.region_rect = REGIONS[int(rand_range(0, REGIONS.size() - 1))]
+	$Foliage.region_rect = REGIONS[randi() % REGIONS.size()]
 	$Foliage.flip_h = rand_range(0, 10) < 5.5
 
 
