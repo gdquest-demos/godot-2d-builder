@@ -22,7 +22,3 @@ func _ready() -> void:
 
 func get_entity_name() -> String:
 	return "Ore"
-
-
-func _get_pickup_count() -> int:
-	return 10
