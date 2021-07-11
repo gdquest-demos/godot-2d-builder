@@ -40,9 +40,8 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 			var available_space: int = panel.held_item.stack_size - panel.held_item.stack_count
 			
 			if item.stack_count > available_space:
-				var transfer_count := item.stack_count - available_space
-				panel.held_item.stack_count += transfer_count
-				item.stack_count -= transfer_count
+				panel.held_item.stack_count += available_space
+				item.stack_count -= available_space
 			else:
 				panel.held_item.stack_count += item.stack_count
 				item.queue_free()
