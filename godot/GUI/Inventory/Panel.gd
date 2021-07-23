@@ -43,7 +43,7 @@ func _gui_input(event: InputEvent) -> void:
 						_stack_items(true)
 
 				else:
-					if left_click and Library.is_valid_filter(_filter_list, held_item_name):
+					if left_click and Library.is_valid_filter(_filter_list, blueprint_name):
 						_swap_items()
 			else:
 				if left_click and Library.is_valid_filter(_filter_list, blueprint_name):
