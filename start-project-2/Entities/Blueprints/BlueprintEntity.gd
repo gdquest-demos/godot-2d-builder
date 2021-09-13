@@ -3,12 +3,12 @@ extends Node2D
 
 export var placeable := true
 
-onready var _power_indicator := find_node("PowerDirection")
+onready var power_direction := find_node("PowerDirection")
 
 
 func rotate_blueprint() -> void:
-	if _power_indicator:
-		var directions: int = _power_indicator.output_directions
+	if power_direction:
+		var directions: int = power_direction.output_directions
 
 		var new_directions := 0
 
@@ -24,4 +24,4 @@ func rotate_blueprint() -> void:
 		if directions & Types.Direction.DOWN != 0:
 			new_directions |= Types.Direction.LEFT
 
-		_power_indicator.output_directions = new_directions
+		power_direction.output_directions = new_directions
