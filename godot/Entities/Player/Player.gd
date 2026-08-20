@@ -1,14 +1,16 @@
 # Player's pawn. Moves in an isometric fashion.
 # The player's position controls what tiles are available to interact with.
-extends KinematicBody2D
+extends CharacterBody2D
 
-export var movement_speed := 200.0
+@export var movement_speed := 200.0
 
 
 func _physics_process(_delta: float) -> void:
 	var direction := _get_direction()
 
-	var _result := move_and_slide(direction * movement_speed)
+	set_velocity(direction * movement_speed)
+	move_and_slide()
+	var _result := velocity
 
 
 func _get_direction() -> Vector2:

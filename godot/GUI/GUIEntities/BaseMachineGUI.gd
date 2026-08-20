@@ -4,13 +4,15 @@ class_name BaseMachineGUI
 extends MarginContainer
 
 # When something about the GUI changes, such as an item being put into an inventory slot.
-#warning-ignore: unused_signal
+
+@warning_ignore("unused_signal")
 signal gui_status_changed
 
 # When the GUI window is opened or closed.
-#warning-ignore: unused_signal
+
+@warning_ignore("unused_signal")
 signal gui_opened
-#warning-ignore: unused_signal
+@warning_ignore("unused_signal")
 signal gui_closed
 
 

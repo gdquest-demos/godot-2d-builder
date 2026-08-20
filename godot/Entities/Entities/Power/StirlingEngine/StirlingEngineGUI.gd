@@ -3,13 +3,13 @@ extends BaseMachineGUI
 var fuel: BlueprintEntity
 var output: Panel
 
-onready var fuel_container := $HBoxContainer/FuelBar
-onready var fuel_bar := $HBoxContainer/ColorRect
+@onready var fuel_container := $HBoxContainer/FuelBar
+@onready var fuel_bar := $HBoxContainer/ColorRect
 
 
 func set_fuel(amount: float) -> void:
 	if fuel_bar:
-		fuel_bar.material.set_shader_param("fill_amount", amount)
+		fuel_bar.material.set_shader_parameter("fill_amount", amount)
 
 
 func setup(gui: Control) -> void:

@@ -1,12 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://djf37vmmk0fwn"]
 
-[ext_resource path="res://GUI/Inventory/InventoryBar.gd" type="Script" id=2]
-[ext_resource path="res://GUI/Inventory/InventoryPanel.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" uid="uid://b70p446vgjoc8" path="res://GUI/Inventory/InventoryBar.gd" id="2"]
+[ext_resource type="PackedScene" path="res://GUI/Inventory/InventoryPanel.tscn" id="3"]
 
-[node name="InventoryBar" type="HBoxContainer"]
-custom_constants/separation = 10
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-InventoryPanelScene = ExtResource( 3 )
+[node name="InventoryBar" type="HBoxContainer" unique_id=1765890169]
+theme_override_constants/separation = 10
+script = ExtResource("2")
+InventoryPanelScene = ExtResource("3")

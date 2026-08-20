@@ -1,6 +1,6 @@
 extends Entity
 
-onready var animation := $AnimationPlayer
+@onready var animation := $AnimationPlayer
 
 
 func _on_GUIComponent_gui_opened() -> void:

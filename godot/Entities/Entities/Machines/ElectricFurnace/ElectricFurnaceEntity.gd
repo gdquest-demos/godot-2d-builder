@@ -1,6 +1,6 @@
 extends FurnaceEntity
 
-onready var power := $PowerReceiver
+@onready var power := $PowerReceiver
 
 
 func _ready() -> void:
@@ -14,7 +14,7 @@ func _set_initial_speed() -> void:
 	work.work_speed = 0.0
 
 
-func _consume_fuel(amount: float) -> void:
+func _consume_fuel(_amount: float) -> void:
 	# We have no fuel to consume, so we override consume fuel to do nothing instead.
 	pass
 

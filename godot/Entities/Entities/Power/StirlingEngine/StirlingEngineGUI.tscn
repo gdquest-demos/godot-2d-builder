@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene format=3 uid="uid://dgj6g83jval4f"]
 
-[ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.gd" type="Script" id=1]
-[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=2]
+[ext_resource type="Script" uid="uid://bn6qq7l0ceknc" path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://djf37vmmk0fwn" path="res://GUI/Inventory/InventoryBar.tscn" id="2"]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id="1"]
 code = "shader_type canvas_item;
 
 uniform float fill_amount : hint_range(0, 1.0) = 0.0;
+
+//Get MODULATE colour:
+uniform vec4 MODULATE: source_color;
 
 void fragment() {
 	vec4 color = MODULATE;
@@ -15,42 +18,34 @@ void fragment() {
 	COLOR = clamp(color + (color * pixel_fill), 0, 1);
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/fill_amount = 0.0
+[sub_resource type="ShaderMaterial" id="2"]
+shader = SubResource("1")
+shader_parameter/fill_amount = 0.0
+shader_parameter/MODULATE = Color(0.1882353, 0.4627451, 1, 1)
 
-[node name="StirlingEngineGUI" type="MarginContainer"]
-margin_right = 19.0
-margin_bottom = 10.0
+[node name="StirlingEngineGUI" type="MarginContainer" unique_id=327306595]
+offset_right = 19.0
+offset_bottom = 10.0
 size_flags_horizontal = 4
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 14.0
-margin_bottom = 5.0
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=114177881]
+layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
-modulate = Color( 0.188235, 0.462745, 1, 1 )
-material = SubResource( 2 )
-margin_right = 5.0
-rect_min_size = Vector2( 5, 0 )
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer" unique_id=997724174]
+modulate = Color(0.188235, 0.462745, 1, 1)
+material = SubResource("2")
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="FuelBar" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 9.0
-margin_right = 9.0
+[node name="FuelBar" parent="HBoxContainer" unique_id=218077946 instance=ExtResource("2")]
+layout_mode = 2
 slot_count = 1
 item_filters = "Fuels"
+
 [connection signal="inventory_changed" from="HBoxContainer/FuelBar" to="." method="_on_FuelBar_inventory_changed"]

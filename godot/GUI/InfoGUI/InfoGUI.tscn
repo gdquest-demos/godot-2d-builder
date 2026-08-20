@@ -1,28 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://clr0lsv0acy5u"]
 
-[ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/InfoGUI/InfoGUI.gd" type="Script" id=2]
+[ext_resource type="Theme" path="res://Shared/Theme/builder_theme.tres" id="1"]
+[ext_resource type="Script" uid="uid://oac7whhfqkwe" path="res://GUI/InfoGUI/InfoGUI.gd" id="2"]
 
-[node name="InfoGUI" type="PanelContainer"]
-margin_right = 20.0
-margin_bottom = 41.0
-theme = ExtResource( 1 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="InfoGUI" type="PanelContainer" unique_id=1316539127]
+offset_right = 20.0
+offset_bottom = 41.0
+theme = ExtResource("1")
+script = ExtResource("2")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 20.0
-margin_bottom = 41.0
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=124241229]
+layout_mode = 2
 mouse_filter = 2
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="MarginContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 10.0
-margin_bottom = 31.0
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1635792663]
+layout_mode = 2

@@ -1,5 +1,5 @@
 class_name PowerSystem
-extends Reference
+extends RefCounted
 
 var power_sources := {}
 var power_receivers := {}
@@ -15,9 +15,9 @@ var receivers_already_provided := {}
 
 
 func _init() -> void:
-	Events.connect("entity_placed", self, "_on_entity_placed")
-	Events.connect("entity_removed", self, "_on_entity_removed")
-	Events.connect("systems_ticked", self, "_on_systems_ticked")
+	Events.entity_placed.connect(_on_entity_placed)
+	Events.entity_removed.connect(_on_entity_removed)
+	Events.systems_ticked.connect(_on_systems_ticked)
 
 
 func _retrace_paths() -> void:
@@ -25,7 +25,7 @@ func _retrace_paths() -> void:
 
 	for source in power_sources.keys():
 		cells_travelled.clear()
-		
+
 		var path := _trace_path_from(source, [source])
 
 		paths.push_back(path)
@@ -40,7 +40,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 		direction = power_sources[cellv].output_direction
 
 	var receivers := _find_neighbors_in(cellv, power_receivers, direction)
-	
+
 	for receiver in receivers:
 		if not receiver in cells_travelled and not receiver in path:
 			var combined_direction := _combine_directions(receiver, cellv)
@@ -65,7 +65,7 @@ func _trace_path_from(cellv: Vector2, path: Array) -> Array:
 				)
 			):
 				continue
-				
+
 			path.push_back(receiver)
 
 	var movers := _find_neighbors_in(cellv, power_movers, direction)
@@ -93,11 +93,11 @@ func _combine_directions(receiver: Vector2, cellv: Vector2) -> int:
 func _find_neighbors_in(cellv: Vector2, collection: Dictionary, output_directions: int = 15) -> Array:
 	var neighbors := []
 	for neighbor in Types.NEIGHBORS.keys():
-		
+
 		if neighbor & output_directions != 0:
-			
+
 			var key: Vector2 = cellv + Types.NEIGHBORS[neighbor]
-			
+
 			if collection.has(key):
 				neighbors.push_back(key)
 
@@ -112,10 +112,10 @@ func _on_systems_ticked(delta: float) -> void:
 
 		var source_power := power_source.get_effective_power()
 		var remaining_power := source_power
-		
+
 		var power_draw := 0.0
 
-		for cell in path.slice(1, path.size()-1):
+		for cell in path.slice(1, path.size()):
 			if not power_receivers.has(cell):
 				continue
 
@@ -141,7 +141,7 @@ func _on_systems_ticked(delta: float) -> void:
 				receivers_already_provided[cell] += min(remaining_power, power_required)
 
 			remaining_power = max(0, remaining_power - power_required)
-			
+
 			if remaining_power == 0:
 				break
 
@@ -185,7 +185,7 @@ func _on_entity_placed(entity, cellv: Vector2) -> void:
 
 func _on_entity_removed(_entity, cellv: Vector2) -> void:
 	var retrace := power_sources.erase(cellv)
-	
+
 	retrace = power_receivers.erase(cellv) or retrace
 	retrace = power_movers.erase(cellv) or retrace
 

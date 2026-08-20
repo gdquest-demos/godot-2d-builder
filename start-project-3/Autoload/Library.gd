@@ -28,7 +28,7 @@ func get_entity_name_from(node: Node) -> String:
 		if node.has_method("get_entity_name"):
 			return node.get_entity_name()
 
-		var filename := node.filename.substr(node.filename.rfind("/") + 1)
+		var filename := node.scene_file_path.substr(node.scene_file_path.rfind("/") + 1)
 		filename = filename.replace(BLUEPRINT, "").replace(ENTITY, "")
 
 		return filename
@@ -36,14 +36,14 @@ func get_entity_name_from(node: Node) -> String:
 
 
 func _find_entities_in(path: String) -> void:
-	var directory := Directory.new()
-	var error := directory.open(path)
+	var directory := DirAccess.open(path)
+	var error := DirAccess.get_open_error()
 
 	if error != OK:
 		print("Library Error: %s" % error)
 		return
 
-	error = directory.list_dir_begin(true, true)
+	error = directory.list_dir_begin()
 
 	if error != OK:
 		print("Library Error: %s" % error)
@@ -51,7 +51,7 @@ func _find_entities_in(path: String) -> void:
 
 	var filename := directory.get_next()
 
-	while not filename.empty():
+	while not filename.is_empty():
 		if directory.current_is_dir():
 			_find_entities_in("%s/%s" % [directory.get_current_dir(), filename])
 		else:

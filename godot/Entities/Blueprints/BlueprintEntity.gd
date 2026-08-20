@@ -5,20 +5,26 @@ extends Node2D
 
 const DEFAULT_SIZE := 100.0
 
-export var stack_size := 1
-export var placeable := true
-export (String, MULTILINE) var description := ""
+# signal to handle count change since setter no longer checks for changed values inside recourses 
+# (for panel.gd specifically)
+signal stack_count_changed
+@export var stack_size := 1
+@export var placeable := true
+@export var description := "" # (String, MULTILINE)
 
-var stack_count := 1
+var stack_count := 1: 
+	set(value):
+		stack_count = value
+		self.emit_signal("stack_count_changed")
 
-onready var _power_direction := find_node("PowerDirection")
+@onready var _power_direction := find_child("PowerDirection")
 
 
 func make_inventory() -> void:
 	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
 	position = Vector2(DEFAULT_SIZE * gui_scale * 0.5, DEFAULT_SIZE * gui_scale * 0.75)
 	scale = Vector2(gui_scale, gui_scale)
-	modulate = Color.white
+	modulate = Color.WHITE
 	if _power_direction:
 		_power_direction.hide()
 

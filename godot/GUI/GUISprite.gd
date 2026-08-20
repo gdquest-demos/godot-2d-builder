@@ -1,12 +1,12 @@
-tool
+@tool
 class_name GUISprite
 extends Control
 
-export var texture: Texture setget _set_texture
+@export var texture: Texture2D: set = _set_texture
 
-export var region_enabled: bool = false setget _set_region_enabled
-export var region_rect: Rect2 = Rect2() setget _set_region_rect
-export var scale := Vector2.ONE setget _set_scale
+@export var region_enabled: bool = false: set = _set_region_enabled
+@export var region_rect: Rect2 = Rect2(): set = _set_region_rect
+@export var scale_size := Vector2.ONE: set = _set_scale
 
 
 func _draw() -> void:
@@ -14,12 +14,12 @@ func _draw() -> void:
 		return
 
 	if region_enabled:
-		draw_texture_rect_region(texture, Rect2(Vector2.ZERO, rect_size), region_rect)
+		draw_texture_rect_region(texture, Rect2(Vector2.ZERO, size), region_rect)
 	else:
-		draw_texture_rect(texture, Rect2(Vector2.ZERO, rect_size), false)
+		draw_texture_rect(texture, Rect2(Vector2.ZERO, size), false)
 
 
-func _set_texture(value: Texture) -> void:
+func _set_texture(value: Texture2D) -> void:
 	texture = value
 	_update_region()
 
@@ -41,10 +41,10 @@ func _set_scale(value: Vector2) -> void:
 
 func _update_region() -> void:
 	if region_enabled:
-		rect_min_size = region_rect.size * scale
+		custom_minimum_size = region_rect.size * scale
 	else:
 		if texture:
-			rect_min_size = texture.get_size() * scale
+			custom_minimum_size = texture.get_size() * scale
 		else:
-			rect_min_size = Vector2.ZERO
-	update()
+			custom_minimum_size = Vector2.ZERO
+	queue_redraw()

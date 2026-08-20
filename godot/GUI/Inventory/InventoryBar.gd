@@ -5,12 +5,12 @@ extends HBoxContainer
 
 signal inventory_changed(panel, held_item)
 
-export var InventoryPanelScene: PackedScene
-export var slot_count := 10
-export var item_filters := ""
+@export var InventoryPanelScene: PackedScene
+@export var slot_count := 10
+@export var item_filters := ""
 
 var panels := []
-onready var _filter_list := item_filters.split(" ", false)
+@onready var _filter_list := item_filters.split(" ", false)
 
 
 func _ready() -> void:
@@ -20,11 +20,8 @@ func _ready() -> void:
 func setup(gui: Control) -> void:
 	for panel in panels:
 		panel.setup(gui, _filter_list)
-		if not panel.is_connected("held_item_changed", self, "_on_Panel_held_item_changed"):
-			Log.log_error(
-				panel.connect("held_item_changed", self, "_on_Panel_held_item_changed"),
-				"Inventory Bar"
-			)
+		if not panel.held_item_changed.is_connected(_on_Panel_held_item_changed):
+			Log.log_error(panel.held_item_changed.connect(_on_Panel_held_item_changed), "Inventory Bar")
 
 
 func find_panels_with(item_id: String) -> Array:
@@ -52,7 +49,7 @@ func update_labels() -> void:
 
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 	var item_name := Library.get_entity_name_from(item)
-	
+
 	if not Library.is_valid_filter(_filter_list, item_name):
 		return false
 
@@ -70,7 +67,6 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 				panel.held_item.stack_count += item.stack_count
 				item.queue_free()
 				return true
-
 		elif not panel.held_item:
 			panel.held_item = item
 			return true
@@ -80,7 +76,7 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 
 func _make_panels() -> void:
 	for _i in slot_count:
-		var panel := InventoryPanelScene.instance()
+		var panel := InventoryPanelScene.instantiate()
 		add_child(panel)
 		panels.append(panel)
 

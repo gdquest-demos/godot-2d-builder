@@ -9,14 +9,16 @@ var ore_container: InventoryBar
 var fuel_container: InventoryBar
 var fuel_bar: ColorRect
 
-onready var output_container := $HBoxContainer/Output
-onready var tween := $Tween
-onready var arrow := $HBoxContainer/GUISprite
+@onready var output_container := $HBoxContainer/Output
+var tween :Tween
+@onready var arrow := $HBoxContainer/GUISprite
 
 
 func _ready() -> void:
-	var scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
-	arrow.scale = Vector2(scale, scale)
+	tween = create_tween()
+	tween.stop()
+	var _scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
+	arrow.scale = Vector2(scale)*_scale
 	
 	_find_nodes()
 
@@ -24,27 +26,27 @@ func _ready() -> void:
 func work(time: float) -> void:
 	if not is_inside_tree():
 		return
-	tween.interpolate_method(self, "_advance_work_time", 0, 1, time)
-	tween.start()
+	tween.stop() # reset tween in case previous interaction was successful (aka arrow filled fully and tween finished its work)
+	tween.play()
+	tween.tween_method(_advance_work_time, 0.0, 1.0, time)
 
 
 func abort() -> void:
-	tween.stop_all()
-	tween.remove_all()
-	arrow.material.set_shader_param("fill_amount", 0)
+	tween.stop()
+	arrow.material.set_shader_parameter("fill_amount", 0)
 
 
 func set_fuel(amount: float) -> void:
-	fuel_bar.material.set_shader_param("fill_amount", amount)
+	fuel_bar.material.set_shader_parameter("fill_amount", amount)
 
 
 func seek(time: float) -> void:
-	if tween.is_active():
-		tween.seek(time)
+	if tween.is_running():
+		tween.custom_step(time)
 
 
 func _advance_work_time(amount: float) -> void:
-	arrow.material.set_shader_param("fill_amount", amount)
+	arrow.material.set_shader_parameter("fill_amount", amount)
 
 
 func setup(gui: Control) -> void:

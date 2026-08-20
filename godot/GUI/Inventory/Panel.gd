@@ -1,4 +1,4 @@
-# Represents a slot in which an item can be held. Inventory is kept track of 
+# Represents a slot in which an item can be held. Inventory is kept track of
 # through being a child of the panel.
 class_name InventoryPanel
 extends Panel
@@ -7,20 +7,23 @@ const DEFAULT_SIZE := Vector2(100, 100)
 
 signal held_item_changed(panel, item)
 
-var held_item: BlueprintEntity setget _set_held_item
+# setter no longer checks for variable change within the class
+
+var held_item: BlueprintEntity: set = _set_held_item
 var silent := false
 var gui: Control
 var _filter_list := []
 
-onready var count_label := $Label
+@onready var count_label := $Label
 
 
 func _ready() -> void:
 	var gui_scale: float = ProjectSettings.get_setting("game_gui/gui_scale")
 	var blueprint_size := DEFAULT_SIZE * gui_scale
-	rect_min_size = blueprint_size
-	rect_size = rect_min_size
-	count_label.rect_min_size = rect_min_size
+	custom_minimum_size = blueprint_size
+	size = custom_minimum_size
+	count_label.custom_minimum_size = custom_minimum_size
+
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -76,11 +79,15 @@ func _set_held_item(value: BlueprintEntity) -> void:
 	if is_instance_valid(held_item) and held_item.get_parent() == self:
 		remove_child(held_item)
 	held_item = value
+	if held_item: # update label on count change
+		if not held_item.stack_count_changed.is_connected(_update_label):
+			held_item.stack_count_changed.connect(_update_label)
 
 	if is_instance_valid(held_item):
 		add_child(held_item)
 		move_child(held_item, 0)
 		held_item.make_inventory()
+
 	_update_label()
 	emit_signal("held_item_changed", self, held_item)
 
@@ -130,6 +137,7 @@ func _grab_item() -> void:
 	var item: BlueprintEntity = gui.blueprint
 	gui.blueprint = null
 	self.held_item = item
+
 
 
 func _release_item() -> void:

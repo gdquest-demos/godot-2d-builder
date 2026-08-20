@@ -5,7 +5,7 @@
 
 [node name="QuickBar" type="HBoxContainer"]
 mouse_filter = 2
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

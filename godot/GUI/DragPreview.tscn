@@ -1,19 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene format=3 uid="uid://cbf6a1411tj6b"]
 
-[ext_resource path="res://GUI/DragPreview.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://b4i76lo24135h" path="res://GUI/DragPreview.gd" id="1"]
 
-[node name="DragPreview" type="Control"]
-rect_min_size = Vector2( 100, 100 )
+[node name="DragPreview" type="Control" unique_id=469438028]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 mouse_filter = 2
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource("1")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=2131150674]
 visible = false
-margin_right = 40.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 100, 100 )
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 14.0
 text = "1"
-align = 2
+horizontal_alignment = 2

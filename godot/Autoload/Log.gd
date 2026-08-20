@@ -52,13 +52,12 @@ const ERROR_MESSAGES := {
 	47: "Bug"
 }
 
-var file: File
+var file: FileAccess = FileAccess.open("res://log.txt", FileAccess.WRITE_READ)
 
 
 func _ready() -> void:
 	if ENABLED:
-		file = File.new()
-		var result := file.open("res://log.txt", File.WRITE_READ)
+		var result := file.get_error()
 
 		if result == OK:
 			file.seek_end()
@@ -66,7 +65,7 @@ func _ready() -> void:
 		else:
 			print_debug("Couldn't open log.txt file! %s" % [ERROR_MESSAGES[result]])
 
-		var _error := connect("tree_exiting", self, "_on_tree_exiting")
+		var _error := tree_exiting.connect(_on_tree_exiting)
 
 
 func _notification(what: int) -> void:
@@ -79,11 +78,11 @@ func log_error(error: int, header := "") -> void:
 	if ENABLED:
 		if error != OK:
 			var error_notification := "*****ERROR"
-			if not header.empty():
+			if not header.is_empty():
 				error_notification += " in %s" % header
 			error_notification += "*****"
 
-			var time := OS.get_datetime()
+			var time := Time.get_datetime_dict_from_system()
 			file.store_string(
 				(
 					"%s (%s:%s:%s) %s : %s\n"

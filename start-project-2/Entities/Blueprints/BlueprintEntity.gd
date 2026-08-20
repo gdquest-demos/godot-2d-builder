@@ -1,9 +1,9 @@
 class_name BlueprintEntity
 extends Node2D
 
-export var placeable := true
+@export var placeable := true
 
-onready var power_direction := find_node("PowerDirection")
+@onready var power_direction := find_child("PowerDirection")
 
 
 func rotate_blueprint() -> void:

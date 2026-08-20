@@ -14,33 +14,33 @@ const QUICKBAR_ACTIONS := [
 	"quickbar_0"
 ]
 
-export var debug_items := {}
+@export var debug_items := {}
 
-var blueprint: BlueprintEntity setget _set_blueprint, _get_blueprint
+var blueprint: BlueprintEntity: get = _get_blueprint, set = _set_blueprint
 
 var mouse_in_gui := false
 var is_open := false
 
-onready var player_inventory := $HBoxContainer/InventoryWindow
-onready var quickbar_container := $MarginContainer
-onready var quickbar := $MarginContainer/QuickBar
+@onready var player_inventory := $HBoxContainer/InventoryWindow
+@onready var quickbar_container := $MarginContainer
+@onready var quickbar := $MarginContainer/QuickBar
 
-onready var _drag_preview := $DragPreview
-onready var _gui_rect := $HBoxContainer
+@onready var _drag_preview := $DragPreview
+@onready var _gui_rect := $HBoxContainer
 
 
 func _ready() -> void:
 	player_inventory.setup(self)
 	quickbar.setup(self)
-	Events.connect("entered_pickup_area", self, "_on_Player_entered_pickup_area")
-	
+	Events.entered_pickup_area.connect(_on_Player_entered_pickup_area)
+
 	for item in debug_items.keys():
 		if not Library.blueprints.has(item):
 			continue
 
-		var item_instance: Node = Library.blueprints[item].instance()
+		var item_instance = Library.blueprints[item].instantiate()
 		item_instance.stack_count = min(item_instance.stack_size, debug_items[item])
-		
+
 		if not add_to_inventory(item_instance):
 			item_instance.queue_free()
 
@@ -58,7 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				break
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var mouse_position := get_global_mouse_position()
 	mouse_in_gui = is_open and _gui_rect.get_rect().has_point(mouse_position)
 
@@ -109,15 +109,15 @@ func _claim_quickbar() -> void:
 
 func _simulate_input(panel: InventoryPanel) -> void:
 	var input := InputEventMouseButton.new()
-	input.button_index = BUTTON_LEFT
+	input.button_index = MOUSE_BUTTON_LEFT
 	input.pressed = true
-	
+
 	panel._gui_input(input)
 
 
 func _set_blueprint(value: BlueprintEntity) -> void:
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	_drag_preview.blueprint = value
 
 
@@ -125,7 +125,7 @@ func _get_blueprint() -> BlueprintEntity:
 	return _drag_preview.blueprint
 
 
-func _on_Player_entered_pickup_area(item: GroundItem, player: KinematicBody2D) -> void:
+func _on_Player_entered_pickup_area(item: GroundItem, player: CharacterBody2D) -> void:
 	if item and item.blueprint:
 		var amount := item.blueprint.stack_count
 
@@ -134,7 +134,7 @@ func _on_Player_entered_pickup_area(item: GroundItem, player: KinematicBody2D) -
 		else:
 			if item.blueprint.stack_count < amount:
 				var new_item := item.duplicate()
-				
+
 				item.get_parent().call_deferred("add_child", new_item)
 				new_item.call_deferred("setup", item.blueprint)
 				new_item.call_deferred("do_pickup", player)

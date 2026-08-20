@@ -1,7 +1,7 @@
 ## Sub class of the simulation that keeps track of all entities and their location
 ## using dictionary keys. Emits signals when the player places or removes entities.
 class_name EntityTracker
-extends Reference
+extends RefCounted
 
 ## A Dictionary of entities, keyed using Vector2 tile map coordinates
 var entities := {}

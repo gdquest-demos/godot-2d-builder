@@ -1,115 +1,117 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene format=3 uid="uid://dve0g584ntdn1"]
 
-[ext_resource path="res://Shared/tileset.svg" type="Texture" id=1]
-[ext_resource path="res://Systems/Power/PowerSource.gd" type="Script" id=2]
-[ext_resource path="res://GUI/GUIEntities/GUIComponent.gd" type="Script" id=3]
-[ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineEntity.gd" type="Script" id=5]
-[ext_resource path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.tscn" type="PackedScene" id=6]
+[ext_resource type="Texture2D" uid="uid://c818npetbsfqr" path="res://Shared/tileset.svg" id="1"]
+[ext_resource type="Script" uid="uid://4sbnimoq4udc" path="res://Systems/Power/PowerSource.gd" id="2"]
+[ext_resource type="Script" uid="uid://b1o6l7lbscm75" path="res://GUI/GUIEntities/GUIComponent.gd" id="3"]
+[ext_resource type="Script" uid="uid://cakpjbec6lnar" path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineEntity.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://dgj6g83jval4f" path="res://Entities/Entities/Power/StirlingEngine/StirlingEngineGUI.tscn" id="6"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "Shutdown"
 length = 3.0
+loop_mode = 2
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("PistonFront:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 3 ),
-"transitions": PoolRealArray( -2, -2, -2 ),
+"times": PackedFloat32Array(0, 0.3, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
 "update": 0,
-"values": [ Vector2( 0, -4 ), Vector2( 0, -32.666 ), Vector2( 0, -4 ) ]
+"values": [Vector2(0, -4), Vector2(0, -32.666), Vector2(0, -4)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("PistonBack:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 3 ),
-"transitions": PoolRealArray( -2, -2, -2 ),
+"times": PackedFloat32Array(0, 0.3, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
 "update": 0,
-"values": [ Vector2( 0, -33.9232 ), Vector2( 0, -63 ), Vector2( 0, -33.9232 ) ]
+"values": [Vector2(0, -33.9232), Vector2(0, -63), Vector2(0, -33.9232)]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "Work"
 length = 0.6
-loop = true
+loop_mode = 1
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("PistonFront:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
-"transitions": PoolRealArray( -2, -2, -2 ),
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(-2, -2, -2),
 "update": 0,
-"values": [ Vector2( 0, -4 ), Vector2( 0, -32.666 ), Vector2( 0, -4 ) ]
+"values": [Vector2(0, -4), Vector2(0, -32.666), Vector2(0, -4)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("PistonBack:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
-"transitions": PoolRealArray( -2, -2, -2 ),
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(-2, -2, -2),
 "update": 0,
-"values": [ Vector2( 0, -33.9232 ), Vector2( 0, -63 ), Vector2( 0, -33.9232 ) ]
+"values": [Vector2(0, -33.9232), Vector2(0, -63), Vector2(0, -33.9232)]
 }
 
-[node name="StirlingEngine" type="StaticBody2D" groups=[
-"gui_entities",
-"power_sources",
-]]
-script = ExtResource( 5 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_52t2m"]
+_data = {
+&"Shutdown": SubResource("1"),
+&"Work": SubResource("2")
+}
 
-[node name="PowerSource" type="Node" parent="."]
-script = ExtResource( 2 )
+[node name="StirlingEngine" type="StaticBody2D" unique_id=872724622 groups=["gui_entities", "power_sources"]]
+script = ExtResource("5")
+
+[node name="PowerSource" type="Node" parent="." unique_id=576902023]
+script = ExtResource("2")
 power_amount = 25.0
 
-[node name="GUIComponent" type="Node" parent="."]
-script = ExtResource( 3 )
-GuiWindow = ExtResource( 6 )
+[node name="GUIComponent" type="Node" parent="." unique_id=1907069723]
+script = ExtResource("3")
+GuiWindow = ExtResource("6")
 
-[node name="EngineBase" type="Sprite" parent="."]
-position = Vector2( 0, -5.68882 )
-texture = ExtResource( 1 )
+[node name="EngineBase" type="Sprite2D" parent="." unique_id=1660321819]
+position = Vector2(0, -5.68882)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 449, 149, 102, 62 )
+region_rect = Rect2(449, 149, 102, 62)
 
-[node name="PistonBack" type="Sprite" parent="."]
-position = Vector2( 0, -33.9232 )
-texture = ExtResource( 1 )
+[node name="PistonBack" type="Sprite2D" parent="." unique_id=727070503]
+position = Vector2(0, -33.9232)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 780, 139, 100, 27 )
+region_rect = Rect2(780, 139, 100, 27)
 
-[node name="PistonShaft" type="Sprite" parent="."]
-position = Vector2( 0, -31.819 )
-texture = ExtResource( 1 )
+[node name="PistonShaft" type="Sprite2D" parent="." unique_id=1394417747]
+position = Vector2(0, -31.819)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 584, 119, 52, 70 )
+region_rect = Rect2(584, 119, 52, 70)
 
-[node name="PistonFront" type="Sprite" parent="."]
-position = Vector2( 0, -4 )
-texture = ExtResource( 1 )
+[node name="PistonFront" type="Sprite2D" parent="." unique_id=620910273]
+position = Vector2(0, -4)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 669, 164, 102, 37 )
+region_rect = Rect2(669, 164, 102, 37)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1327165183]
 visible = false
-position = Vector2( 0, -19.7535 )
-polygon = PoolVector2Array( -50.2016, 19.1812, -50.5989, 3.68654, 0.255356, -21.3433, 49.9177, 3.42167, 50.0501, 19.0488, -0.274368, 43.8137 )
+position = Vector2(0, -19.7535)
+polygon = PackedVector2Array(-50.2016, 19.1812, -50.5989, 3.68654, 0.255356, -21.3433, 49.9177, 3.42167, 50.0501, 19.0488, -0.274368, 43.8137)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Shutdown = SubResource( 1 )
-anims/Work = SubResource( 2 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1170456192]
+libraries/ = SubResource("AnimationLibrary_52t2m")
 
-[node name="Tween" type="Tween" parent="."]
 [connection signal="power_updated" from="PowerSource" to="." method="_on_PowerSource_power_updated"]
 [connection signal="gui_status_changed" from="GUIComponent" to="." method="_on_GUIComponent_gui_status_changed"]

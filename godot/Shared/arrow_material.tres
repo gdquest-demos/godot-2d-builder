@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d1t4b0jr8oboj"]
+
+[ext_resource type="Shader" uid="uid://bvu5vp1vpisnp" path="res://Shared/arrow_fill.gdshader" id="1_kbo5j"]
+
+[resource]
+shader = ExtResource("1_kbo5j")
+shader_parameter/fill_amount = 0.0
+shader_parameter/region_position = Vector2(10, 10)
+shader_parameter/region_size = Vector2(50, 50)

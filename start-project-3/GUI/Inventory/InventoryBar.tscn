@@ -4,7 +4,7 @@
 [ext_resource path="res://GUI/Inventory/InventoryBar.gd" type="Script" id=2]
 
 [node name="InventoryBar" type="HBoxContainer"]
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

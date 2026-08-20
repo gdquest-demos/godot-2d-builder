@@ -1,5 +1,5 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://5288y0tc8c1e"]
 
-[node name="Simulation" type="Node"]
+[node name="Simulation" type="Node" unique_id=2089959396]
 
-[node name="GameWorld" type="Node2D" parent="."]
+[node name="GameWorld" type="Node2D" parent="." unique_id=1403735496]

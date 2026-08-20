@@ -1,17 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://dxx6iq47an0gq"]
 
-[ext_resource path="res://Entities/Blueprints/BlueprintEntity.gd" type="Script" id=1]
-[ext_resource path="res://Shared/blueprints.svg" type="Texture" id=2]
+[ext_resource type="Script" uid="uid://depvrlid144wo" path="res://Entities/Blueprints/BlueprintEntity.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bunwc0u4elj4a" path="res://Shared/blueprints.svg" id="2"]
 
-[node name="StoneBlueprint" type="Node2D"]
-script = ExtResource( 1 )
+[node name="StoneBlueprint" type="Node2D" unique_id=332969275]
+script = ExtResource("1")
 stack_size = 100
 placeable = false
 description = "Rocks from the ground."
 
-[node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.882353 )
-position = Vector2( 0, -20.69 )
-texture = ExtResource( 2 )
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=726677539]
+modulate = Color(1, 1, 1, 0.882353)
+position = Vector2(0, -20.69)
+texture = ExtResource("2")
 region_enabled = true
-region_rect = Rect2( 672, 119, 96, 70 )
+region_rect = Rect2(672, 119, 96, 70)

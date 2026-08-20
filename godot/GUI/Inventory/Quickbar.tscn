@@ -1,16 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://bom6j112u7wqf"]
 
-[ext_resource path="res://GUI/Inventory/Quickbar.gd" type="Script" id=1]
-[ext_resource path="res://GUI/Inventory/QuickbarInventoryPanel.tscn" type="PackedScene" id=4]
+[ext_resource type="Script" uid="uid://ctny4f8igprik" path="res://GUI/Inventory/Quickbar.gd" id="1"]
+[ext_resource type="PackedScene" path="res://GUI/Inventory/QuickbarInventoryPanel.tscn" id="4"]
 
-[node name="Quickbar" type="HBoxContainer"]
-margin_right = 665.0
-margin_bottom = 77.0
+[node name="Quickbar" type="HBoxContainer" unique_id=961660846]
+offset_right = 665.0
+offset_bottom = 77.0
 mouse_filter = 2
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 alignment = 1
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-InventoryPanelScene = ExtResource( 4 )
+script = ExtResource("1")
+InventoryPanelScene = ExtResource("4")

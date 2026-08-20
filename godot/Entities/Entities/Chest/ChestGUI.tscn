@@ -1,41 +1,31 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://dcvcymb71ntpg"]
 
-[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Entities/Entities/Chest/ChestGUI.gd" type="Script" id=2]
+[ext_resource type="PackedScene" path="res://GUI/Inventory/InventoryBar.tscn" id="1"]
+[ext_resource type="Script" uid="uid://btjmiy1v0mkm2" path="res://Entities/Entities/Chest/ChestGUI.gd" id="2"]
 
-[node name="ChestGUI" type="MarginContainer"]
-margin_right = 185.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 185, 128 )
+[node name="ChestGUI" type="MarginContainer" unique_id=1960491620]
+custom_minimum_size = Vector2(185, 128)
+offset_right = 185.0
+offset_bottom = 128.0
 size_flags_horizontal = 5
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 180.0
-margin_bottom = 123.0
-custom_constants/separation = 10
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=280937352]
+layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="InventoryBar" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_right = 175.0
+[node name="InventoryBar" parent="VBoxContainer" unique_id=1547067690 instance=ExtResource("1")]
+layout_mode = 2
 slot_count = 5
 
-[node name="InventoryBar2" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 10.0
-margin_right = 175.0
-margin_bottom = 10.0
+[node name="InventoryBar2" parent="VBoxContainer" unique_id=129915056 instance=ExtResource("1")]
+layout_mode = 2
 slot_count = 5
 
-[node name="InventoryBar3" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 20.0
-margin_right = 175.0
-margin_bottom = 20.0
+[node name="InventoryBar3" parent="VBoxContainer" unique_id=1351844077 instance=ExtResource("1")]
+layout_mode = 2
 slot_count = 5

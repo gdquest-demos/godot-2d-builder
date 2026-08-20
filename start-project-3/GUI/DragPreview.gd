@@ -1,25 +1,25 @@
 extends Control
 
-var blueprint: BlueprintEntity setget _set_blueprint
+var blueprint: BlueprintEntity: set = _set_blueprint
 
-onready var count_label := $Label
+@onready var count_label := $Label
 
 
 func _ready() -> void:
-	set_as_toplevel(true)
+	set_as_top_level(true)
 	
 	var panel_size: float = ProjectSettings.get_setting("game_gui/inventory_size")
-	rect_min_size = Vector2(panel_size, panel_size)
-	rect_size = rect_min_size
-	count_label.rect_min_size = rect_min_size
-	count_label.rect_size = rect_min_size
+	custom_minimum_size = Vector2(panel_size, panel_size)
+	size = custom_minimum_size
+	count_label.custom_minimum_size = custom_minimum_size
+	count_label.size = custom_minimum_size
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if blueprint:
 			blueprint.display_as_inventory_icon()
-		rect_global_position = event.global_position
+		global_position = event.global_position
 
 
 func update_label() -> void:

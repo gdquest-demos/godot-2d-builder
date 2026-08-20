@@ -1,7 +1,7 @@
 # Sub class of the simulation that keeps track of all entities and their location
 # using dictionary keys. Emits signals when entities are placed or removed.
 class_name EntityTracker
-extends Reference
+extends RefCounted
 
 var entities := {}
 

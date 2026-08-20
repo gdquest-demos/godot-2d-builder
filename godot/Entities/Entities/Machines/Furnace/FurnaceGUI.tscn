@@ -1,15 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene format=3 uid="uid://du6w17j1p78m8"]
 
-[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Entities/Entities/Machines/Furnace/FurnaceGUI.gd" type="Script" id=2]
-[ext_resource path="res://GUI/GUISprite.gd" type="Script" id=3]
-[ext_resource path="res://Shared/symbols.svg" type="Texture" id=4]
-[ext_resource path="res://Shared/arrow_fill.shader" type="Shader" id=5]
+[ext_resource type="PackedScene" uid="uid://djf37vmmk0fwn" path="res://GUI/Inventory/InventoryBar.tscn" id="1"]
+[ext_resource type="Script" uid="uid://0yfsh5vdgu80" path="res://Entities/Entities/Machines/Furnace/FurnaceGUI.gd" id="2"]
+[ext_resource type="Script" uid="uid://bhifao5gnu1i1" path="res://GUI/GUISprite.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://cemwqsdkotwam" path="res://Shared/symbols.svg" id="4"]
+[ext_resource type="Shader" uid="uid://bvu5vp1vpisnp" path="res://Shared/arrow_fill.gdshader" id="5"]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id="1"]
 code = "shader_type canvas_item;
 
 uniform float fill_amount : hint_range(0, 1.0) = 0.0;
+
+//Get MODULATE colour:
+uniform vec4 MODULATE: source_color;
 
 void fragment() {
 	vec4 color = MODULATE;
@@ -18,86 +21,66 @@ void fragment() {
 	COLOR = clamp(color + (color * pixel_fill), 0, 1);
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/fill_amount = 0.0
+[sub_resource type="ShaderMaterial" id="2"]
+shader = SubResource("1")
+shader_parameter/fill_amount = 0.0
+shader_parameter/MODULATE = Color(0.1882353, 0.4627451, 1, 1)
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 5 )
-shader_param/fill_amount = 0.0
-shader_param/region_position = Vector2( 10, 10 )
-shader_param/region_size = Vector2( 50, 50 )
+[sub_resource type="ShaderMaterial" id="3"]
+shader = ExtResource("5")
+shader_parameter/fill_amount = 0.0
+shader_parameter/region_position = Vector2(10, 10)
+shader_parameter/region_size = Vector2(50, 50)
 
-[node name="FurnaceGUI" type="MarginContainer"]
-margin_right = 69.0
-margin_bottom = 80.0
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="FurnaceGUI" type="MarginContainer" unique_id=1599032819]
+offset_right = 69.0
+offset_bottom = 80.0
+script = ExtResource("2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 69.0
-margin_bottom = 80.0
-custom_constants/separation = 5
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1708644871]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 9.0
-margin_bottom = 80.0
-custom_constants/separation = 5
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=486089744]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="OreBar" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_left = 9.0
-margin_right = 9.0
+[node name="OreBar" parent="HBoxContainer/VBoxContainer" unique_id=376294866 instance=ExtResource("1")]
+layout_mode = 2
 size_flags_horizontal = 8
 slot_count = 1
 item_filters = "Ore Lumber"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-margin_top = 5.0
-margin_right = 9.0
-margin_bottom = 80.0
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1175471311]
+layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-modulate = Color( 0.188235, 0.462745, 1, 1 )
-material = SubResource( 2 )
-margin_right = 5.0
-margin_bottom = 75.0
-rect_min_size = Vector2( 5, 75 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1374426352]
+modulate = Color(0.188235, 0.462745, 1, 1)
+material = SubResource("2")
+custom_minimum_size = Vector2(5, 75)
+layout_mode = 2
 
-[node name="FuelBar" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 1 )]
-margin_left = 9.0
-margin_right = 9.0
-margin_bottom = 75.0
+[node name="FuelBar" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=231788373 instance=ExtResource("1")]
+layout_mode = 2
 slot_count = 1
 item_filters = "Fuels"
 
-[node name="GUISprite" type="Control" parent="HBoxContainer"]
-material = SubResource( 3 )
-margin_left = 14.0
-margin_top = 15.0
-margin_right = 64.0
-margin_bottom = 65.0
-rect_min_size = Vector2( 50, 50 )
+[node name="GUISprite" type="Control" parent="HBoxContainer" unique_id=1447290871]
+material = SubResource("3")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 size_flags_vertical = 4
-script = ExtResource( 3 )
-texture = ExtResource( 4 )
+script = ExtResource("3")
+texture = ExtResource("4")
 region_enabled = true
-region_rect = Rect2( 10, 10, 50, 50 )
+region_rect = Rect2(10, 10, 50, 50)
 
-[node name="Output" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_left = 69.0
-margin_top = 40.0
-margin_right = 69.0
-margin_bottom = 40.0
+[node name="Output" parent="HBoxContainer" unique_id=960812150 instance=ExtResource("1")]
+layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 slot_count = 1
 item_filters = "NIL"
 
-[node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/OreBar" to="." method="_on_OreBar_inventory_changed"]
 [connection signal="inventory_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/FuelBar" to="." method="_on_FuelBar_inventory_changed"]

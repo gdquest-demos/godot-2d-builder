@@ -4,7 +4,7 @@ extends InventoryBar
 
 func _make_panels() -> void:
 	for i in slot_count:
-		var panel := InventoryPanelScene.instance()
+		var panel := InventoryPanelScene.instantiate()
 		add_child(panel)
 		panels.append(panel.get_child(1))
 

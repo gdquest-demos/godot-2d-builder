@@ -21,7 +21,7 @@ const DIRECTIONS_DATA := {
 	11: Rect2(230, 120, 100, 100)
 }
 
-onready var sprite := $Sprite
+@onready var sprite := $Sprite2D
 
 
 func set_sprite_for_direction(directions: int) -> void:

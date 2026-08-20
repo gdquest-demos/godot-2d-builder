@@ -1,55 +1,45 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene format=3 uid="uid://bl8qqrmvikru6"]
 
-[ext_resource path="res://Shared/symbols.svg" type="Texture" id=1]
-[ext_resource path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceGUI.gd" type="Script" id=2]
-[ext_resource path="res://GUI/Inventory/InventoryBar.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Shared/arrow_fill.shader" type="Shader" id=4]
-[ext_resource path="res://GUI/GUISprite.gd" type="Script" id=5]
+[ext_resource type="Texture2D" uid="uid://cemwqsdkotwam" path="res://Shared/symbols.svg" id="1"]
+[ext_resource type="Script" uid="uid://c7frxsmg8te3h" path="res://Entities/Entities/Machines/ElectricFurnace/ElectricFurnaceGUI.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://djf37vmmk0fwn" path="res://GUI/Inventory/InventoryBar.tscn" id="3"]
+[ext_resource type="Shader" uid="uid://bvu5vp1vpisnp" path="res://Shared/arrow_fill.gdshader" id="4"]
+[ext_resource type="Script" uid="uid://bhifao5gnu1i1" path="res://GUI/GUISprite.gd" id="5"]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 4 )
-shader_param/fill_amount = 0.0
-shader_param/region_position = Vector2( 10, 10 )
-shader_param/region_size = Vector2( 50, 50 )
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("4")
+shader_parameter/fill_amount = 0.0
+shader_parameter/region_position = Vector2(10, 10)
+shader_parameter/region_size = Vector2(50, 50)
 
-[node name="ElectricFurnaceGUI" type="MarginContainer"]
-margin_right = 176.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 192, 52 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ElectricFurnaceGUI" type="MarginContainer" unique_id=729489706]
+custom_minimum_size = Vector2(192, 52)
+offset_right = 176.0
+offset_bottom = 48.0
+script = ExtResource("2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 192.0
-margin_bottom = 52.0
-custom_constants/separation = 5
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=761560618]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="OreBar" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_bottom = 52.0
+[node name="OreBar" parent="HBoxContainer" unique_id=211216017 instance=ExtResource("3")]
+layout_mode = 2
 slot_count = 1
 item_filters = "Ore Lumber"
 
-[node name="GUISprite" type="Control" parent="HBoxContainer"]
-material = SubResource( 1 )
-margin_left = 5.0
-margin_top = 1.0
-margin_right = 55.0
-margin_bottom = 51.0
-rect_min_size = Vector2( 50, 50 )
+[node name="GUISprite" type="Control" parent="HBoxContainer" unique_id=1390381153]
+material = SubResource("1")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 size_flags_vertical = 4
-script = ExtResource( 5 )
-texture = ExtResource( 1 )
+script = ExtResource("5")
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 10, 10, 50, 50 )
+region_rect = Rect2(10, 10, 50, 50)
 
-[node name="Output" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 60.0
-margin_right = 60.0
-margin_bottom = 52.0
+[node name="Output" parent="HBoxContainer" unique_id=1396900266 instance=ExtResource("3")]
+layout_mode = 2
 slot_count = 1
 item_filters = "NIL"
 
-[node name="Tween" type="Tween" parent="."]
 [connection signal="inventory_changed" from="HBoxContainer/OreBar" to="." method="_on_OreBar_inventory_changed"]

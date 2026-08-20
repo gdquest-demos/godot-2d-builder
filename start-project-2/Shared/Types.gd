@@ -1,5 +1,5 @@
 class_name Types
-extends Reference
+extends RefCounted
 
 ## A bitwise operator to indicate possible directions up, down, left right.
 ## By combining them together, you can create directions combinations.

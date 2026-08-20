@@ -4,9 +4,9 @@ extends Entity
 var available_fuel := 0.0
 var last_max_fuel := 0.0
 
-onready var gui := $GUIComponent
-onready var work := $WorkComponent
-onready var animation := $AnimationPlayer
+@onready var gui := $GUIComponent
+@onready var work := $WorkComponent
+@onready var animation := $AnimationPlayer
 
 
 func _ready() -> void:
@@ -20,7 +20,7 @@ func get_info() -> String:
 			% [
 				Library.get_entity_name_from(gui.gui.ore),
 				Library.get_entity_name_from(work.current_output),
-				stepify(work.available_work, 0.1)
+				snapped(work.available_work, 0.1)
 			]
 		)
 	else:
@@ -115,6 +115,7 @@ func _on_WorkComponent_work_enabled_changed(enabled) -> void:
 
 
 func _on_GUIComponent_gui_opened() -> void:
+	# after re-opened the GUI set arrow's position to what the time is left
 	gui.gui.set_fuel(available_fuel / last_max_fuel if last_max_fuel else 0.0)
 	if work.is_enabled:
 		gui.gui.work(work.current_recipe.time)

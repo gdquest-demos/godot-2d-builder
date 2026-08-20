@@ -1,18 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://bpiyfpmbflwn"]
 
-[ext_resource path="res://Shared/progress_circle.png" type="Texture" id=1]
-[ext_resource path="res://GUI/DeconstructProgressBar.gd" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://dvns2kmu4jdid" path="res://Shared/progress_circle.png" id="1"]
+[ext_resource type="Script" uid="uid://b4lifu07owkl" path="res://GUI/DeconstructProgressBar.gd" id="2"]
 
-[node name="DeconstructProgressBar" type="TextureProgress"]
-margin_right = 56.0
-margin_bottom = 56.0
-rect_min_size = Vector2( 56, 56 )
-rect_scale = Vector2( 0.5, 0.5 )
+[node name="DeconstructProgressBar" type="TextureProgressBar" unique_id=517298871]
+top_level = true
+custom_minimum_size = Vector2(56, 56)
+offset_right = 56.0
+offset_bottom = 56.0
+scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 value = 100.0
-texture_progress = ExtResource( 1 )
 fill_mode = 4
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture_progress = ExtResource("1")
+script = ExtResource("2")

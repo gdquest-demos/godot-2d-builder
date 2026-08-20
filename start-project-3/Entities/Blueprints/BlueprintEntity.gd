@@ -2,12 +2,12 @@ class_name BlueprintEntity
 extends Node2D
 
 
-export var stack_size := 1
-export var placeable := true
+@export var stack_size := 1
+@export var placeable := true
 
 var stack_count := 1
 
-onready var power_direction := find_node("PowerDirection")
+@onready var power_direction := find_child("PowerDirection")
 
 
 func display_as_inventory_icon() -> void:
@@ -17,7 +17,7 @@ func display_as_inventory_icon() -> void:
 	
 	scale = Vector2(panel_size / 100.0, panel_size / 100.0)
 	
-	modulate = Color.white
+	modulate = Color.WHITE
 
 	if power_direction:
 		power_direction.hide()

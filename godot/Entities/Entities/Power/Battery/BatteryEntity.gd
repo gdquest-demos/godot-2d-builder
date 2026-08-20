@@ -2,14 +2,14 @@
 # > 0
 extends Entity
 
-export var max_storage := 1000.0
+@export var max_storage := 1000.0
 
-var stored_power := 0.0 setget _set_stored_power
+var stored_power := 0.0: set = _set_stored_power
 var last_stored_power := 0.0
 
-onready var receiver := $PowerReceiver
-onready var source := $PowerSource
-onready var indicator := $Indicator
+@onready var receiver := $PowerReceiver
+@onready var source := $PowerSource
+@onready var indicator := $Indicator
 
 
 func _ready() -> void:
@@ -28,9 +28,10 @@ func _setup(blueprint: BlueprintEntity) -> void:
 
 # Set efficiency as a source and receiver based on stored amount of power
 func _set_stored_power(value: float) -> void:
+	
 	stored_power = max(value, 0)
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 
 	receiver.efficiency = (
 		0.0
@@ -40,7 +41,7 @@ func _set_stored_power(value: float) -> void:
 
 	source.efficiency = (0.0 if stored_power <= 0 else min(stored_power / source.power_amount, 1.0))
 
-	indicator.material.set_shader_param("amount", stored_power / max_storage)
+	indicator.material.set_shader_parameter("amount", stored_power / max_storage)
 
 
 func _on_PowerReceiver_received_power(amount: float, delta: float) -> void:

@@ -5,9 +5,9 @@ signal inventory_changed(panel, held_item)
 
 var gui: Control
 
-onready var inventory_path := $PanelContainer/MarginContainer/Inventories
+@onready var inventory_path := $PanelContainer/MarginContainer/Inventories
 
-onready var inventories := inventory_path.get_children()
+@onready var inventories := inventory_path.get_children()
 
 
 func setup(_gui: Control) -> void:

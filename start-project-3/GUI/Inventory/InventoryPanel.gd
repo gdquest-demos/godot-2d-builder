@@ -4,19 +4,19 @@ extends Panel
 
 signal held_item_changed(panel, item)
 
-var held_item: BlueprintEntity setget _set_held_item
+var held_item: BlueprintEntity: set = _set_held_item
 
 var gui: Control
 
-onready var count_label := $Label
+@onready var count_label := $Label
 
 
 func _ready() -> void:
 	var panel_size: float = ProjectSettings.get_setting("game_gui/inventory_size")
-	rect_min_size = Vector2(panel_size, panel_size)
-	rect_size = rect_min_size
-	count_label.rect_min_size = rect_min_size
-	count_label.rect_size = rect_min_size
+	custom_minimum_size = Vector2(panel_size, panel_size)
+	size = custom_minimum_size
+	count_label.custom_minimum_size = custom_minimum_size
+	count_label.size = custom_minimum_size
 
 
 func _gui_input(event: InputEvent) -> void:

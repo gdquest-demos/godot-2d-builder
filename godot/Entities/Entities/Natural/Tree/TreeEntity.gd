@@ -10,7 +10,7 @@ const REGIONS := [
 
 func _ready() -> void:
 	$Foliage.region_rect = REGIONS[randi() % REGIONS.size()]
-	$Foliage.flip_h = rand_range(0, 10) < 5.5
+	$Foliage.flip_h = randf_range(0, 10) < 5.5
 
 
 func get_entity_name() -> String:

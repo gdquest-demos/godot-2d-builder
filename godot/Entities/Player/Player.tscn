@@ -1,33 +1,32 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene format=3 uid="uid://cww3iencmshep"]
 
-[ext_resource path="res://Entities/Player/pawn.svg" type="Texture" id=1]
-[ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://cos3yxm1soivu" path="res://Entities/Player/pawn.svg" id="1"]
+[ext_resource type="Script" uid="uid://c5g73i3mc0nuv" path="res://Entities/Player/Player.gd" id="2"]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 11.0
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id="2"]
 radius = 100.0
 
-[node name="Player" type="KinematicBody2D"]
-script = ExtResource( 2 )
+[node name="Player" type="CharacterBody2D" unique_id=431104931]
+script = ExtResource("2")
 
-[node name="Pawn" type="Sprite" parent="."]
-position = Vector2( 0, -22.6235 )
-texture = ExtResource( 1 )
+[node name="Pawn" type="Sprite2D" parent="." unique_id=1076028705]
+position = Vector2(0, -22.6235)
+texture = ExtResource("1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -5.51734 )
-shape = SubResource( 1 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1632996511]
+position = Vector2(0, -5.51734)
+shape = SubResource("1")
 
-[node name="PickupRadius" type="Area2D" parent="."]
-position = Vector2( 0, -0.264841 )
+[node name="PickupRadius" type="Area2D" parent="." unique_id=462342466]
+position = Vector2(0, -0.264841)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
-shape = SubResource( 2 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius" unique_id=36614746]
+shape = SubResource("2")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-process_mode = 0
-smoothing_enabled = true
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1665556679]
+position_smoothing_enabled = true
+
 [connection signal="area_entered" from="PickupRadius" to="." method="_on_PickupRadius_area_entered"]

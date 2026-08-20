@@ -1,47 +1,34 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene format=3 uid="uid://b2m163kr5khs7"]
 
-[ext_resource path="res://Shared/Theme/builder_theme.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/Crafting/CraftingGUI.gd" type="Script" id=2]
+[ext_resource type="Theme" path="res://Shared/Theme/builder_theme.tres" id="1"]
+[ext_resource type="Script" uid="uid://db2qu8ol0vj47" path="res://GUI/Crafting/CraftingGUI.gd" id="2"]
 
-[node name="CraftingGUI" type="MarginContainer"]
-margin_right = 90.0
-margin_bottom = 90.0
-mouse_filter = 1
-theme = ExtResource( 1 )
-custom_constants/margin_right = 25
-custom_constants/margin_top = 25
-custom_constants/margin_left = 25
-custom_constants/margin_bottom = 25
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="CraftingGUI" type="MarginContainer" unique_id=1965368421]
+anchors_preset = -1
+offset_right = 90.0
+offset_bottom = 90.0
+theme = ExtResource("1")
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+script = ExtResource("2")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 25.0
-margin_top = 25.0
-margin_right = 73.0
-margin_bottom = 77.0
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=537923612]
+layout_mode = 2
 mouse_filter = 1
 
-[node name="CraftingList" type="MarginContainer" parent="PanelContainer"]
-margin_right = 48.0
-margin_bottom = 52.0
-mouse_filter = 1
-custom_constants/margin_right = 20
-custom_constants/margin_top = 20
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
+[node name="CraftingList" type="MarginContainer" parent="PanelContainer" unique_id=146967036]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/CraftingList"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 28.0
-margin_bottom = 32.0
-mouse_filter = 1
-scroll_horizontal_enabled = false
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/CraftingList" unique_id=546447605]
+layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CraftingList/ScrollContainer"]
-margin_right = 8.0
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CraftingList/ScrollContainer" unique_id=390981317]
+layout_mode = 2
 size_flags_horizontal = 3
-custom_constants/separation = 5
+theme_override_constants/separation = 5

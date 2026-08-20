@@ -4,23 +4,19 @@ const OFFSET := Vector2(25, -25)
 
 var current_entity: Node
 
-onready var label := $MarginContainer/Label
+@onready var label := $MarginContainer/Label
 
 
 func _ready() -> void:
-	set_as_toplevel(true)
-	Log.log_error(
-		Events.connect("hovered_over_entity", self, "_on_hovered_over_entity"), "Info GUI"
-	)
-	Log.log_error(Events.connect("info_updated", self, "_on_info_updated"), "Info GUI")
-	Log.log_error(
-		Events.connect("hovered_over_recipe", self, "_on_hovered_over_recipe"), "Info GUI"
-	)
+	set_as_top_level(true)
+	Log.log_error(Events.hovered_over_entity.connect(_on_hovered_over_entity), "Info GUI")
+	Log.log_error(Events.info_updated.connect(_on_info_updated), "Info GUI")
+	Log.log_error(Events.hovered_over_recipe.connect(_on_hovered_over_recipe), "Info GUI")
 	hide()
 
 
 func _process(_delta: float) -> void:
-	rect_global_position = get_global_mouse_position() + OFFSET
+	global_position = get_global_mouse_position() + OFFSET
 
 
 func _set_info(entity: Node) -> void:
@@ -32,7 +28,7 @@ func _set_info(entity: Node) -> void:
 	else:
 		if entity.has_method("get_info"):
 			var info: String = entity.get_info()
-			if not info.empty():
+			if not info.is_empty():
 				output += "\n%s" % info
 
 	label.text = output
@@ -49,23 +45,23 @@ func _on_hovered_over_entity(entity: Node) -> void:
 		return
 
 	_set_info(entity)
-	set_deferred("rect_size", Vector2.ZERO)
+	set_deferred("size", Vector2.ZERO)
 
 
 func _on_info_updated(entity: Node) -> void:
 	if current_entity and entity == current_entity:
 		_set_info(current_entity)
-		set_deferred("rect_size", Vector2.ZERO)
+		set_deferred("size", Vector2.ZERO)
 
 
 func _on_hovered_over_recipe(output: String, recipe: Dictionary) -> void:
-	var blueprint: BlueprintEntity = Library.blueprints[output].instance()
+	var blueprint: BlueprintEntity = Library.blueprints[output].instantiate()
 	_set_info(blueprint)
 	blueprint.free()
-	
+
 	label.text = "%sx %s" % [recipe.amount, label.text]
 
 	var inputs: Dictionary = recipe.inputs
 	for input in inputs.keys():
 		label.text += "\n    %sx %s" % [inputs[input], input.capitalize()]
-	set_deferred("rect_size", Vector2.ZERO)
+	set_deferred("size", Vector2.ZERO)

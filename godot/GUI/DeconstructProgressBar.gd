@@ -1,6 +1,6 @@
-tool
-extends TextureProgress
+@tool
+extends TextureProgressBar
 
 
 func _ready() -> void:
-	set_as_toplevel(true)
+	set_as_top_level(true)

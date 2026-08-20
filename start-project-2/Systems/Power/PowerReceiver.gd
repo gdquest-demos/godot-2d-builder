@@ -3,9 +3,9 @@ extends Node
 
 signal received_power(amount, delta)
 
-export var power_required := 10.0
+@export var power_required := 10.0
 
-export (Types.Direction, FLAGS) var input_direction := 15
+@export var input_direction := 15 # (Types.Direction, FLAGS)
 
 var efficiency := 0.0
 

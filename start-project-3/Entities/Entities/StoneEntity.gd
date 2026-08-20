@@ -14,4 +14,4 @@ const REGIONS := [
 
 
 func _ready() -> void:
-	$Sprite.region_rect = REGIONS[randi() % REGIONS.size()]
+	$Sprite2D.region_rect = REGIONS[randi() % REGIONS.size()]

@@ -2,4 +2,4 @@
 class_name WireEntity
 extends Entity
 
-onready var sprite := $Sprite
+@onready var sprite := $Sprite2D

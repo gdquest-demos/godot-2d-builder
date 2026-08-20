@@ -2,7 +2,7 @@
 # to power receivers. Every system tick, it sends power from the sources to the
 # receivers in order.
 class_name PowerSystem
-extends Reference
+extends RefCounted
 
 var power_sources := {}
 var power_receivers := {}
@@ -16,9 +16,9 @@ var receivers_already_provided := {}
 
 
 func _init() -> void:
-	Log.log_error(Events.connect("entity_placed", self, "_on_entity_placed"), "Power System")
-	Log.log_error(Events.connect("entity_removed", self, "_on_entity_removed"), "Power System")
-	Log.log_error(Events.connect("systems_ticked", self, "_on_systems_ticked"), "Power System")
+	Log.log_error(Events.entity_placed.connect(_on_entity_placed), "Power System")
+	Log.log_error(Events.entity_removed.connect(_on_entity_removed), "Power System")
+	Log.log_error(Events.systems_ticked.connect(_on_systems_ticked), "Power System")
 
 
 func _retrace_paths() -> void:
@@ -112,7 +112,7 @@ func _on_systems_ticked(delta: float) -> void:
 		var available_power := source_power
 		var power_draw := 0.0
 
-		for cell in path.slice(1, path.size() - 1):
+		for cell in path.slice(1, path.size()):
 			if cell == path[0]:
 				continue
 
@@ -143,7 +143,7 @@ func _on_systems_ticked(delta: float) -> void:
 				receivers_already_provided[cell] += min(available_power, power_required)
 
 			available_power = max(available_power - power_required, 0)
-			
+
 			if available_power == 0:
 				break
 

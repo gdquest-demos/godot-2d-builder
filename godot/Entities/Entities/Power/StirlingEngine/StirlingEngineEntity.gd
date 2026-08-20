@@ -7,11 +7,10 @@ const SHUTDOWN_TIME := 3
 var available_fuel := 0.0
 var last_max_fuel := 0.0
 
-onready var animation_player := $AnimationPlayer
-onready var tween := $Tween
-onready var shaft := $PistonShaft
-onready var power := $PowerSource
-onready var gui := $GUIComponent
+@onready var animation_player := $AnimationPlayer
+@onready var shaft := $PistonShaft
+@onready var power := $PowerSource
+@onready var gui := $GUIComponent
 
 
 func get_info() -> String:
@@ -20,11 +19,15 @@ func get_info() -> String:
 
 func _setup_work() -> void:
 	if not animation_player.is_playing() and (gui.gui.fuel or available_fuel > 0.0):
+		
+		
 		animation_player.play("Work")
-		tween.interpolate_property(animation_player, "playback_speed", 0, 1, BOOTUP_TIME)
-		tween.interpolate_method(self, "_update_efficiency", 0, 1, BOOTUP_TIME)
-		tween.interpolate_property(shaft, "modulate", Color.white, Color(0.5, 1, 0.5), BOOTUP_TIME)
-		tween.start()
+		var tween := create_tween()
+		var tween_method := create_tween()
+		var tween_color := create_tween()
+		tween.tween_property(animation_player, "speed_scale", 1, BOOTUP_TIME).from(0)
+		tween_method.tween_method(_update_efficiency, 0.0, 1.0, BOOTUP_TIME)
+		tween_color.tween_property(shaft, "modulate",  Color(0.5, 1.0, 0.5), BOOTUP_TIME).from(Color.WHITE)
 		_consume_fuel(0.0)
 	elif (
 		animation_player.is_playing()
@@ -34,15 +37,17 @@ func _setup_work() -> void:
 		var work_animation: Animation = animation_player.get_animation(
 			animation_player.current_animation
 		)
-		work_animation.loop = false
-		yield(animation_player, "animation_finished")
-		work_animation.loop = true
+		work_animation.loop_mode = Animation.LOOP_NONE
+		await animation_player.animation_finished
+		work_animation.loop_mode = Animation.LOOP_LINEAR
 
 		animation_player.play("Shutdown")
-		animation_player.playback_speed = 1.0
-		tween.interpolate_property(shaft, "modulate", shaft.modulate, Color(1, 1, 1), SHUTDOWN_TIME)
-		tween.interpolate_method(self, "_update_efficiency", 1, 0, SHUTDOWN_TIME)
-		tween.start()
+		animation_player.speed_scale = 1.0
+		
+		var tween_method := create_tween()
+		var tween_color := create_tween()
+		tween_method.tween_property(shaft, "modulate", Color(1, 1, 1), SHUTDOWN_TIME).from(shaft.modulate)
+		tween_color.tween_method(_update_efficiency, 1, 0, SHUTDOWN_TIME)
 
 
 func _update_efficiency(value: float) -> void:
